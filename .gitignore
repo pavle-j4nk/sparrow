@@ -23,3 +23,6 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+
+### To prevent password leaks
+src/main/resources/application.properties
