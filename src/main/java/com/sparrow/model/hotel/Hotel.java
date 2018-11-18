@@ -1,6 +1,16 @@
 package com.sparrow.model.hotel;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Hotel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
 
@@ -39,7 +49,7 @@ public class Hotel {
     }
 
     public Hotel(String name, String address, String description, Pricelist pricelist, RoomConfiguration roomConfiguration,
-                 boolean hasTransferToAirport,boolean hasParking, boolean hasPool, boolean hasRestaurant, boolean hasRoomService,
+                 boolean hasTransferToAirport, boolean hasParking, boolean hasPool, boolean hasRestaurant, boolean hasRoomService,
                  boolean hasWelness, boolean hasSpaCenter, boolean hasWiFi) {
         this.name = name;
         this.address = address;
@@ -54,6 +64,14 @@ public class Hotel {
         this.hasWelness = hasWelness;
         this.hasSpaCenter = hasSpaCenter;
         this.hasWiFi = hasWiFi;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
