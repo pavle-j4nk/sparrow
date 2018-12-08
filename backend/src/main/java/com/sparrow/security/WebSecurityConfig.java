@@ -23,6 +23,9 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .permitAll()
                 .and()
                 .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .deleteCookies("JSESSIONID")
                 .permitAll();
     }
 
@@ -31,6 +34,10 @@ public class WebSecurityConfig implements WebMvcConfigurer {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         //Nema potrebe za ROLE_USER, ROLE_ se automatski dodaje
         manager.createUser(User.withDefaultPasswordEncoder().username("admin").password("admin").roles("ADMIN").build());
+        manager.createUser(User.withDefaultPasswordEncoder().username("marko").password("marko").roles("USER").build());
+        manager.createUser(User.withDefaultPasswordEncoder().username("pavle").password("pavle").roles("USER").build());
+        manager.createUser(User.withDefaultPasswordEncoder().username("aco").password("aco").roles("USER").build());
+
         return manager;
     }
 
