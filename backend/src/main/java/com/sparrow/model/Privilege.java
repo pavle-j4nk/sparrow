@@ -6,14 +6,15 @@ import java.util.Set;
 
 @Entity
 public class Privilege {
-    public static final String USER_PROFILE_EDIT = "PRIVILEGE_USER_PROFILE_EDIT";
-    public static final String AIRLINE_PROFILE_EDIT = "PRIVILEGE_AIRLINE_PROFILE_EDIT";
+    public static final String USER_PROFILE_EDIT = "USER_PROFILE_EDIT";
+    public static final String AIRLINE_PROFILE_EDIT = "AIRLINE_PROFILE_EDIT";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+
     @ManyToMany(mappedBy = "privileges")
     private Collection<Role> roles;
 

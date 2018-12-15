@@ -6,8 +6,11 @@ import java.util.Set;
 
 @Entity
 public class Role {
-    public static final String USER_REGISTERED = "ROLE_USER_REGISTERED";
-    public static final String USER_AIRLINE_ADMIN = "ROLE_USER_AIRLINE_ADMIN";
+    public static final String USER = "USER";
+    public static final String AIRLINE_ADMIN = "AIRLINE_ADMIN";
+    public static final String HOTEL_ADMIN = "HOTEL_ADMIN";
+    public static final String RENT_A_CAR_ADMIN = "RENT_A_CAR_ADMIN";
+    public static final String ADMIN = "ADMIN";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +18,7 @@ public class Role {
 
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "role")
     private Collection<User> users;
 
     @ManyToMany

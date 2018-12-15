@@ -1,44 +1,58 @@
 package com.sparrow.security;
 
+import com.sparrow.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig implements WebMvcConfigurer {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public void configure(HttpSecurity http) throws Exception {
+    @Autowired
+    UserRepository userRepository;
+
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/home").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/anonymous*").anonymous()
+                .antMatchers("/login*").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .permitAll()
+                //.loginPage("/login.html")
+                .loginProcessingUrl("/perform_login")
+                //.defaultSuccessUrl("/homepage.html", true)
+                //.failureUrl("/login.html?error=true")
                 .and()
                 .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
-                .deleteCookies("JSESSIONID")
-                .permitAll();
+                .logoutUrl("/perform_logout")
+                .deleteCookies("JSESSIONID");
+
+        http.headers().frameOptions().disable();
+
     }
 
     @Bean
-    public UserDetailsService userDetailsService() throws Exception {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        //Nema potrebe za ROLE_USER, ROLE_ se automatski dodaje
-        manager.createUser(User.withDefaultPasswordEncoder().username("admin").password("admin").roles("ADMIN").build());
-        manager.createUser(User.withDefaultPasswordEncoder().username("marko").password("marko").roles("USER").build());
-        manager.createUser(User.withDefaultPasswordEncoder().username("pavle").password("pavle").roles("USER").build());
-        manager.createUser(User.withDefaultPasswordEncoder().username("aco").password("aco").roles("USER").build());
+    public PasswordEncoder passwordEncoder() {
+        return new PasswordEncoder() {
+            public String encode(CharSequence charSequence) {
+                return String.valueOf(charSequence);
+            }
 
-        return manager;
+            public boolean matches(CharSequence charSequence, String s) {
+                return String.valueOf(charSequence).equals(s);
+            }
+        };
     }
 
 }
