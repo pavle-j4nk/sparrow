@@ -9,6 +9,8 @@ public class Privilege {
     public static final String USER_PROFILE_EDIT = "USER_PROFILE_EDIT";
     public static final String AIRLINE_PROFILE_EDIT = "AIRLINE_PROFILE_EDIT";
 
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,6 +21,7 @@ public class Privilege {
     private Collection<Role> roles;
 
     public Privilege() {
+        System.out.println("slack test");
     }
 
     public Privilege(String name) {
