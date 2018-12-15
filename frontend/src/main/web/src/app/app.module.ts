@@ -1,8 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from "@angular/platform-browser";
+import {AppRoutingModule} from "./app.routing.module";
+import {AppComponent} from "./app.component";
+import {LoginModule} from "./login/login.module";
 
 @NgModule({
   declarations: [
@@ -10,7 +10,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
   ],
   imports: [
     BrowserModule,
-    MDBBootstrapModule.forRoot()
+    AppRoutingModule,
+    LoginModule
   ],
   providers: [],
   bootstrap: [AppComponent]
