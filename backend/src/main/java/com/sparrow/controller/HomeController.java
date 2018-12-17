@@ -18,5 +18,9 @@ public class HomeController {
         return "index.html";
     }
 
+    @GetMapping("/home")
+    public  String getHome() {
+        return "index.html";
+    }
 
 }
