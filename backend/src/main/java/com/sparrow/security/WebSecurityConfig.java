@@ -7,7 +7,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -22,14 +31,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/anonymous*").anonymous()
-                .antMatchers("/login*").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/login/**").permitAll()
+                .antMatchers("/*.js").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                //.loginPage("/login.html")
+                .loginPage("/login")
                 .loginProcessingUrl("/perform_login")
                 //.defaultSuccessUrl("/homepage.html", true)
                 //.failureUrl("/login.html?error=true")
@@ -40,6 +49,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.headers().frameOptions().disable();
 
+    }
+
+    private AuthenticationSuccessHandler successHandler() {
+        return new AuthenticationSuccessHandler() {
+            @Override
+            public void onAuthenticationSuccess(HttpServletRequest httpServletRequest
+                    , HttpServletResponse httpServletResponse, Authentication authentication)
+                    throws IOException, ServletException {
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+            }
+        };
+    }
+
+    private AuthenticationFailureHandler failureHandler() {
+        return new AuthenticationFailureHandler() {
+            @Override
+            public void onAuthenticationFailure(HttpServletRequest httpServletRequest
+                    , HttpServletResponse httpServletResponse, AuthenticationException e)
+                    throws IOException, ServletException {
+                httpServletResponse.getWriter().append(e.getMessage());
+                httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            }
+        };
     }
 
     @Bean

@@ -1,0 +1,13 @@
+.icon-big {
+  text-shadow: none;
+  font-size: 72px;
+  color: rgb(77, 77, 77);
+  height: 150px;
+  width: 150px;
+  line-height: 150px;
+  border-radius: 100%;
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+}
+
+
