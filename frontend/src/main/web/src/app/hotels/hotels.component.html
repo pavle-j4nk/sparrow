@@ -1,0 +1,11 @@
+<h1>Mock Hotels: </h1>
+<ul class="list-group-flush">
+  <li class="list-group-item" *ngFor="let hotel of hotels">
+    <div class="card">
+      <div class="card-body">
+        <span  class="badge">Name: </span><span>{{hotel.name}}</span><br>
+        <span class="badge">Description: </span><span>{{hotel.description}}</span>
+      </div>
+    </div>
+  </li>
+</ul>
