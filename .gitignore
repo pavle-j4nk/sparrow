@@ -6,6 +6,7 @@ out-tsc
 
 # dependencies
 node_modules
+.attach_pid*
 
 ## SpringBoot
 target/
