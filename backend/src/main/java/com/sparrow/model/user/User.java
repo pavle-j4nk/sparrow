@@ -1,8 +1,11 @@
-package com.sparrow.model;
+package com.sparrow.model.user;
+
+import com.sparrow.model.Role;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collector;
 
 @Entity
 public class User {
@@ -21,6 +24,9 @@ public class User {
     private String password;
 
     private Boolean enabled;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Collection<Friendship> friendships;
 
     @ManyToOne
     private Role role;
@@ -105,4 +111,5 @@ public class User {
     public boolean getEnabled() {
         return enabled;
     }
+
 }

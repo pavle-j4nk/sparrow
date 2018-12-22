@@ -24,10 +24,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        com.sparrow.model.User u = userRepository.findByEmail(s);
-        if (u == null) {
+        com.sparrow.model.user.User u = userRepository.findByEmail(s).orElseGet(() -> {
             throw new UsernameNotFoundException("User does not exist.");
-        }
+        });
 
         if (!u.getEnabled()) {
             throw new UsernameNotFoundException("User is disabled.");

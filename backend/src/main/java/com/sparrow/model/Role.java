@@ -1,5 +1,7 @@
 package com.sparrow.model;
 
+import com.sparrow.model.user.User;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;

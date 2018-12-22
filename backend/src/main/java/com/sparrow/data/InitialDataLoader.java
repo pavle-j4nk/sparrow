@@ -3,7 +3,7 @@ package com.sparrow.data;
 import com.sparrow.encoder.PasswordEncoder;
 import com.sparrow.model.Privilege;
 import com.sparrow.model.Role;
-import com.sparrow.model.User;
+import com.sparrow.model.user.User;
 import com.sparrow.repository.PrivilegeRepository;
 import com.sparrow.repository.RoleRepository;
 import com.sparrow.repository.UserRepository;
