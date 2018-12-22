@@ -1,28 +1,26 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
-import { catchError, map, tap } from 'rxjs/operators';
+import {User} from "../user/user";
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private loginUrl = "/perform_login";
+  private getMeLocation = "/api/user/me";
+  private userMe: Observable<User> = null;
 
   constructor(private http: HttpClient) {
+    this.userMe = this.fetchMe();
   }
 
-  login(username: String, password: String): Observable<String> {
-    if(!username || !password) {
-      return Observable.create("Enter username and password.");
-    }
-
-    return this.http.post<String>(this.loginUrl, {});
+  private fetchMe(): Observable<User> {
+    return this.http.get<User>(this.getMeLocation);
   }
 
-  isAuthenticated() {
-    return true;
+  public me(): Observable<User> {
+    return this.userMe;
   }
 
 }

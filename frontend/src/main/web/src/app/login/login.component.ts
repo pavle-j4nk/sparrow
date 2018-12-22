@@ -1,19 +1,21 @@
-import {Component} from "@angular/core";
-import {LoginService} from "./login.service";
+import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'login',
   templateUrl: './login.component.html'
 })
 
-export class LoginComponent {
-  constructor(private loginService: LoginService) {
+export class LoginComponent implements OnInit {
+
+  error: string = null;
+
+  constructor(private route: ActivatedRoute) {
   }
 
-  login(username: String, password: String) {
-    this.loginService.login(username, password).subscribe(value => {
-      console.log(value);
-    });
+  ngOnInit(): void {
+    this.error = this.route.snapshot.queryParamMap.get('error');
   }
+
 
 }
