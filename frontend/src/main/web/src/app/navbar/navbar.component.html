@@ -30,6 +30,18 @@
         <a class="nav-link" href="#">Contact Us</a>
       </li>
     </ul>
+
+    <div *ngIf="me" class="btn-group" role="group" aria-label="Button group with nested dropdown">
+      <button type="button" class="btn btn-info">{{me.firstName}}</button>
+      <div class="btn-group" role="group">
+        <button id="btnGroupDrop3" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+          <a class="dropdown-item" routerLink="/user/profile">Profile</a>
+          <a class="dropdown-item" href="/perform_logout">Log Out</a>
+        </div>
+      </div>
+    </div>
+
     <form class="form-inline my-2 my-md-0">
       <input class="form-control" type="text" placeholder="Search">
     </form>
