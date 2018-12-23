@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Hotel {
@@ -22,7 +23,7 @@ public class Hotel {
 //    private PriceList priceList;
 
     @OneToMany(mappedBy = "hotel")
-    private List<Room> rooms;
+    private Set<Room> rooms;
 
     public Hotel() {
     }
