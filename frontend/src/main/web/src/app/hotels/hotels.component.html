@@ -30,7 +30,7 @@
                 </div>
               </div>
               <div class="card-footer">
-                <button class="btn btn-success mr-2 ">Details</button>
+                <button class="btn btn-success mr-2" routerLink="details/{{hotel.id}}">Details</button>
                 <button *ngIf="hotel.freeRooms" class="btn btn-primary">Book</button>
               </div>
             </div>

@@ -5,20 +5,19 @@ import {AppComponent} from "./app.component";
 import {LoginModule} from "./login/login.module";
 import {HomeModule} from "./home/home.module";
 import {NavbarComponent} from "./navbar/navbar.component";
-import {HotelsComponent} from "./hotels/hotels.component";
+import {HotelsModule} from "./hotels/hotels.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    HotelsComponent
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-
     LoginModule,
     HomeModule,
+    HotelsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

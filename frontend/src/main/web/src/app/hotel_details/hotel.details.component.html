@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row mt-2">
+    <div class="col-md-12">
+      <div class="container-fluid">
+        <div class="card">
+          <h4 class="card-header font-weight-bold">{{hotel.name}}
+            <span><i class="fa fa-star mr-1 ml-3" style="color: yellow"></i>{{hotel.rate}} -
+               <span class="badge badge-primary" *ngIf="hotel.rate > 9 && hotel.rate <= 10">excellent</span>
+               <span class="badge badge-success" *ngIf="hotel.rate > 7 && hotel.rate <= 9">very good</span>
+               <span class="badge badge-warning" *ngIf="hotel.rate > 5 && hotel.rate <= 7">good</span>
+               <span class="badge badge-dark" *ngIf="hotel.rate < 5">bad</span>
+            </span>
+          </h4>
+          <div class="card-body">
+            <div class="row m-1">
+              <img src="{{hotel.imagePath}}" class="img img-thumbnail w-100 h-100">
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <p>{{hotel.description}}</p><br>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-md-12">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-header">
+            <h3>Rooms: </h3>
+          </div>
+          <div class="card-body">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
