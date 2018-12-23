@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
+
     public User findById(Long id) {
         AtomicReference<User> user = null;
         return userRepository.findById(id).orElseGet(() -> {
@@ -43,6 +44,17 @@ public class UserServiceImpl implements UserService {
     public UserResponse getUser(String email) {
         User user = findByEmail(email);
         return new UserResponse(user);
+    }
+
+    @Override
+    public void updateUserInfo(String email, User userInfo) {
+        User user = findByEmail(email);
+
+        user.setFirstName(userInfo.getFirstName());
+        user.setLastName(userInfo.getLastName());
+        user.setAddress(userInfo.getAddress());
+
+        userRepository.save(user);
     }
 
 

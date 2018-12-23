@@ -13,4 +13,11 @@ public interface UserService {
     UserProfileResponse getProfile(String email);
 
     UserResponse getUser(String email);
+
+    /**
+     * Update user info.
+     * @param email user identifier
+     * @param newInfo information holder
+     */
+    void updateUserInfo(String email, User newInfo);
 }

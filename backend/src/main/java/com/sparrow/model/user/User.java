@@ -1,11 +1,13 @@
 package com.sparrow.model.user;
 
 import com.sparrow.model.Role;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collector;
 
 @Entity
 public class User {
@@ -13,16 +15,30 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
+    @Email
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @NotNull
+    @Length(min = 1)
+    @Column(nullable = false)
     private String firstName;
 
+    @NotNull
+    @Length(min = 1)
+    @Column(nullable = false)
     private String lastName;
 
+    @NotNull
+    @Length(min = 1)
+    @Column(nullable = false)
     private String address;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private Boolean enabled;
 
     @ManyToMany(fetch = FetchType.LAZY)

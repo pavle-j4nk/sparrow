@@ -3,6 +3,7 @@ import {UserProfileComponent} from "./user.profile.component";
 import {CommonModule} from "@angular/common";
 import {UserRoutingModule} from "./user.routing.module";
 import {UserService} from "./user.service";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -10,8 +11,9 @@ import {UserService} from "./user.service";
   ],
   imports: [
     CommonModule,
-    UserRoutingModule
+    UserRoutingModule,
+    FormsModule
   ],
   providers: [UserService],
 })
-export class AppModule { }
+export class UserModule { }

@@ -22,4 +22,10 @@ public class HomeController {
     public  String getHome() {
         return "index.html";
     }
+
+    @GetMapping("/user/**")
+    public String getUser() {
+        return "/index.html";
+    }
+
 }
