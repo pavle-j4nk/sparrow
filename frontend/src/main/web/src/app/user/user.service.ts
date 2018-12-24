@@ -9,7 +9,6 @@ import {User} from "./user";
 export class UserService {
   private APILocation = "/api/user/";
   private getMeLocation = this.APILocation + "me";
-  private updateProfileLocation = this.APILocation + "update";
 
   private user : User;
 
@@ -30,7 +29,7 @@ export class UserService {
   }
 
   public updateProfile(user: User): Observable<Object> {
-    return this.http.post(this.updateProfileLocation, user);
+    return this.http.post(this.getMeLocation, user);
   }
 
 

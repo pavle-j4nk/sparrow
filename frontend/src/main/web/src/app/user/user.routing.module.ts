@@ -1,13 +1,16 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {UserProfileComponent} from "./user.profile.component";
+import {UserProfileEditorComponent} from "./profile/user.profile-editor.component";
 import {UserComponent} from "./user.component";
+import {UserFriendListComponent} from "./friends/user.friends-list.component";
 
 const routes: Routes = [
   {
     path: 'user', component: UserComponent, children: [
-      {path: 'profile', component: UserProfileComponent},
-      {path: 'profile/:id', component: UserProfileComponent}
+      {path: 'profile', component: UserProfileEditorComponent},
+      {path: 'profile/:id', component: UserProfileEditorComponent},
+      {path: 'friends', component: UserFriendListComponent}
+
     ]
   }
 ];

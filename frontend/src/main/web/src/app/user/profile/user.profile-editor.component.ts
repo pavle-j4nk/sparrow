@@ -1,15 +1,15 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {UserService} from "./user.service";
-import {User} from "./user";
+import {UserService} from "../user.service";
+import {User} from "../user";
 
 
 @Component({
   selector: 'profile',
-  templateUrl: './user.profile.component.html'
+  templateUrl: './user.profile-editor.component.html'
 })
 
-export class UserProfileComponent implements OnInit {
+export class UserProfileEditorComponent implements OnInit {
   private id: string;
 
   memento: User = null;

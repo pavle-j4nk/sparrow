@@ -1,6 +1,7 @@
 package com.sparrow.model.user;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class FriendRequest {
@@ -10,20 +11,23 @@ public class FriendRequest {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     @ManyToOne
     private User sender;
 
+    @NotNull
     @ManyToOne
-    private User reciever;
+    private User receiver;
 
+    @NotNull
     private Status status;
 
     public FriendRequest() {
     }
 
-    public FriendRequest(User sender, User reciever, Status status) {
+    public FriendRequest(User sender, User receiver, Status status) {
         this.sender = sender;
-        this.reciever = reciever;
+        this.receiver = receiver;
         this.status = status;
     }
 
@@ -43,12 +47,12 @@ public class FriendRequest {
         this.sender = sender;
     }
 
-    public User getReciever() {
-        return reciever;
+    public User getReceiver() {
+        return receiver;
     }
 
-    public void setReciever(User reciever) {
-        this.reciever = reciever;
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
     }
 
     public Status getStatus() {

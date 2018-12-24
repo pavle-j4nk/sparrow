@@ -3,7 +3,8 @@ import {Role} from "./role";
 export class User {
 
 
-  constructor(public email: string = ""
+  constructor(public id: number = -1
+    , public email: string = ""
     , public firstName: string = ""
     , public lastName: string = ""
     , public address: string = ""
@@ -11,6 +12,7 @@ export class User {
   }
 
   public set(user: User): void {
+    this.id = user.id;
     this.email = user.email;
     this.firstName = user.firstName;
     this.lastName = user.lastName;
@@ -19,7 +21,7 @@ export class User {
   }
 
   public static clone(user: User): User {
-    return new User(user.email, user.firstName, user.lastName, user.address, user.role);
+    return new User(user.id, user.email, user.firstName, user.lastName, user.address, user.role);
   }
 
   public static empty() : User {

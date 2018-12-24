@@ -26,4 +26,5 @@ import {UserModule} from "./user/user.module";
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

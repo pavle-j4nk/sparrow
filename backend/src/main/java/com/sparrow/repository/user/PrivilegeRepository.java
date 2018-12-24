@@ -1,4 +1,4 @@
-package com.sparrow.repository;
+package com.sparrow.repository.user;
 
 import com.sparrow.model.Privilege;
 import org.springframework.data.jpa.repository.JpaRepository;

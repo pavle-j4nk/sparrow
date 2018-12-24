@@ -128,4 +128,11 @@ public class User {
         return enabled;
     }
 
+    public Collection<Friendship> getFriendships() {
+        return friendships;
+    }
+
+    public void setFriendships(Collection<Friendship> friendships) {
+        this.friendships = friendships;
+    }
 }
