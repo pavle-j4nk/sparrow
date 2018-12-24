@@ -1,7 +1,7 @@
 package com.sparrow.security;
 
 import com.sparrow.model.Privilege;
-import com.sparrow.repository.UserRepository;
+import com.sparrow.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

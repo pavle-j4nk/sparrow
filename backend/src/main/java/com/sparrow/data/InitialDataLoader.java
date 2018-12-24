@@ -4,9 +4,9 @@ import com.sparrow.encoder.PasswordEncoder;
 import com.sparrow.model.Privilege;
 import com.sparrow.model.Role;
 import com.sparrow.model.user.User;
-import com.sparrow.repository.PrivilegeRepository;
-import com.sparrow.repository.RoleRepository;
-import com.sparrow.repository.UserRepository;
+import com.sparrow.repository.user.PrivilegeRepository;
+import com.sparrow.repository.user.RoleRepository;
+import com.sparrow.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -61,6 +61,12 @@ public class InitialDataLoader implements
         user.setRole(roleUser);
         user.setEnabled(true);
         userRepository.save(user);
+
+        User u1 = new User("pavle.gp@gmail.com", "Pol", "Divol", "add", "123", true, roleUser);
+        User u2 = new User("oee@disi.com", "Aki", "Maki", "kod sakija", "123", true, roleUser);
+        User u3 = new User("zoki@poki.moki", "Zoki", "Moj te Coki", "addzoki", "123", true, roleUser);
+
+        userRepository.saveAll(Arrays.asList(u1, u2, u3));
 
         alreadySetup = true;
     }
