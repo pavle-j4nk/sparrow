@@ -3,7 +3,7 @@ package com.sparrow.controller.user;
 import com.sparrow.model.user.User;
 import com.sparrow.response.UserProfileResponse;
 import com.sparrow.response.UserResponse;
-import com.sparrow.service.impl.user.UserService;
+import com.sparrow.service.UserService;
 import com.sparrow.service.impl.user.UserDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +32,13 @@ public class UserController {
     }
 
     @GetMapping("/search/{name}")
-    public ResponseEntity<List<UserResponse>> search(@PathVariable("name") String name) {
-        return ResponseEntity.ok(UserResponse.of(userService.searchByAnyName(name)));
+    public ResponseEntity<List<UserResponse>> search(Principal principal
+            , @PathVariable("name") String name
+            , @RequestParam(name = "friend", required = false) Boolean isFriend
+            , @RequestParam(name = "canAddFriend", required = false) Boolean canAddFriend) {
+
+        return ResponseEntity
+                .ok(UserResponse.of(userService.searchByAnyName(name, principal.getName(), isFriend, canAddFriend)));
     }
 
     @GetMapping("{id}")
