@@ -8,22 +8,22 @@ import java.util.List;
 
 public class FriendRequestResponse {
     private Long id;
-    private String sender;
-    private String reciever;
+    private UserResponse sender;
+    private String receiver;
     private String status;
 
     public FriendRequestResponse() {
     }
 
-    public FriendRequestResponse(Long id, String sender, String reciever, String status) {
+    public FriendRequestResponse(Long id, UserResponse sender, String receiver, String status) {
         this.id = id;
         this.sender = sender;
-        this.reciever = reciever;
+        this.receiver = receiver;
         this.status = status;
     }
 
     public FriendRequestResponse(FriendRequest request) {
-        this(request.getId(), request.getSender().getEmail(), request.getReceiver().getEmail()
+        this(request.getId(), UserResponse.of(request.getSender()), request.getReceiver().getEmail()
                 , request.getStatus().name());
     }
 
@@ -51,20 +51,20 @@ public class FriendRequestResponse {
         this.id = id;
     }
 
-    public String getSender() {
+    public UserResponse getSender() {
         return sender;
     }
 
-    public void setSender(String sender) {
+    public void setSender(UserResponse sender) {
         this.sender = sender;
     }
 
-    public String getReciever() {
-        return reciever;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public void setReciever(String reciever) {
-        this.reciever = reciever;
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 
     public String getStatus() {

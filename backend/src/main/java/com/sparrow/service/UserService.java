@@ -1,4 +1,4 @@
-package com.sparrow.service.impl.user;
+package com.sparrow.service;
 
 import com.sparrow.model.user.User;
 import com.sparrow.response.UserProfileResponse;
@@ -26,4 +26,5 @@ public interface UserService {
 
     List<User> searchByAnyName(String name);
 
+    List<User> searchByAnyName(String name, String invoker, Boolean isFriend, Boolean canAddFriend);
 }

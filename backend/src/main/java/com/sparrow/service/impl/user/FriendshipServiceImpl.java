@@ -5,6 +5,7 @@ import com.sparrow.model.user.Friendship;
 import com.sparrow.model.user.User;
 import com.sparrow.repository.user.FriendshipRepository;
 import com.sparrow.repository.user.FriendRequestRepository;
+import com.sparrow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,6 +96,12 @@ public class FriendshipServiceImpl implements FriendshipService {
             throw new FriendRequestAlreadyExistsException(String.format("From %s to %s", emailFrom, emailTo));
         }
 
+        if (!friendRequestRepository.findBySenderAndReceiverAndStatus(receiver, sender, FriendRequest.Status.PENDING)
+                .isEmpty()) {
+            throw new FriendRequestAlreadyExistsException(String.format("From %s to %s", emailTo, emailFrom));
+        }
+
+
         FriendRequest request = new FriendRequest(sender, receiver, FriendRequest.Status.PENDING);
 
         friendRequestRepository.save(request);
@@ -120,6 +127,12 @@ public class FriendshipServiceImpl implements FriendshipService {
     public List<FriendRequest> getRequestFor(String receiver) {
         return friendRequestRepository
                 .findAllByReceiverAndStatus(userService.findByEmail(receiver), FriendRequest.Status.PENDING);
+    }
+
+    @Override
+    public List<FriendRequest> getRequestOf(String sender) {
+        return friendRequestRepository
+                .findAllBySenderAndStatus(userService.findByEmail(sender), FriendRequest.Status.PENDING);
     }
 
 

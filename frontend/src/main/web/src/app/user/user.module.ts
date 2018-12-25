@@ -5,13 +5,17 @@ import {UserRoutingModule} from "./user.routing.module";
 import {UserService} from "./user.service";
 import {FormsModule} from "@angular/forms";
 import {UserComponent} from "./user.component";
-import {UserFriendListComponent} from "./friends/user.friends-list.component";
+import {UserFriendComponent} from "./friends/user.friends.component";
+import {AddFriendsComponent} from "./friends/add-friends.component";
+import {FriendshipRequestsComponent} from "./friends/friendship-requests.component";
 
 @NgModule({
   declarations: [
     UserComponent,
     UserProfileEditorComponent,
-    UserFriendListComponent
+    UserFriendComponent,
+    AddFriendsComponent,
+    FriendshipRequestsComponent
   ],
   imports: [
     CommonModule,

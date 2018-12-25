@@ -25,4 +25,6 @@ public interface FriendshipService {
 
     List<FriendRequest> getRequestFor(String receiver);
 
+    List<FriendRequest> getRequestOf(String sender);
+
 }
