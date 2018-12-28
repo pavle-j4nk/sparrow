@@ -5,6 +5,8 @@ import {AppComponent} from "./app.component";
 import {LoginModule} from "./login/login.module";
 import {HomeModule} from "./home/home.module";
 import {NavbarComponent} from "./navbar/navbar.component";
+import {HotelsComponent} from "./hotels/hotels.component";
+import {UserModule} from "./user/user.module";
 import {HotelsModule} from "./hotels/hotels.module";
 
 @NgModule({
@@ -17,9 +19,12 @@ import {HotelsModule} from "./hotels/hotels.module";
     AppRoutingModule,
     LoginModule,
     HomeModule,
+
+    UserModule,
     HotelsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

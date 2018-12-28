@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-header">
+    Your Friend Requests:
+  </div>
+
+  <div class="card-body">
+    <ul class="list-group">
+      <li *ngFor="let request of requests" class="list-group-item d-flex justify-content-between align-items-center row">
+        <span class="col-3">{{request.sender.firstName}} {{request.sender.lastName}}</span>
+
+        <div (click)="accept(request)" class="btn btn-success ml-auto">
+          <i class="fa fa-check"></i>
+          <span>Accept</span>
+        </div>
+        <div (click)="decline(request)" class="btn btn-danger ml-1">
+          <i class="fa fa-times"></i>
+          <span>Decline</span>
+        </div>
+
+      </li>
+    </ul>
+  </div>
+
+</div>

@@ -2,6 +2,11 @@ package com.sparrow.response;
 
 import com.sparrow.model.user.User;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 public class UserResponse {
     private Long id;
     private String email;
@@ -25,6 +30,23 @@ public class UserResponse {
     public UserResponse(User user) {
         this(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName()
                 , user.getEnabled(), user.getRole().getName());
+    }
+
+    public static UserResponse of(User user) {
+        return new UserResponse(user);
+    }
+
+    public static List<UserResponse> of(User... users) {
+        return of(Arrays.asList(users));
+    }
+
+    public static List<UserResponse> of(Collection<User> users) {
+        List<UserResponse> userResponses = new ArrayList<>();
+        for (User u : users) {
+            userResponses.add(UserResponse.of(u));
+        }
+
+        return userResponses;
     }
 
     public Long getId() {
@@ -74,4 +96,5 @@ public class UserResponse {
     public void setRole(String role) {
         this.role = role;
     }
+
 }

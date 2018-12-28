@@ -10,7 +10,7 @@ public class Friendship {
     private Long id;
 
     @OneToMany(fetch = FetchType.EAGER)
-    private Collection<User> users;
+    private Collection<User> friends;
 
     public Friendship() {
     }
@@ -24,10 +24,10 @@ public class Friendship {
     }
 
     public Collection<User> getFriends() {
-        return users;
+        return friends;
     }
 
     public void setFriends(Collection<User> friends) {
-        this.users = friends;
+        this.friends = friends;
     }
 }

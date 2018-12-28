@@ -1,0 +1,38 @@
+<div class="container mt-5">
+  <div class="card text-white bg-dark">
+
+    <div class="card-header p-0 m-0">
+      <nav class="navbar navbar-expand-sm navbar-dark bg-dark mt-2">
+        <div class="container">
+
+          <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" routerLink="/user/profile">Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/user/friends" routerLinkActive="active">Friends</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/user/addFriends" routerLinkActive="active">Add Friends</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/user/friendRequests" routerLinkActive="active">Friendship Requests</a>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </nav>
+
+
+    </div>
+
+    <div class="card-body p-0 m-0">
+      <div class="m-2">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
+  </div>
+</div>
