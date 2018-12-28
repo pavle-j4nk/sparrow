@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class Room {
 
     public static final String HOTEL_ID = "hotel_id";
+    public static final String BEDS_NUMBER = "beds_number";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,6 +18,7 @@ public class Room {
 
     private String name;
 
+    @Column(name = BEDS_NUMBER)
     private int bedsNo; //Number of beds in room.
 
     @ManyToOne
