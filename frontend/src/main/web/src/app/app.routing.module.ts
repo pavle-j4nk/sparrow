@@ -3,13 +3,14 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from "./login/login.component";
 import {HomeComponent} from "./home/home.component";
 import {HotelsComponent} from "./hotels/hotels.component";
-import {HotelDetailsComponent} from "./hotel_details/hotel.details.component";
+import {SystemAdminComponent} from "./system_admin/system.admin.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: '', component: HomeComponent},
 
-  {path: 'hotels', component: HotelsComponent}
+  {path: 'hotels', component: HotelsComponent},
+  {path: 'sa', component: SystemAdminComponent}
 ];
 
 @NgModule({

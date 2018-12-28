@@ -8,11 +8,13 @@ import {NavbarComponent} from "./navbar/navbar.component";
 import {HotelsComponent} from "./hotels/hotels.component";
 import {UserModule} from "./user/user.module";
 import {HotelsModule} from "./hotels/hotels.module";
+import {SystemAdminComponent} from "./system_admin/system.admin.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent
+    NavbarComponent,
+    SystemAdminComponent
   ],
   imports: [
     BrowserModule,

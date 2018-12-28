@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HotelServiceImpl implements HotelService {
@@ -21,13 +22,11 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public Hotel findByName(String name) {
-        List<Hotel> hotels = hotelRepository.findAll();
-
-        for (Hotel hotel : hotels) {
-            if (hotel.getName().equals(name)) {
-                return hotel;
-            }
+        Optional<Hotel> hotel = hotelRepository.findByName(name);
+        if (hotel.isPresent()) {
+            return hotel.get();
+        } else {
+            throw new HotelNotFoundException(name);
         }
-        return null;
-    }
+        }
 }
