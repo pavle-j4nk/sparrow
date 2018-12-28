@@ -7,11 +7,9 @@ import {Hotel} from "../hotel";
 )
 export class SystemAdminService {
 
-  private hotels : Hotel[];
-
   constructor(private http: HttpClient) {
-    this.getHotels().subscribe(hotels => this.hotels = hotels);
   }
+
   public getHotels(): Observable<Hotel[]> {
     return this.http.get<Hotel[]>("/hotels");
   }
