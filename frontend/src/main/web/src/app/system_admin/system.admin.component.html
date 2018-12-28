@@ -26,7 +26,11 @@
           <h4>Hotels</h4>
         </div>
         <div class="card-body">
-
+          <ul>
+            <li *ngFor = "let hotel of hotels">
+              {{hotel.name}}
+            </li>
+          </ul>
         </div>
         <div class="card-footer">
           <div class="btn btn-primary">New</div>

@@ -5,16 +5,14 @@ import {AppComponent} from "./app.component";
 import {LoginModule} from "./login/login.module";
 import {HomeModule} from "./home/home.module";
 import {NavbarComponent} from "./navbar/navbar.component";
-import {HotelsComponent} from "./hotels/hotels.component";
 import {UserModule} from "./user/user.module";
 import {HotelsModule} from "./hotels/hotels.module";
-import {SystemAdminComponent} from "./system_admin/system.admin.component";
+import {SystemAdminModule} from "./system_admin/system.admin.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    SystemAdminComponent
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +21,8 @@ import {SystemAdminComponent} from "./system_admin/system.admin.component";
     HomeModule,
 
     UserModule,
-    HotelsModule
+    HotelsModule,
+    SystemAdminModule
   ],
   providers: [],
   bootstrap: [AppComponent]
