@@ -3,8 +3,8 @@ import {Hotel} from "../hotel";
 import {SystemAdminService} from "./system.admin.service";
 
 @Component({
-  templateUrl : "./system.admin.component.html",
-  selector : 'system-admin'
+  selector : 'system-admin',
+  templateUrl : "./system.admin.component.html"
 })
 export class SystemAdminComponent {
   private hotels : Hotel[];
