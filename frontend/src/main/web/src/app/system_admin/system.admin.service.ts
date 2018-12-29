@@ -13,4 +13,7 @@ export class SystemAdminService {
   public getHotels(): Observable<Hotel[]> {
     return this.http.get<Hotel[]>("/api/public/hotels");
   }
+  public addHotel(hotel: Hotel): Observable<Hotel> {
+    return this.http.post<Hotel>("api/public/hotels",hotel);
+  }
 }

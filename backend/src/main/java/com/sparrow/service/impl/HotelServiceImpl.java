@@ -28,5 +28,9 @@ public class HotelServiceImpl implements HotelService {
         } else {
             throw new HotelNotFoundException(name);
         }
-        }
+    }
+
+    public Hotel save(Hotel hotel) {
+        return hotelRepository.save(hotel);
+    }
 }

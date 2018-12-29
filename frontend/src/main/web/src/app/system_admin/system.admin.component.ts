@@ -12,4 +12,13 @@ export class SystemAdminComponent {
   constructor(private systemAdminService: SystemAdminService) {
     systemAdminService.getHotels().subscribe(hotels => this.hotels = hotels);
   }
+
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.systemAdminService.addHotel({name} as Hotel)
+      .subscribe(hotel => {
+        this.hotels.push(hotel)
+      });
+  }
 }

@@ -26,14 +26,15 @@
           <h4>Hotels</h4>
         </div>
         <div class="card-body">
-          <ul>
-            <li *ngFor = "let hotel of hotels">
-              {{hotel.name}}
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-primary" *ngFor = "let hotel of hotels">
+              <span>{{hotel.name}}</span>
             </li>
           </ul>
         </div>
         <div class="card-footer">
-          <div class="btn btn-primary">New</div>
+          <input type="text" class="form-control" [(ngModel)]="hotelName">
+          <div class="btn btn-primary" (click) = "add(hotelName)">Create</div>
         </div>
       </div>
     </div>

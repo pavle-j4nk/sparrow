@@ -9,4 +9,6 @@ public interface HotelService {
     List<Hotel> findAll();
 
     Hotel findByName(String name);
+
+    Hotel save(Hotel hotel);
 }
