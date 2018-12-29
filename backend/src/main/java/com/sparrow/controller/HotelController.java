@@ -25,9 +25,9 @@ public class HotelController {
     }
 
     @PostMapping
-    public Hotel postHotel(@RequestBody Hotel hotel) {
+    public ResponseEntity<Hotel> postHotel(@RequestBody Hotel hotel) {
         System.err.println("In postHotel...");
-        return hotelService.save(hotel);
+        return ResponseEntity.ok(hotelService.save(hotel));
     }
 
 

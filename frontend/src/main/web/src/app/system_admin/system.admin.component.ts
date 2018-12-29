@@ -8,6 +8,7 @@ import {SystemAdminService} from "./system.admin.service";
 })
 export class SystemAdminComponent {
   private hotels : Hotel[];
+  hotelName: string;
 
   constructor(private systemAdminService: SystemAdminService) {
     systemAdminService.getHotels().subscribe(hotels => this.hotels = hotels);
