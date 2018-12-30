@@ -5,7 +5,10 @@ import com.sparrow.model.user.Friendship;
 import com.sparrow.model.user.User;
 import com.sparrow.repository.user.FriendshipRepository;
 import com.sparrow.repository.user.FriendRequestRepository;
-import com.sparrow.service.UserService;
+import com.sparrow.service.impl.user.exception.FriendRequestAlreadyExistsException;
+import com.sparrow.service.impl.user.exception.FriendRequestDoesNotExistException;
+import com.sparrow.service.impl.user.exception.FriendshipAlreadyExistsException;
+import com.sparrow.service.impl.user.exception.FriendshipDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +47,10 @@ public class FriendshipServiceImpl implements FriendshipService {
     public void createFriendship(String email1, String email2) {
         User user1 = userService.findByEmail(email1);
         User user2 = userService.findByEmail(email2);
+
+        if (email1.equals(email2) || getFriendsOf(email1).contains(user2)) {
+            throw new FriendshipAlreadyExistsException(String.format("Between %s and %s", email1, email2));
+        }
 
         Friendship friendship = new Friendship();
         friendship.setFriends(Arrays.asList(user1, user2));
@@ -91,6 +98,10 @@ public class FriendshipServiceImpl implements FriendshipService {
         User sender = userService.findByEmail(emailFrom);
         User receiver = userService.findByEmail(emailTo);
 
+        if (emailFrom.equals(emailTo) || getFriendsOf(emailTo).contains(sender)) {
+            throw new FriendshipAlreadyExistsException(String.format("Between %s and %s", emailFrom, emailTo));
+        }
+
         if (!friendRequestRepository.findBySenderAndReceiverAndStatus(sender, receiver, FriendRequest.Status.PENDING)
                 .isEmpty()) {
             throw new FriendRequestAlreadyExistsException(String.format("From %s to %s", emailFrom, emailTo));
@@ -100,7 +111,6 @@ public class FriendshipServiceImpl implements FriendshipService {
                 .isEmpty()) {
             throw new FriendRequestAlreadyExistsException(String.format("From %s to %s", emailTo, emailFrom));
         }
-
 
         FriendRequest request = new FriendRequest(sender, receiver, FriendRequest.Status.PENDING);
 
