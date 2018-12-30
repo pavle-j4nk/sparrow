@@ -10,6 +10,7 @@ import {FriendshipRequest} from "./friendshipRequest";
 export class UserService {
   private APILocation = "/api/user/";
   private getMeLocation = this.APILocation + "me";
+  private getProfileLocation = this.APILocation + "profile/";
   private friendLocation = this.APILocation + "friends/";
   private friendRequestLocation = this.friendLocation + "request/";
   private getAllRequests = this.friendRequestLocation + "all"
@@ -26,12 +27,15 @@ export class UserService {
     return this.http.get<User>(this.getMeLocation);
   }
 
-  public me(): User {
-    return this.user;
+  public getProfile(id: string): Observable<User> {
+    if(id == null)
+      id = "";
+
+    return this.http.get<User>(this.getProfileLocation + id);
   }
 
-  public getUser(id: string): Observable<User> {
-    return this.http.get<User>(this.APILocation + id);
+  public me(): User {
+    return this.user;
   }
 
   public updateProfile(user: User): Observable<Object> {

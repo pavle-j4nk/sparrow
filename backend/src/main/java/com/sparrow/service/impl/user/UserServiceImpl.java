@@ -5,7 +5,7 @@ import com.sparrow.model.user.User;
 import com.sparrow.repository.user.UserRepository;
 import com.sparrow.response.UserProfileResponse;
 import com.sparrow.response.UserResponse;
-import com.sparrow.service.UserService;
+import com.sparrow.service.impl.user.exception.UserDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,7 +98,19 @@ public class UserServiceImpl implements UserService {
             }
         }
 
+        users.remove(findByEmail(invoker));
+
         return users;
+    }
+
+    @Override
+    public UserProfileResponse me(String email) {
+        User me = findByEmail(email);
+        UserProfileResponse userProfileResponse = new UserProfileResponse();
+        userProfileResponse.setId(me.getId());
+        userProfileResponse.setEmail(me.getEmail());
+        userProfileResponse.setFirstName(me.getFirstName());
+        return userProfileResponse;
     }
 
 

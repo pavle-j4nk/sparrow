@@ -3,6 +3,7 @@ package com.sparrow.controller.user;
 import com.sparrow.response.FriendRequestResponse;
 import com.sparrow.response.UserResponse;
 import com.sparrow.service.impl.user.*;
+import com.sparrow.service.impl.user.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +55,8 @@ public class FriendshipController {
     }
 
     @ExceptionHandler({UserDoesNotExistException.class, FriendshipDoesNotExistException.class
-            , FriendRequestDoesNotExistException.class, FriendRequestAlreadyExistsException.class})
+            , FriendRequestDoesNotExistException.class, FriendRequestAlreadyExistsException.class
+            , FriendshipAlreadyExistsException.class})
     public ResponseEntity<String> onException(RuntimeException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(String.format( "%s: %s", e.getClass().getSimpleName(), e.getMessage()));

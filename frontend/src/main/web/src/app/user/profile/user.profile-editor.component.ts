@@ -20,16 +20,9 @@ export class UserProfileEditorComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private userService: UserService) {
     this.id = route.snapshot.paramMap.get('id');
+    this.editable = true;
 
-    if (this.id == null) {
-      this.id = "me";
-    }
-
-    if (this.id === 'me') {
-      this.editable = true;
-    }
-
-    userService.getUser(this.id).subscribe(u => this.user = User.clone(u));
+    userService.getProfile(this.id).subscribe(u => this.user = User.clone(u));
   }
 
   ngOnInit(): void {
