@@ -22,15 +22,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     AuthenticationFailureHandlerImpl authenticationFailureHandler;
 
-    @Qualifier("notFoundEntryPoint")
-    @Autowired
-    AuthenticationEntryPoint notFoundEntryPoint;
-
     @Qualifier("unauthorizedEntryPoint")
     @Autowired
     AuthenticationEntryPoint unauthorizedEntryPoint;
-
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -46,10 +40,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/**").authenticated()
                 .and()
                 .exceptionHandling()
-                .defaultAuthenticationEntryPointFor(
-                        notFoundEntryPoint,
-                        new AntPathRequestMatcher("/api/user/me")
-                )
                 .defaultAuthenticationEntryPointFor(
                         unauthorizedEntryPoint,
                         new AntPathRequestMatcher("/api/**")

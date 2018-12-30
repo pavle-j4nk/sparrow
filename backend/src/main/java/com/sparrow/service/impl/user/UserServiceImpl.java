@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @Transactional
@@ -27,7 +26,6 @@ public class UserServiceImpl implements UserService {
     @Override
 
     public User findById(Long id) {
-        AtomicReference<User> user = null;
         return userRepository.findById(id).orElseGet(() -> {
             throw new UserDoesNotExistException(id.toString());
         });
