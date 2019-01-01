@@ -9,15 +9,14 @@ import {SystemAdminService} from "./system.admin.service";
 export class SystemAdminComponent {
   private hotels : Hotel[];
   hotelName: string;
+  newHotel : Hotel;
 
   constructor(private systemAdminService: SystemAdminService) {
     systemAdminService.getHotels().subscribe(hotels => this.hotels = hotels);
   }
 
-  add(name: string): void {
-    name = name.trim();
-    if (!name) { return; }
-    this.systemAdminService.addHotel({name} as Hotel)
+  add(newOne : Hotel): void {
+    this.systemAdminService.addHotel(newOne)
       .subscribe(hotel => {
         this.hotels.push(hotel)
       });

@@ -33,8 +33,11 @@
           </ul>
         </div>
         <div class="card-footer">
-          <input type="text" class="form-control" [(ngModel)]="hotelName">
-          <div class="btn btn-primary" (click) = "add(hotelName)">Create</div>
+          <form>
+            <input type="text" class="form-control" [(ngModel)]="newHotel.name">
+            <input type="text" class="form-control" [(ngModel)]="newHotel.description">
+            <div class="btn btn-primary" (click) = "add(newHotel)">Create</div>
+          </form>
         </div>
       </div>
     </div>
