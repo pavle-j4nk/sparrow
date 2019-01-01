@@ -7,9 +7,8 @@ import {SystemAdminService} from "./system.admin.service";
   templateUrl : "./system.admin.component.html"
 })
 export class SystemAdminComponent {
-  private hotels : Hotel[];
-  hotelName: string;
-  newHotel : Hotel;
+  hotels : Hotel[];
+  newHotel : Hotel = new Hotel();
 
   constructor(private systemAdminService: SystemAdminService) {
     systemAdminService.getHotels().subscribe(hotels => this.hotels = hotels);
