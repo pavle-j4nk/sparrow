@@ -1,16 +1,17 @@
 import {Component, OnInit} from "@angular/core";
-import {HOTELS} from "../mock-hotels";
+import {Hotel} from "../hotel";
+import {HotelsService} from "./hotels.service";
 
 @Component({
   selector : 'hotels',
   templateUrl : './hotels.component.html'
 })
-export class HotelsComponent implements OnInit {
+export class HotelsComponent{
 
-  hotels = HOTELS;
+  hotels : Hotel[];
 
-  constructor() {}
-
-  ngOnInit(): void {
+  constructor(private hotelsService : HotelsService) {
+    hotelsService.getHotels().subscribe(hotels => this.hotels = hotels);
   }
+
 }
