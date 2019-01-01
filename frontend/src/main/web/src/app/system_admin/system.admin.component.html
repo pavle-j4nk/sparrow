@@ -32,10 +32,14 @@
             </li>
           </ul>
         </div>
-        <div class="card-footer">
-          <input type="text" class="form-control" [(ngModel)]="newHotel.name">
-          <input type="text" class="form-control" [(ngModel)]="newHotel.description">
-          <div class="btn btn-primary" (click)="add(newHotel)">Create</div>
+        <div class="card-footer p-2">
+          <div class="form p-2">
+            <span>Name</span>
+            <input type="text" class="form-control mt-2 mb-2" [(ngModel)]="newHotel.name" #nameInput placeholder="name...">
+            <span>Description</span>
+            <input type="text" class="form-control mt-2 mb-2" [(ngModel)]="newHotel.description" #descriptionInput placeholder="description...">
+            <div class="btn btn-primary " (click)="add(newHotel); nameInput.value=''; descriptionInput.value = ''">Create</div>
+          </div>
         </div>
       </div>
     </div>
