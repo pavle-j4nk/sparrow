@@ -4,6 +4,7 @@ import {HotelsComponent} from "./hotels.component";
 import {HotelDetailsComponent} from "../hotel_details/hotel.details.component";
 import {CommonModule} from "@angular/common";
 import {HotelsService} from "./hotels.service";
+import {HotelReservationComponent} from "../reservation_hotel/reservation.hotel.component";
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {HotelsService} from "./hotels.service";
   ],
   declarations: [
     HotelsComponent,
-    HotelDetailsComponent
+    HotelDetailsComponent,
+    HotelReservationComponent
   ],
   providers: [
     HotelsService
