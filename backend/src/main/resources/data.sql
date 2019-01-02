@@ -19,6 +19,30 @@ insert into room (id, name, beds_number, hotel_id) values (10, '44', 3 , 4);
 insert into room (id, name, beds_number, hotel_id) values (11, '55', 5 , 3);
 insert into room (id, name, beds_number, hotel_id) values (12, '16', 5 , 2);
 
+-- Extra Services
+insert into hotel_extra_service (name) values ('TRANSPORT_FROM_AIRPORT');
+insert into hotel_extra_service (name) values ('TRANSPORT_TO_AIRPORT');
+insert into hotel_extra_service (name) values ('PARKING');
+insert into hotel_extra_service (name) values ('POOL');
+insert into hotel_extra_service (name) values ('RESTAURANT');
+insert into hotel_extra_service (name) values ('ROOM_SERVICE');
+insert into hotel_extra_service (name) values ('WELLNESS');
+insert into hotel_extra_service (name) values ('SPA');
+insert into hotel_extra_service (name) values ('WIRELESS');
+insert into hotel_extra_service (name) values ('AIR_CONDITIONING');
+
+-- Hotel services
+insert into hotel_services (hotel_id, services_name) values (1,'TRANSPORT_FROM_AIRPORT');
+insert into hotel_services (hotel_id, services_name) values (1,'TRANSPORT_TO_AIRPORT');
+insert into hotel_services (hotel_id, services_name) values (1,'RESTAURANT');
+insert into hotel_services (hotel_id, services_name) values (1,'WIRELESS');
+insert into hotel_services (hotel_id, services_name) values (1,'AIR_CONDITIONING');
+insert into hotel_services (hotel_id, services_name) values (2,'WELLNESS');
+insert into hotel_services (hotel_id, services_name) values (2,'SPA');
+insert into hotel_services (hotel_id, services_name) values (3,'RESTAURANT');
+insert into hotel_services (hotel_id, services_name) values (4,'WIRELESS');
+insert into hotel_services (hotel_id, services_name) values (4,'AIR_CONDITIONING');
+
 
 
 

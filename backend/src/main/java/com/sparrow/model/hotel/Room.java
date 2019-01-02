@@ -19,7 +19,7 @@ public class Room {
     private String name;
 
     @Column(name = BEDS_NUMBER)
-    private int bedsNo; //Number of beds in room.
+    private int bedsNo;
 
     @ManyToOne
     @JoinColumn(name= HOTEL_ID, nullable = false)

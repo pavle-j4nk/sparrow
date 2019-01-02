@@ -25,6 +25,12 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel")
     private Set<Room> rooms;
 
+    @ManyToMany(
+            fetch = FetchType.LAZY
+    )
+    private Set<HotelExtraService> services;
+
+
     public Hotel() {
     }
 
@@ -55,5 +61,21 @@ public class Hotel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(Set<Room> rooms) {
+        this.rooms = rooms;
+    }
+
+    public Set<HotelExtraService> getServices() {
+        return services;
+    }
+
+    public void setServices(Set<HotelExtraService> services) {
+        this.services = services;
     }
 }
