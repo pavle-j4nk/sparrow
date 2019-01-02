@@ -11,27 +11,15 @@
               <h4 class="card-header font-weight-bold">{{hotel.name}}</h4>
               <div class="card-body">
                 <div class="row m-1">
-                  <img src="{{hotel.imagePath}}" class="img img-thumbnail w-100 h-100">
                 </div>
                 <div class="row">
                   <div class="col-md-12">
                     <p>{{hotel.description}}</p><br>
-                    <span><i class="fa fa-star mr-1"></i>{{hotel.rate}} -
-                          <span class="badge badge-primary" *ngIf="hotel.rate > 9 && hotel.rate <= 10">excellent</span>
-                          <span class="badge badge-success" *ngIf="hotel.rate > 7 && hotel.rate <= 9">very good</span>
-                          <span class="badge badge-warning" *ngIf="hotel.rate > 5 && hotel.rate <= 7">good</span>
-                          <span class="badge badge-dark" *ngIf="hotel.rate < 5">bad</span>
-                        </span><br>
-                    <div *ngIf="hotel.freeRooms">
-                      <span style="color: forestgreen">There are free rooms</span><br>
-                    </div>
-                    <div *ngIf="!hotel.freeRooms"><span style="color: red">Full</span></div>
                   </div>
                 </div>
               </div>
               <div class="card-footer">
                 <button class="btn btn-success mr-2" routerLink="details/{{hotel.id}}">Details</button>
-                <button *ngIf="hotel.freeRooms" class="btn btn-primary">Book</button>
               </div>
             </div>
           </div>

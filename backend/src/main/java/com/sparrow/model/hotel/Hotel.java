@@ -20,7 +20,7 @@ public class Hotel {
 
     private String description;
 
-//    private PriceList priceList;
+//  private PriceList priceList;
 
     @OneToMany(mappedBy = "hotel")
     private Set<Room> rooms;
