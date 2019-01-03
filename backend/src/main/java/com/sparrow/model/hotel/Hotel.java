@@ -1,5 +1,7 @@
 package com.sparrow.model.hotel;
 
+import com.sparrow.model.Address;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,7 +13,8 @@ public class Hotel {
 
     private String name;
 
-//  private Address address; TODO: Create special class Address
+    @OneToOne
+    private Address address;
 
     private String description;
 
@@ -62,7 +65,15 @@ public class Hotel {
         this.rooms = rooms;
     }
 
-//    public Set<ExtraService> getServices() {
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    //    public Set<ExtraService> getServices() {
 //        return services;
 //    }
 //

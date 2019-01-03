@@ -1,9 +1,10 @@
 package com.sparrow.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.sparrow.model.hotel.Hotel;
 
+import javax.persistence.*;
+
+@Entity
 public class Address {
 
     @Id
