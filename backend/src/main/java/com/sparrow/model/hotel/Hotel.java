@@ -1,11 +1,6 @@
 package com.sparrow.model.hotel;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,15 +15,11 @@ public class Hotel {
 
     private String description;
 
-//  private PriceList priceList;
+    @OneToMany
+    private Set<PriceList> priceLists;
 
     @OneToMany(mappedBy = "hotel")
     private Set<Room> rooms;
-
-    @ManyToMany(
-            fetch = FetchType.LAZY
-    )
-    private Set<HotelExtraService> services;
 
 
     public Hotel() {
@@ -71,11 +62,11 @@ public class Hotel {
         this.rooms = rooms;
     }
 
-    public Set<HotelExtraService> getServices() {
-        return services;
-    }
-
-    public void setServices(Set<HotelExtraService> services) {
-        this.services = services;
-    }
+//    public Set<ExtraService> getServices() {
+//        return services;
+//    }
+//
+//    public void setServices(Set<ExtraService> services) {
+//        this.services = services;
+//    }
 }

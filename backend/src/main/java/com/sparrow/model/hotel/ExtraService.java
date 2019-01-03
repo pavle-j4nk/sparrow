@@ -1,15 +1,17 @@
 package com.sparrow.model.hotel;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
-public class HotelExtraService {
+public class ExtraService {
 
     @Id
     private String name;
 
-    public HotelExtraService() {
+    public ExtraService() {
 
     }
 
