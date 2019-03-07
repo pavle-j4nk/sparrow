@@ -30,7 +30,23 @@ public class HotelServiceImpl implements HotelService {
         }
     }
 
+    public Hotel findById(Long id) {
+        Optional<Hotel> hotel = hotelRepository.findById(id);
+        if (hotel.isPresent()) {
+            return hotel.get();
+        }
+        else {
+            throw new HotelNotFoundException(id);
+        }
+    }
+
     public Hotel save(Hotel hotel) {
         return hotelRepository.save(hotel);
     }
+
+    @Override
+    public void delete(Hotel hotel) {
+        hotelRepository.delete(hotel);
+    }
+
 }

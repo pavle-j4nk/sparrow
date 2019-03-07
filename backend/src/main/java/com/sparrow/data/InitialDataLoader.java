@@ -52,6 +52,8 @@ public class InitialDataLoader implements
         createRoleIfNotFound("ROLE_USER", Arrays.asList(readPrivilege));
 
         Role roleUser = roleRepository.findByName("ROLE_USER");
+        Role adminRole = roleRepository.findByName("ROLE_ADMIN");
+
         User user = new User();
         user.setFirstName("Test");
         user.setLastName("Test");
@@ -65,8 +67,9 @@ public class InitialDataLoader implements
         User u1 = new User("pavle.gp@gmail.com", "Pol", "Divol", "add", "123", true, roleUser);
         User u2 = new User("oee@disi.com", "Aki", "Maki", "kod sakija", "123", true, roleUser);
         User u3 = new User("zoki@poki.moki", "Zoki", "Moj te Coki", "addzoki", "123", true, roleUser);
+        User admin = new User("admin@admin.com","Bog","Boziji","Nebeska 12", "dmina", true, adminRole);
 
-        userRepository.saveAll(Arrays.asList(u1, u2, u3));
+        userRepository.saveAll(Arrays.asList(u1, u2, u3, admin));
 
         alreadySetup = true;
     }

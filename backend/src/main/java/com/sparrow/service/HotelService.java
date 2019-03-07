@@ -10,5 +10,10 @@ public interface HotelService {
 
     Hotel findByName(String name);
 
+    Hotel findById(Long id);
+
     Hotel save(Hotel hotel);
+
+    void delete(Hotel hotel);
+
 }
