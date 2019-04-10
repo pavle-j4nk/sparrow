@@ -1,6 +1,7 @@
 package com.sparrow.model.hotel;
 
 import com.sparrow.model.Address;
+import com.sparrow.model.user.User;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -24,13 +25,16 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel")
     private Set<Room> rooms;
 
+    @ManyToOne
+    private User admin;
 
     public Hotel() {
     }
 
-    public Hotel(String name, String description) {
+    public Hotel(String name, String description, User admin) {
         this.name = name;
         this.description = description;
+        this.admin = admin;
     }
 
     public Long getId() {
@@ -71,6 +75,14 @@ public class Hotel {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public User getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(User admin) {
+        this.admin = admin;
     }
 
     //    public Set<ExtraService> getServices() {

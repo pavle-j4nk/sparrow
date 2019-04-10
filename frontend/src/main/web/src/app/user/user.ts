@@ -4,6 +4,7 @@ export class User {
 
 
   constructor(public id: number = -1
+    , public username: string = ""
     , public email: string = ""
     , public firstName: string = ""
     , public lastName: string = ""
@@ -13,6 +14,7 @@ export class User {
 
   public set(user: User): void {
     this.id = user.id;
+    this.username = user.username;
     this.email = user.email;
     this.firstName = user.firstName;
     this.lastName = user.lastName;
@@ -21,7 +23,7 @@ export class User {
   }
 
   public static clone(user: User): User {
-    return new User(user.id, user.email, user.firstName, user.lastName, user.address, user.role);
+    return new User(user.id, user.username, user.email, user.firstName, user.lastName, user.address, user.role);
   }
 
   public static empty() : User {

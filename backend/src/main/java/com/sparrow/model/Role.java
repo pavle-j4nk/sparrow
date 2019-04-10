@@ -1,5 +1,6 @@
 package com.sparrow.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sparrow.model.user.User;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "role")
+    @JsonIgnore
     private Collection<User> users;
 
     @ManyToMany

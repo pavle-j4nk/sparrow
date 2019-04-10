@@ -25,7 +25,11 @@ public class UserServiceImpl implements UserService {
     FriendshipService friendshipService;
 
     @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
 
+    @Override
     public User findById(Long id) {
         AtomicReference<User> user = null;
         return userRepository.findById(id).orElseGet(() -> {

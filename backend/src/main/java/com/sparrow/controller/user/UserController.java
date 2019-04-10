@@ -61,4 +61,8 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<User>> getUsers() {
+        return ResponseEntity.ok(userService.findAll());
+    }
 }

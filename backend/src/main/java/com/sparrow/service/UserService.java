@@ -7,6 +7,7 @@ import com.sparrow.response.UserResponse;
 import java.util.List;
 
 public interface UserService {
+    List<User> findAll();
 
     User findById(Long id);
 

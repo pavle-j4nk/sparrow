@@ -3,7 +3,9 @@ package com.sparrow.data;
 import com.sparrow.encoder.PasswordEncoder;
 import com.sparrow.model.Privilege;
 import com.sparrow.model.Role;
+import com.sparrow.model.hotel.Hotel;
 import com.sparrow.model.user.User;
+import com.sparrow.repository.hotel.HotelRepository;
 import com.sparrow.repository.user.PrivilegeRepository;
 import com.sparrow.repository.user.RoleRepository;
 import com.sparrow.repository.user.UserRepository;
@@ -26,6 +28,9 @@ public class InitialDataLoader implements
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private HotelRepository hotelRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -64,12 +69,18 @@ public class InitialDataLoader implements
         user.setEnabled(true);
         userRepository.save(user);
 
-        User u1 = new User("pavle.gp@gmail.com", "Pol", "Divol", "add", "123", true, roleUser);
-        User u2 = new User("oee@disi.com", "Aki", "Maki", "kod sakija", "123", true, roleUser);
-        User u3 = new User("zoki@poki.moki", "Zoki", "Moj te Coki", "addzoki", "123", true, roleUser);
-        User admin = new User("admin@admin.com","Bog","Boziji","Nebeska 12", "dmina", true, adminRole);
+        User u1 = new User("pavle.jankovic","pavle.gp@gmail.com", "Pavle", "Jankovic", "Babanovacka bb", "123", true, roleUser);
+        User u2 = new User("marko.ristic","marko.ristic@gmail.com", "Marko", "Ristic", "Topolska 18", "123", true, roleUser);
+        User u3 = new User("aleksandar.vujasinovic","aleksandar.vujasinov@gmail.com", "Aleksandar", "Vujasinovic", "Laze Stajica 16", "123", true, roleUser);
+        User admin = new User("sysadmin","admin@admin.com","Bog","Boziji","Nebeska 12", "admin", true, adminRole);
+
+        Hotel h1 = new Hotel("Plaza","The Plaza Hotel is a landmarked 20-story luxury hotel and condominium apartment building in the Midtown Manhattan neighborhood of Manhattan, New York City. It opened in 1907 and is now owned by Katara Hospitality.", u2);
+        Hotel h2 = new Hotel("Holiday Inn", "Holiday Inn is a British-owned American brand of hotels, and a subsidiary of InterContinental Hotels Group. Founded as a U.S. motel chain, it has grown to be one of the world's largest hotel chains.", u3);
+        Hotel h3 = new Hotel("Burj Al Arab", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", u1);
+
 
         userRepository.saveAll(Arrays.asList(u1, u2, u3, admin));
+        hotelRepository.saveAll(Arrays.asList(h1, h2, h3));
 
         alreadySetup = true;
     }

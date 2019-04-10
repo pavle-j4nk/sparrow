@@ -1,5 +1,6 @@
 package com.sparrow.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sparrow.model.Role;
 import org.hibernate.validator.constraints.Length;
 
@@ -13,6 +14,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(unique = true)
+    private String username;
 
     @NotNull
     @Email
@@ -44,12 +48,14 @@ public class User {
     private Collection<Friendship> friendships;
 
     @ManyToOne
+    @JsonIgnore
     private Role role;
 
     public User() {
     }
 
-    public User(String email, String firstName, String lastName, String address, String password, Boolean enabled, Role role) {
+    public User(String username, String email, String firstName, String lastName, String address, String password, Boolean enabled, Role role) {
+        this.username = username;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -65,6 +71,14 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {

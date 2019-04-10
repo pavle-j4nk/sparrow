@@ -1,8 +1,10 @@
 package com.sparrow.service.impl;
 
+import com.sparrow.dto.NewHotelDto;
 import com.sparrow.model.hotel.Hotel;
 import com.sparrow.repository.hotel.HotelRepository;
 import com.sparrow.service.HotelService;
+import com.sparrow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ public class HotelServiceImpl implements HotelService {
 
     @Autowired
     private HotelRepository hotelRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public List<Hotel> findAll() {
@@ -47,6 +52,15 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public void delete(Hotel hotel) {
         hotelRepository.delete(hotel);
+    }
+
+    @Override
+    public Hotel create(NewHotelDto newHotelDto) {
+        Hotel hotel = new Hotel();
+        hotel.setName(newHotelDto.getName());
+        hotel.setDescription(newHotelDto.getDescription());
+        hotel.setAdmin(userService.findByEmail(newHotelDto.getUserEmail()));
+        return hotel;
     }
 
 }
