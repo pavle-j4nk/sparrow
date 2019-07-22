@@ -40,19 +40,19 @@ public class HotelController {
     @GetMapping(value = "/details/**")
     public String getHotelDetails() {
         logger.info("Getting hotel details...");
-        return "/index.html";
+        return null;
     }
 
     @GetMapping(value = "/edit/{id}")
     public String getHotelEdit(@PathVariable Long id) {
         logger.info("Passed id :" + id);
-        return "/index.html";
+        return null;
     }
 
     @GetMapping(value = "/delete/{id}")
     public String getHotelDelete(@PathVariable Long id) {
         Hotel hotel = hotelService.findById(id);
         hotelService.delete(hotel);
-        return "/sa";
+        return null;
     }
 }
