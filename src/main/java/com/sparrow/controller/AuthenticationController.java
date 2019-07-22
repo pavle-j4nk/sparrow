@@ -1,7 +1,7 @@
 package com.sparrow.controller;
 
-import com.sparrow.dto.auth.JwtAuthenticationRequest;
-import com.sparrow.service.auth.AuthenticationService;
+import com.sparrow.dto.JwtAuthenticationRequest;
+import com.sparrow.service.AuthenticationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

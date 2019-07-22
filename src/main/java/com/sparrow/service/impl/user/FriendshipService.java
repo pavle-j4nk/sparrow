@@ -1,7 +1,7 @@
 package com.sparrow.service.impl.user;
 
-import com.sparrow.model.user.FriendRequest;
-import com.sparrow.model.user.User;
+import com.sparrow.model.FriendRequest;
+import com.sparrow.model.User;
 
 import java.util.List;
 

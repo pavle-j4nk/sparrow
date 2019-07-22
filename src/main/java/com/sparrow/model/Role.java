@@ -1,7 +1,6 @@
 package com.sparrow.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sparrow.model.user.User;
 
 import javax.persistence.*;
 import java.util.Collection;

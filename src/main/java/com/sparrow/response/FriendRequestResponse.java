@@ -1,6 +1,6 @@
 package com.sparrow.response;
 
-import com.sparrow.model.user.FriendRequest;
+import com.sparrow.model.FriendRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;

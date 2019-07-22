@@ -1,6 +1,6 @@
 package com.sparrow.controller;
 
-import com.sparrow.model.hotel.Hotel;
+import com.sparrow.model.Hotel;
 import com.sparrow.service.HotelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller

@@ -1,10 +1,10 @@
 package com.sparrow.service.impl;
 
 import com.sparrow.dto.NewHotelDto;
-import com.sparrow.model.hotel.Hotel;
-import com.sparrow.repository.hotel.HotelRepository;
+import com.sparrow.model.Hotel;
+import com.sparrow.repository.HotelRepository;
 import com.sparrow.service.HotelService;
-import com.sparrow.service.user.UserService;
+import com.sparrow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +32,17 @@ public class HotelServiceImpl implements HotelService {
             return hotel.get();
         } else {
             throw new HotelNotFoundException(name);
+        }
+    }
+
+    @Override
+    public Hotel findByAddress(String address) {
+        Optional<Hotel> hotel = hotelRepository.findByAddress(address);
+        if (hotel.isPresent()) {
+            return hotel.get();
+        }
+        else {
+            throw new HotelNotFoundException();
         }
     }
 

@@ -1,11 +1,11 @@
 package com.sparrow.service.impl.user;
 
-import com.sparrow.model.user.FriendRequest;
-import com.sparrow.model.user.Friendship;
-import com.sparrow.model.user.User;
-import com.sparrow.repository.user.FriendshipRepository;
-import com.sparrow.repository.user.FriendRequestRepository;
-import com.sparrow.service.user.UserService;
+import com.sparrow.model.FriendRequest;
+import com.sparrow.model.Friendship;
+import com.sparrow.model.User;
+import com.sparrow.repository.FriendshipRepository;
+import com.sparrow.repository.FriendRequestRepository;
+import com.sparrow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

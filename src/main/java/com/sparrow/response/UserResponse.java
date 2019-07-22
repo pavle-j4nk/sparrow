@@ -1,6 +1,6 @@
 package com.sparrow.response;
 
-import com.sparrow.model.user.User;
+import com.sparrow.model.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;

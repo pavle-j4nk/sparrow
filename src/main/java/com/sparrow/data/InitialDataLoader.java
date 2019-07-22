@@ -2,12 +2,12 @@ package com.sparrow.data;
 
 import com.sparrow.model.Privilege;
 import com.sparrow.model.Role;
-import com.sparrow.model.hotel.Hotel;
-import com.sparrow.model.user.User;
-import com.sparrow.repository.hotel.HotelRepository;
-import com.sparrow.repository.user.PrivilegeRepository;
-import com.sparrow.repository.user.RoleRepository;
-import com.sparrow.repository.user.UserRepository;
+import com.sparrow.model.Hotel;
+import com.sparrow.model.User;
+import com.sparrow.repository.HotelRepository;
+import com.sparrow.repository.PrivilegeRepository;
+import com.sparrow.repository.RoleRepository;
+import com.sparrow.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;

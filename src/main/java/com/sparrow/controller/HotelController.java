@@ -1,9 +1,9 @@
 package com.sparrow.controller;
 
 import com.sparrow.dto.NewHotelDto;
-import com.sparrow.model.hotel.Hotel;
+import com.sparrow.model.Hotel;
 import com.sparrow.service.HotelService;
-import com.sparrow.service.user.UserService;
+import com.sparrow.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
