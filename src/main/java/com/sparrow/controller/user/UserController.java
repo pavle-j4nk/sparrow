@@ -3,8 +3,8 @@ package com.sparrow.controller.user;
 import com.sparrow.model.user.User;
 import com.sparrow.response.UserProfileResponse;
 import com.sparrow.response.UserResponse;
-import com.sparrow.service.UserService;
 import com.sparrow.service.impl.user.UserDoesNotExistException;
+import com.sparrow.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,14 +22,16 @@ public class UserController {
 
     @GetMapping("/me")
     public ResponseEntity<UserProfileResponse> getUser(Principal principal) {
-        return ResponseEntity.ok(new UserProfileResponse(userService.findByEmail(principal.getName())));
+        return ResponseEntity.ok(new UserProfileResponse(userService.findByUsername(principal.getName())));
     }
 
+/*
     @PostMapping(path = "/me")
     public ResponseEntity updateProfile(Principal principal, @RequestBody @Valid User info) {
         userService.updateUserInfo(principal.getName(), info);
         return ResponseEntity.ok().build();
     }
+*/
 
     @GetMapping("/search/{name}")
     public ResponseEntity<List<UserResponse>> search(Principal principal
@@ -43,7 +45,7 @@ public class UserController {
 
     @GetMapping("{id}")
     public ResponseEntity<UserResponse> getUser(@PathVariable("id") String id) {
-        return ResponseEntity.ok(UserResponse.of(userService.findByEmail(id)));
+        return ResponseEntity.ok(UserResponse.of(userService.findByUsername(id)));
     }
 
     @GetMapping("/profile")

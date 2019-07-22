@@ -5,7 +5,7 @@ import com.sparrow.model.user.Friendship;
 import com.sparrow.model.user.User;
 import com.sparrow.repository.user.FriendshipRepository;
 import com.sparrow.repository.user.FriendRequestRepository;
-import com.sparrow.service.UserService;
+import com.sparrow.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     public List<User> getFriendsOf(String email) {
-        User user = userService.findByEmail(email);
+        User user = userService.findByUsername(email);
 
         List<Friendship> friendships = friendshipRepository.findAllByFriendsContaining(user);
 
@@ -42,8 +42,8 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     public void createFriendship(String email1, String email2) {
-        User user1 = userService.findByEmail(email1);
-        User user2 = userService.findByEmail(email2);
+        User user1 = userService.findByUsername(email1);
+        User user2 = userService.findByUsername(email2);
 
         Friendship friendship = new Friendship();
         friendship.setFriends(Arrays.asList(user1, user2));
@@ -53,8 +53,8 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     public void breakFriendship(String email1, String email2) {
-        User user1 = userService.findByEmail(email1);
-        User user2 = userService.findByEmail(email2);
+        User user1 = userService.findByUsername(email1);
+        User user2 = userService.findByUsername(email2);
 
         List<Friendship> friendships = friendshipRepository
                 .findAllByFriendsContainingAndFriendsContaining(user1, user2);
@@ -67,8 +67,8 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     public FriendRequest findRequest(String senderEmail, String receiverEmail) {
-        User sender = userService.findByEmail(senderEmail);
-        User receiver = userService.findByEmail(receiverEmail);
+        User sender = userService.findByUsername(senderEmail);
+        User receiver = userService.findByUsername(receiverEmail);
 
         return findRequest(sender, receiver);
     }
@@ -88,8 +88,8 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     public void sendRequest(String emailFrom, String emailTo) {
-        User sender = userService.findByEmail(emailFrom);
-        User receiver = userService.findByEmail(emailTo);
+        User sender = userService.findByUsername(emailFrom);
+        User receiver = userService.findByUsername(emailTo);
 
         if (!friendRequestRepository.findBySenderAndReceiverAndStatus(sender, receiver, FriendRequest.Status.PENDING)
                 .isEmpty()) {
@@ -126,13 +126,13 @@ public class FriendshipServiceImpl implements FriendshipService {
     @Override
     public List<FriendRequest> getRequestFor(String receiver) {
         return friendRequestRepository
-                .findAllByReceiverAndStatus(userService.findByEmail(receiver), FriendRequest.Status.PENDING);
+                .findAllByReceiverAndStatus(userService.findByUsername(receiver), FriendRequest.Status.PENDING);
     }
 
     @Override
     public List<FriendRequest> getRequestOf(String sender) {
         return friendRequestRepository
-                .findAllBySenderAndStatus(userService.findByEmail(sender), FriendRequest.Status.PENDING);
+                .findAllBySenderAndStatus(userService.findByUsername(sender), FriendRequest.Status.PENDING);
     }
 
 

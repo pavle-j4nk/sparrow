@@ -4,7 +4,7 @@ import com.sparrow.dto.NewHotelDto;
 import com.sparrow.model.hotel.Hotel;
 import com.sparrow.repository.hotel.HotelRepository;
 import com.sparrow.service.HotelService;
-import com.sparrow.service.UserService;
+import com.sparrow.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +59,7 @@ public class HotelServiceImpl implements HotelService {
         Hotel hotel = new Hotel();
         hotel.setName(newHotelDto.getName());
         hotel.setDescription(newHotelDto.getDescription());
-        hotel.setAdmin(userService.findByEmail(newHotelDto.getUserEmail()));
+        hotel.setAdmin(userService.findByUsername(newHotelDto.getUserEmail()));
         return hotel;
     }
 
