@@ -17,6 +17,7 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthenticationController {
     private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
 

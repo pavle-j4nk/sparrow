@@ -7,6 +7,7 @@ import com.sparrow.service.impl.user.UserDoesNotExistException;
 import com.sparrow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +16,13 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api/user")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
     @Autowired
     UserService userService;
 
     @GetMapping("/me")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UserProfileResponse> getUser(Principal principal) {
         return ResponseEntity.ok(new UserProfileResponse(userService.findByUsername(principal.getName())));
     }

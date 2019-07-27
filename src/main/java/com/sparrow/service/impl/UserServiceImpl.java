@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {
-        return userRepository.findByEmail(username).orElseGet(() -> {
+        return userRepository.findByUsername(username).orElseGet(() -> {
             throw new UserDoesNotExist(username);
         });
     }

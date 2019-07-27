@@ -128,14 +128,6 @@ public class JwtTokenProvider {
     }
 
     public String getToken(HttpServletRequest request) {
-        if(request.getCookies() != null) {
-            for (Cookie c : request.getCookies()) {
-                if (c.getName().equals("token")) {
-                    return c.getValue();
-                }
-            }
-        }
-
         String authHeader = request.getHeader(HEADER_AUTHORIZATION);
         if (authHeader != null) {
             return authHeader.substring(TOKEN_BEARER.length() + 1);
