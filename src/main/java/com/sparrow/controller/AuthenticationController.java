@@ -2,6 +2,7 @@ package com.sparrow.controller;
 
 import com.sparrow.dto.JwtAuthenticationRequest;
 import com.sparrow.service.AuthenticationService;
+import com.sparrow.service.ExceptionHandlerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,21 +14,23 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Controller
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthenticationController {
+
     private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
 
     private final AuthenticationService authenticationService;
-//    private final ExceptionHandlerService exceptionHandlerService;
+    private final ExceptionHandlerService exceptionHandlerService;
 
     @Autowired
-    public AuthenticationController(AuthenticationService authenticationService) {
+    public AuthenticationController(AuthenticationService authenticationService,
+                                    ExceptionHandlerService exceptionHandlerService) {
         this.authenticationService = authenticationService;
-//        this.exceptionHandlerService = exceptionHandlerService;
+        this.exceptionHandlerService = exceptionHandlerService;
+
     }
 
     @PostMapping
@@ -35,24 +38,6 @@ public class AuthenticationController {
                                                     HttpServletResponse httpServletResponse,
                                                     @RequestBody JwtAuthenticationRequest authenticationRequest)
             throws AuthenticationException {
-        return ResponseEntity.ok(authenticationService.performAuthentication(httpServletRequest,
-                httpServletResponse, authenticationRequest));
-    }
-
-    /**
-     * NOTE: FOR TESTING PURPOSES ONLY
-     */
-    @GetMapping
-    @Deprecated
-    public ResponseEntity login(
-            HttpServletRequest httpServletRequest
-            , HttpServletResponse httpServletResponse
-            , @RequestParam("username") String username
-            , @RequestParam("password") String password)
-            throws AuthenticationException {
-
-        JwtAuthenticationRequest authenticationRequest = new JwtAuthenticationRequest(username, password);
-
         return ResponseEntity.ok(authenticationService.performAuthentication(httpServletRequest,
                 httpServletResponse, authenticationRequest));
     }
@@ -71,15 +56,9 @@ public class AuthenticationController {
         return ResponseEntity.ok("");
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(Exception.class)
     public void onException(Exception e, HttpServletResponse response) {
-        e.printStackTrace();
-        try {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-//        exceptionHandlerService.onException(e, response, log);
+        exceptionHandlerService.handle(e, response);
     }
 
 }

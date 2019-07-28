@@ -2,6 +2,7 @@ package com.sparrow.controller;
 
 import com.sparrow.dto.NewHotelDto;
 import com.sparrow.model.Hotel;
+import com.sparrow.service.ExceptionHandlerService;
 import com.sparrow.service.HotelService;
 import com.sparrow.service.UserService;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -24,6 +26,9 @@ public class HotelController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    private ExceptionHandlerService exceptionHandlerService;
 
     @GetMapping
     public ResponseEntity<List<Hotel>> getHotels() {
@@ -55,4 +60,10 @@ public class HotelController {
         hotelService.delete(hotel);
         return null;
     }
+
+    @ExceptionHandler
+    public void onException(Exception e, HttpServletResponse response) {
+        exceptionHandlerService.handle(e, response);
+    }
+
 }
