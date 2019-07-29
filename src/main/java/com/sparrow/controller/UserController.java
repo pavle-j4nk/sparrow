@@ -3,26 +3,37 @@ package com.sparrow.controller;
 import com.sparrow.model.User;
 import com.sparrow.response.UserProfileResponse;
 import com.sparrow.response.UserResponse;
+import com.sparrow.service.ExceptionHandlerService;
 import com.sparrow.service.impl.user.UserDoesNotExistException;
 import com.sparrow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/user")
+@RequestMapping(value = "/api/user")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
+
     @Autowired
-    UserService userService;
+    private UserService userService;
+
+    @Autowired
+    private ExceptionHandlerService exceptionHandlerService;
 
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
+
     public ResponseEntity<UserProfileResponse> getUser(Principal principal) {
         return ResponseEntity.ok(new UserProfileResponse(userService.findByUsername(principal.getName())));
     }
@@ -60,13 +71,19 @@ public class UserController {
         return null;
     }
 
-    @ExceptionHandler({UserDoesNotExistException.class})
-    public ResponseEntity<Object> onException() {
-        return ResponseEntity.notFound().build();
-    }
-
     @GetMapping("/all")
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok(userService.findAll());
     }
+
+    @PostMapping
+    public ResponseEntity<User> create(@RequestBody @Valid User user) {
+        return ResponseEntity.ok(userService.create(user));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public void onException(Exception e, HttpServletResponse response) {
+        this.exceptionHandlerService.handle(e, response);
+    }
+
 }

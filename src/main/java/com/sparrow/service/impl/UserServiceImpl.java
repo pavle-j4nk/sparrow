@@ -1,8 +1,10 @@
 package com.sparrow.service.impl;
 
+import com.sparrow.model.Role;
 import com.sparrow.model.User;
 import com.sparrow.repository.RoleRepository;
 import com.sparrow.repository.UserRepository;
+import com.sparrow.service.exception.UserAlreadyExists;
 import com.sparrow.service.exception.UserDoesNotExist;
 import com.sparrow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElseGet(() -> {
+            throw new UserDoesNotExist(email);
+        });
+    }
+
+    @Override
     public List<User> findAll() {
         return userRepository.findAll();
     }
@@ -58,6 +67,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> searchByAnyName(String name, String name1, Boolean isFriend, Boolean canAddFriend) {
         return userRepository.findAllWhereAnyNameContains(name);
+    }
+
+    @Override
+    public User create(User user) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new UserAlreadyExists(user.getEmail());
+        }
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            throw new UserAlreadyExists(user.getUsername());
+        }
+
+        user.setEnabled(true);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(roleRepo.findByName(Role.USER));
+
+        return userRepository.save(user);
     }
 
 }

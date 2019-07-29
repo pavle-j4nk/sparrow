@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 public class Role {
-    public static final String USER = "USER";
+    public static final String USER = "ROLE_USER";
     public static final String AIRLINE_ADMIN = "AIRLINE_ADMIN";
     public static final String HOTEL_ADMIN = "HOTEL_ADMIN";
     public static final String RENT_A_CAR_ADMIN = "RENT_A_CAR_ADMIN";

@@ -64,6 +64,7 @@ public class InitialDataLoader implements
         user.setLastName("Test");
         user.setPassword(passwordEncoder.encode("123"));
         user.setEmail("test@test.com");
+        user.setUsername("test");
         user.setAddress("Unknown");
         user.setRole(roleUser);
         user.setEnabled(true);

@@ -10,6 +10,8 @@ public interface UserService {
 
     User findByUsername(String username);
 
+    User findByEmail(String email);
+
     List<User> findAll();
 
     Page<User> findAll(int page, int pageSize);
@@ -17,4 +19,6 @@ public interface UserService {
     Page<User> findAll(int page, int pageSize, String orderBy);
 
     List<User> searchByAnyName(String name, String name1, Boolean isFriend, Boolean canAddFriend);
+
+    User create(User user);
 }
