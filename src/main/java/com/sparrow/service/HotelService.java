@@ -9,6 +9,10 @@ public interface HotelService {
 
     List<Hotel> findAll();
 
+    Hotel getOne(Long id);
+
+    Hotel findOne(Long id);
+
     Hotel findByName(String name);
 
     Hotel findByAddress(String address);

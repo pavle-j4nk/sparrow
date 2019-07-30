@@ -22,6 +22,12 @@ public class Address {
 
     }
 
+    public Address(String address, double longitude, double latitude) {
+        this.address = address;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
     public Long getId() {
         return id;
     }

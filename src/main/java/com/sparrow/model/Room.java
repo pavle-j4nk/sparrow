@@ -21,12 +21,24 @@ public class Room {
     @JoinColumn(name= HOTEL_ID, nullable = false)
     private Hotel hotel;
 
+    private int floor;
+
+    private boolean balcony;
+
     public Room() {
     }
 
     public Room(String name, int bedsNo) {
         this.name = name;
         this.bedsNo = bedsNo;
+    }
+
+    public Room(String name, int bedsNo, Hotel hotel, int floor, boolean balcony) {
+        this.name = name;
+        this.bedsNo = bedsNo;
+        this.hotel = hotel;
+        this.floor = floor;
+        this.balcony = balcony;
     }
 
     public Long getId() {
@@ -51,5 +63,21 @@ public class Room {
 
     public void setBedsNo(int bedsNo) {
         this.bedsNo = bedsNo;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    public boolean isBalcony() {
+        return balcony;
+    }
+
+    public void setBalcony(boolean balcony) {
+        this.balcony = balcony;
     }
 }

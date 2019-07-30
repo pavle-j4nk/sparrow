@@ -1,13 +1,7 @@
 package com.sparrow.data;
 
-import com.sparrow.model.Privilege;
-import com.sparrow.model.Role;
-import com.sparrow.model.Hotel;
-import com.sparrow.model.User;
-import com.sparrow.repository.HotelRepository;
-import com.sparrow.repository.PrivilegeRepository;
-import com.sparrow.repository.RoleRepository;
-import com.sparrow.repository.UserRepository;
+import com.sparrow.model.*;
+import com.sparrow.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -34,6 +28,12 @@ public class InitialDataLoader implements
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
 
     @Autowired
     private PrivilegeRepository privilegeRepository;
@@ -70,18 +70,31 @@ public class InitialDataLoader implements
         user.setEnabled(true);
         userRepository.save(user);
 
-        User u1 = new User("pavle.jankovic","pavle.gp@gmail.com", "Pavle", "Jankovic", "Babanovacka bb", passwordEncoder.encode("123"), true, roleUser);
-        User u2 = new User("marko.ristic","marko.ristic@gmail.com", "Marko", "Ristic", "Topolska 18", passwordEncoder.encode("123"), true, roleUser);
-        User u3 = new User("aleksandar.vujasinovic","aleksandar.vujasinov@gmail.com", "Aleksandar", "Vujasinovic", "Laze Stajica 16", passwordEncoder.encode("123"), true, roleUser);
-        User admin = new User("sysadmin","admin@admin.com","Bog","Boziji","Nebeska 12", passwordEncoder.encode("123"), true, adminRole);
+        User u1 = new User("pavle.jankovic", "pavle.gp@gmail.com", "Pavle", "Jankovic", "Babanovacka bb", passwordEncoder.encode("123"), true, roleUser);
+        User u2 = new User("marko.ristic", "marko.ristic@gmail.com", "Marko", "Ristic", "Topolska 18", passwordEncoder.encode("123"), true, roleUser);
+        User u3 = new User("aleksandar.vujasinovic", "aleksandar.vujasinov@gmail.com", "Aleksandar", "Vujasinovic", "Laze Stajica 16", passwordEncoder.encode("123"), true, roleUser);
+        User admin = new User("sysadmin", "admin@admin.com", "Bog", "Boziji", "Nebeska 12", passwordEncoder.encode("123"), true, adminRole);
 
-        Hotel h1 = new Hotel("Plaza","The Plaza Hotel is a landmarked 20-story luxury hotel and condominium apartment building in the Midtown Manhattan neighborhood of Manhattan, New York City. It opened in 1907 and is now owned by Katara Hospitality.", u2);
-        Hotel h2 = new Hotel("Holiday Inn", "Holiday Inn is a British-owned American brand of hotels, and a subsidiary of InterContinental Hotels Group. Founded as a U.S. motel chain, it has grown to be one of the world's largest hotel chains.", u3);
-        Hotel h3 = new Hotel("Burj Al Arab", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", u1);
+        Address a1 = new Address("Danila Kisa 44, 21000, Novi Sad", 45.24, 19.83);
+        Address a2 = new Address("Brace Ribnikar 17, 21000, Novi Sad", 45.24, 19.83);
+        Address a3 = new Address("Topolska 18, 11000, Beograd", 44.79, 20.47);
+        Address a4 = new Address("Gavrila Principa 3, 11000, Beograd", 44.81, 20.45);
+        addressRepository.saveAll(Arrays.asList(a1, a2, a3, a4));
 
-
-        userRepository.saveAll(Arrays.asList(u1, u2, u3, admin));
+        Hotel h1 = new Hotel("Plaza", "The Plaza Hotel is a landmarked 20-story luxury hotel and condominium apartment building in the Midtown Manhattan neighborhood of Manhattan, New York City. It opened in 1907 and is now owned by Katara Hospitality.", u2, a1);
+        Hotel h2 = new Hotel("Holiday Inn", "Holiday Inn is a British-owned American brand of hotels, and a subsidiary of InterContinental Hotels Group. Founded as a U.S. motel chain, it has grown to be one of the world's largest hotel chains.", u3, a2);
+        Hotel h3 = new Hotel("Burj Al Arab", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", u1, a3);
         hotelRepository.saveAll(Arrays.asList(h1, h2, h3));
+
+        Room r1 = new Room("Single room", 1, h1, 1, true);
+        Room r2 = new Room("Double room", 2, h1, 1, true);
+        Room r3 = new Room("Special double room", 3, h1, 1, true);
+        Room r4 = new Room("Family room", 5, h1, 2, true);
+        Room r5 = new Room("Small family room", 4, h1, 2, true);
+        Room r6 = new Room("King's Apartment", 7, h1, 3, true);
+
+        roomRepository.saveAll(Arrays.asList(r1, r2, r3, r4, r5, r6));
+        userRepository.saveAll(Arrays.asList(u1, u2, u3, admin));
 
         alreadySetup = true;
     }

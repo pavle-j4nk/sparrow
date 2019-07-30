@@ -19,7 +19,7 @@ public class Hotel {
     @OneToMany
     private Set<PriceList> priceLists;
 
-    @OneToMany(mappedBy = "hotel")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "hotel")
     private Set<Room> rooms;
 
     @ManyToOne
@@ -28,10 +28,11 @@ public class Hotel {
     public Hotel() {
     }
 
-    public Hotel(String name, String description, User admin) {
+    public Hotel(String name, String description, User admin, Address address) {
         this.name = name;
         this.description = description;
         this.admin = admin;
+        this.address = address;
     }
 
     public Long getId() {

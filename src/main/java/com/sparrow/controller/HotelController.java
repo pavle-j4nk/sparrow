@@ -16,7 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "api/public/hotels")
+@RequestMapping(value = "api/hotels")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class HotelController {
 
     private Logger logger = LoggerFactory.getLogger(HotelController.class);
@@ -42,10 +43,11 @@ public class HotelController {
         return ResponseEntity.ok(hotelService.save(hotel));
     }
 
-    @GetMapping(value = "/details/**")
-    public String getHotelDetails() {
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Hotel> getHotelDetails(@PathVariable Long id) {
+        Hotel hotel = hotelService.findById(id);
         logger.info("Getting hotel details...");
-        return null;
+        return ResponseEntity.ok(hotel);
     }
 
     @GetMapping(value = "/edit/{id}")
