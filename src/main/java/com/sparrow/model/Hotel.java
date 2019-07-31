@@ -1,5 +1,7 @@
 package com.sparrow.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -17,6 +19,7 @@ public class Hotel {
     private String description;
 
     @OneToMany
+    @JsonIgnore
     private Set<PriceList> priceLists;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "hotel")
@@ -24,6 +27,12 @@ public class Hotel {
 
     @ManyToOne
     private User admin;
+
+    @ManyToMany
+    @JoinTable(name = "hotel_extra_services",
+        joinColumns = @JoinColumn(name = "hotel_id"),
+        inverseJoinColumns = @JoinColumn(name = "extra_service_id"))
+    private Set<ExtraService> services;
 
     public Hotel() {
     }
@@ -91,11 +100,11 @@ public class Hotel {
         this.priceLists = priceLists;
     }
 
-    //    public Set<ExtraService> getServices() {
-//        return services;
-//    }
-//
-//    public void setServices(Set<ExtraService> services) {
-//        this.services = services;
-//    }
+        public Set<ExtraService> getServices() {
+        return services;
+    }
+
+    public void setServices(Set<ExtraService> services) {
+        this.services= services;
+    }
 }

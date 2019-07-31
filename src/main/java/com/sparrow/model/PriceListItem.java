@@ -1,5 +1,7 @@
 package com.sparrow.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,6 +16,7 @@ public class PriceListItem {
     private double price;
 
     @ManyToOne
+    @JsonIgnore
     private PriceList priceList;
 
     public PriceListItem() {

@@ -60,9 +60,9 @@ public class HotelController {
 
     @GetMapping(value = "/{id}/pricelist")
     public ResponseEntity<Set<PriceListItem>> getHotelPriceList(@PathVariable Long id) {
-        PriceList priceList = priceListService.findByHotelId(id);
-        Set<PriceListItem> priceListItems = priceListItemService.findByPriceList(priceList);
-        return ResponseEntity.ok(priceListItems);
+        Hotel hotel = hotelService.findById(id);
+        Set<PriceList> priceLists = hotel.getPriceLists();
+        return ResponseEntity.ok(priceLists.stream().findFirst().get().getItems());
     }
 
     @GetMapping(value = "/edit/{id}")

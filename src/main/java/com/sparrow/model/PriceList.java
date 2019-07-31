@@ -1,5 +1,7 @@
 package com.sparrow.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,6 +13,7 @@ public class PriceList {
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     private Hotel hotel;
 
     @OneToMany

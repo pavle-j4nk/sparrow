@@ -43,6 +43,9 @@ public class InitialDataLoader implements
     private PriceListItemRepository priceListItemRepository;
 
     @Autowired
+    private ExtraServicesRepository extraServicesRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -90,6 +93,14 @@ public class InitialDataLoader implements
         Hotel h3 = new Hotel("Burj Al Arab", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", u1, a3);
         hotelRepository.saveAll(Arrays.asList(h1, h2, h3));
 
+        ExtraService e1 = new ExtraService();
+        e1.setName("Wellness");
+        ExtraService e2 = new ExtraService();
+        e2.setName("Swimming pool");
+        ExtraService e3 = new ExtraService();
+        e3.setName("Spa");
+        extraServicesRepository.saveAll(Arrays.asList(e1, e2, e3));
+
         Room r1 = new Room("Single room", 1, h1, 1, true);
         Room r2 = new Room("Double room", 2, h1, 1, true);
         Room r3 = new Room("Special double room", 3, h1, 1, true);
@@ -108,10 +119,14 @@ public class InitialDataLoader implements
         PriceListItem p4 = new PriceListItem(r4, 140.0, pl1);
         PriceListItem p5 = new PriceListItem(r5, 150.0, pl1);
         PriceListItem p6 = new PriceListItem(r6, 160.0, pl1);
-        priceListItemRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6));
+
+        List<PriceListItem> plitems = Arrays.asList(p1, p2, p3, p4, p5, p6);
+        priceListItemRepository.saveAll(plitems);
+        pl1.setItems(new HashSet<>(plitems));
         priceListRepository.save(pl1);
 
-        h1.setPriceLists(plazaPriceLists);
+        h1.setPriceLists(new HashSet<>(Arrays.asList(pl1)));
+        h1.setServices(new HashSet<>(Arrays.asList(e1, e2, e3)));
         hotelRepository.save(h1);
 
         userRepository.saveAll(Arrays.asList(u1, u2, u3, admin));
