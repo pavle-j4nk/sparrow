@@ -46,6 +46,9 @@ public class InitialDataLoader implements
     private ExtraServicesRepository extraServicesRepository;
 
     @Autowired
+    private HotelServicesRepository hotelServicesRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -101,6 +104,23 @@ public class InitialDataLoader implements
         e3.setName("Spa");
         extraServicesRepository.saveAll(Arrays.asList(e1, e2, e3));
 
+        HotelServices hs1 = new HotelServices();
+        hs1.setExtraService(e1);
+        hs1.setHotel(h1);
+        hs1.setPrice(20.0);
+
+        HotelServices hs2 = new HotelServices();
+        hs2.setExtraService(e2);
+        hs2.setHotel(h1);
+        hs2.setPrice(5.0);
+
+        HotelServices hs3 = new HotelServices();
+        hs3.setExtraService(e3);
+        hs3.setHotel(h1);
+        hs3.setPrice(10.0);
+
+        hotelServicesRepository.saveAll(Arrays.asList(hs1, hs2, hs3));
+
         Room r1 = new Room("Single room", 1, h1, 1, true);
         Room r2 = new Room("Double room", 2, h1, 1, true);
         Room r3 = new Room("Special double room", 3, h1, 1, true);
@@ -126,7 +146,6 @@ public class InitialDataLoader implements
         priceListRepository.save(pl1);
 
         h1.setPriceLists(new HashSet<>(Arrays.asList(pl1)));
-        h1.setServices(new HashSet<>(Arrays.asList(e1, e2, e3)));
         hotelRepository.save(h1);
 
         userRepository.saveAll(Arrays.asList(u1, u2, u3, admin));

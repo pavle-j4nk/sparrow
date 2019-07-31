@@ -28,11 +28,8 @@ public class Hotel {
     @ManyToOne
     private User admin;
 
-    @ManyToMany
-    @JoinTable(name = "hotel_extra_services",
-        joinColumns = @JoinColumn(name = "hotel_id"),
-        inverseJoinColumns = @JoinColumn(name = "extra_service_id"))
-    private Set<ExtraService> services;
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
+    private Set<HotelServices> hotelServices;
 
     public Hotel() {
     }
@@ -100,11 +97,11 @@ public class Hotel {
         this.priceLists = priceLists;
     }
 
-        public Set<ExtraService> getServices() {
-        return services;
+    public Set<HotelServices> getHotelServices() {
+        return hotelServices;
     }
 
-    public void setServices(Set<ExtraService> services) {
-        this.services= services;
+    public void setHotelServices(Set<HotelServices> hotelServices) {
+        this.hotelServices = hotelServices;
     }
 }

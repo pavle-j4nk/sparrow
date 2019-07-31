@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "EXTRA_SERVICE")
 public class ExtraService {
 
     @Id
@@ -13,11 +12,10 @@ public class ExtraService {
 
     private String name;
 
-    @ManyToMany(mappedBy = "services")
-    private Set<Hotel> hotel;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<HotelServices> hotelServices;
 
     public ExtraService() {
-
     }
 
     public Long getId() {
@@ -28,19 +26,19 @@ public class ExtraService {
         this.id = id;
     }
 
-    public Set<Hotel> getHotel() {
-        return hotel;
-    }
-
-    public void setHotel(Set<Hotel> hotel) {
-        this.hotel = hotel;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<HotelServices> getHotelServices() {
+        return hotelServices;
+    }
+
+    public void setHotelServices(Set<HotelServices> hotelServices) {
+        this.hotelServices = hotelServices;
     }
 }
