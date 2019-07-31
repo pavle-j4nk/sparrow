@@ -1,10 +1,7 @@
 package com.sparrow.controller;
 
 import com.sparrow.dto.NewHotelDto;
-import com.sparrow.model.Hotel;
-import com.sparrow.model.PriceList;
-import com.sparrow.model.PriceListItem;
-import com.sparrow.model.Room;
+import com.sparrow.model.*;
 import com.sparrow.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +60,12 @@ public class HotelController {
         Hotel hotel = hotelService.findById(id);
         Set<PriceList> priceLists = hotel.getPriceLists();
         return ResponseEntity.ok(priceLists.stream().findFirst().get().getItems());
+    }
+
+    @GetMapping(value = "/{id}/services")
+    public ResponseEntity<Set<HotelServices>> getHotelServices(@PathVariable Long id) {
+        Hotel hotel = hotelService.findById(id);
+        return ResponseEntity.ok(hotel.getHotelServices());
     }
 
     @GetMapping(value = "/edit/{id}")
