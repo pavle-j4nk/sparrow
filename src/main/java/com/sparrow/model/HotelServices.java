@@ -20,7 +20,6 @@ public class HotelServices {
     private Hotel hotel;
 
     @ManyToOne
-    @JsonIgnore
     private ExtraService extraService;
 
     private double price;

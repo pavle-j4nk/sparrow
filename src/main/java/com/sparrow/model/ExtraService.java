@@ -1,5 +1,7 @@
 package com.sparrow.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,6 +15,7 @@ public class ExtraService {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<HotelServices> hotelServices;
 
     public ExtraService() {
