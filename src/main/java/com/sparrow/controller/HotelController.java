@@ -2,9 +2,10 @@ package com.sparrow.controller;
 
 import com.sparrow.dto.NewHotelDto;
 import com.sparrow.model.Hotel;
-import com.sparrow.service.ExceptionHandlerService;
-import com.sparrow.service.HotelService;
-import com.sparrow.service.UserService;
+import com.sparrow.model.PriceList;
+import com.sparrow.model.PriceListItem;
+import com.sparrow.model.Room;
+import com.sparrow.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping(value = "api/hotels")
@@ -27,6 +29,12 @@ public class HotelController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    private PriceListService priceListService;
+
+    @Autowired
+    private PriceListItemService priceListItemService;
 
     @Autowired
     private ExceptionHandlerService exceptionHandlerService;
@@ -50,6 +58,13 @@ public class HotelController {
         return ResponseEntity.ok(hotel);
     }
 
+    @GetMapping(value = "/{id}/pricelist")
+    public ResponseEntity<Set<PriceListItem>> getHotelPriceList(@PathVariable Long id) {
+        PriceList priceList = priceListService.findByHotelId(id);
+        Set<PriceListItem> priceListItems = priceListItemService.findByPriceList(priceList);
+        return ResponseEntity.ok(priceListItems);
+    }
+
     @GetMapping(value = "/edit/{id}")
     public String getHotelEdit(@PathVariable Long id) {
         logger.info("Passed id :" + id);
@@ -60,6 +75,12 @@ public class HotelController {
     public String getHotelDelete(@PathVariable Long id) {
         Hotel hotel = hotelService.findById(id);
         hotelService.delete(hotel);
+        return null;
+    }
+
+    @PostMapping(value = "/room")
+    public String postRoom() {
+
         return null;
     }
 

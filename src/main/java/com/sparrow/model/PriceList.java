@@ -20,6 +20,10 @@ public class PriceList {
 
     }
 
+    public PriceList(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
     public Long getId() {
         return id;
     }

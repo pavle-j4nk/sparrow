@@ -10,9 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class InitialDataLoader implements
@@ -37,6 +35,12 @@ public class InitialDataLoader implements
 
     @Autowired
     private PrivilegeRepository privilegeRepository;
+
+    @Autowired
+    private PriceListRepository priceListRepository;
+
+    @Autowired
+    private PriceListItemRepository priceListItemRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -92,8 +96,24 @@ public class InitialDataLoader implements
         Room r4 = new Room("Family room", 5, h1, 2, true);
         Room r5 = new Room("Small family room", 4, h1, 2, true);
         Room r6 = new Room("King's Apartment", 7, h1, 3, true);
-
         roomRepository.saveAll(Arrays.asList(r1, r2, r3, r4, r5, r6));
+
+        Set<PriceList> plazaPriceLists = new HashSet<>();
+        PriceList pl1 = new PriceList(h1);
+        priceListRepository.save(pl1);
+
+        PriceListItem p1 = new PriceListItem(r1, 100.0, pl1);
+        PriceListItem p2 = new PriceListItem(r2, 120.0, pl1);
+        PriceListItem p3 = new PriceListItem(r3, 130.0, pl1);
+        PriceListItem p4 = new PriceListItem(r4, 140.0, pl1);
+        PriceListItem p5 = new PriceListItem(r5, 150.0, pl1);
+        PriceListItem p6 = new PriceListItem(r6, 160.0, pl1);
+        priceListItemRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6));
+        priceListRepository.save(pl1);
+
+        h1.setPriceLists(plazaPriceLists);
+        hotelRepository.save(h1);
+
         userRepository.saveAll(Arrays.asList(u1, u2, u3, admin));
 
         alreadySetup = true;

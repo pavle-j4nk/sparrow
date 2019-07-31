@@ -83,6 +83,14 @@ public class Hotel {
         this.admin = admin;
     }
 
+    public Set<PriceList> getPriceLists() {
+        return priceLists;
+    }
+
+    public void setPriceLists(Set<PriceList> priceLists) {
+        this.priceLists = priceLists;
+    }
+
     //    public Set<ExtraService> getServices() {
 //        return services;
 //    }

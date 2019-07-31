@@ -20,6 +20,12 @@ public class PriceListItem {
 
     }
 
+    public PriceListItem(Room room, double price, PriceList priceList) {
+        this.room = room;
+        this.price = price;
+        this.priceList = priceList;
+    }
+
     public Long getId() {
         return id;
     }
