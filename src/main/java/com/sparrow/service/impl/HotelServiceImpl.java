@@ -75,6 +75,15 @@ public class HotelServiceImpl implements HotelService {
         return hotelRepository.save(hotel);
     }
 
+    public Hotel update(Hotel h) {
+        Optional<Hotel> hotelOptional = hotelRepository.findById(h.getId());
+        Hotel hotel = hotelOptional.get();
+        hotel.setName(h.getName());
+        hotel.setDescription(h.getDescription());
+        hotel.setAddress(h.getAddress());
+        return hotelRepository.save(hotel);
+    }
+
     @Override
     public void delete(Hotel hotel) {
         hotelRepository.delete(hotel);

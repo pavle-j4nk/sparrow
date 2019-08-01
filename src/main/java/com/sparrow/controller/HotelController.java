@@ -1,6 +1,7 @@
 package com.sparrow.controller;
 
 import com.sparrow.dto.NewHotelDto;
+import com.sparrow.dto.NewPriceListItemDto;
 import com.sparrow.model.*;
 import com.sparrow.service.*;
 import org.slf4j.Logger;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -26,6 +29,9 @@ public class HotelController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    private RoomService roomService;
 
     @Autowired
     private PriceListService priceListService;
@@ -46,6 +52,22 @@ public class HotelController {
         Hotel hotel = hotelService.create(newHotelDto);
         logger.info(String.format("Creating new hotel...\nName: %s\nDescription: %s\nAdministrator email: %s", hotel.getName(), hotel.getDescription(), hotel.getAdmin().getEmail()));
         return ResponseEntity.ok(hotelService.save(hotel));
+    }
+
+    @PostMapping(value = "/{id}/pricelistitem")
+    public ResponseEntity<PriceListItem> postPriceListItem(@RequestBody PriceListItem priceListItem, @PathVariable Long id) {
+        PriceListItem pli = priceListItemService.create(priceListItem, id);
+        return ResponseEntity.ok(pli);
+    }
+
+    @DeleteMapping(value = "/pricelistitem/{id}")
+    public ResponseEntity<PriceListItem> deletePriceListItem(@PathVariable Long id) {
+        PriceListItem priceListItem = priceListItemService.findById(id);
+        if (priceListItem == null) {
+            return (ResponseEntity<PriceListItem>) ResponseEntity.notFound();
+        }
+        priceListItemService.delete(priceListItem);
+        return ResponseEntity.ok(priceListItem);
     }
 
     @GetMapping(value = "/{id}")

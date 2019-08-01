@@ -1,5 +1,7 @@
 package com.sparrow.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,6 +21,7 @@ public class Room {
 
     @ManyToOne
     @JoinColumn(name= HOTEL_ID, nullable = false)
+    @JsonIgnore
     private Hotel hotel;
 
     private int floor;
@@ -79,5 +82,13 @@ public class Room {
 
     public void setBalcony(boolean balcony) {
         this.balcony = balcony;
+    }
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 }

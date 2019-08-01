@@ -21,6 +21,8 @@ public interface HotelService {
 
     Hotel save(Hotel hotel);
 
+    Hotel update(Hotel hotel);
+
     void delete(Hotel hotel);
 
     Hotel create(NewHotelDto newHotelDto);

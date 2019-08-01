@@ -16,6 +16,7 @@ public class Hotel {
     @OneToOne
     private Address address;
 
+    @Column(length = 1000)
     private String description;
 
     @OneToMany

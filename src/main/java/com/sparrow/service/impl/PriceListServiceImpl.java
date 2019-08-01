@@ -15,4 +15,9 @@ public class PriceListServiceImpl implements PriceListService {
     public PriceList findByHotelId(Long id) {
         return priceListRepository.findByHotelId(id);
     }
+
+    @Override
+    public PriceList save(PriceList priceList) {
+        return priceListRepository.save(priceList);
+    }
 }

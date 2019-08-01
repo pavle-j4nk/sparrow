@@ -41,26 +41,13 @@ public class AdminController {
         return ResponseEntity.ok(savedHotel);
     }
 
-    @PutMapping(value = "/hotel/{id}")
-    public ResponseEntity<Hotel> updateHotel(@PathVariable Long id, @RequestBody Hotel hotel) {
-        Hotel h = hotelService.findById(id);
-        if (h == null) {
-            return (ResponseEntity<Hotel>) ResponseEntity.notFound();
-        }
-
-        logger.info(String.format("Updating hotel with %f id."));
-        logger.info(String.format("Setting following attributes: \n name : %s \n description : %s \n address : %s",
-                hotel.getName(), hotel.getDescription(), hotel.getAddress()));
-
-        h.setName(hotel.getName());
-        h.setAddress(hotel.getAddress());
-        h.setDescription(hotel.getDescription());
-        h.setId(hotel.getId());
-        h.setRooms(hotel.getRooms());
-
-        Hotel updatedHotel = hotelService.save(h);
-        return ResponseEntity.ok(updatedHotel);
+    @PutMapping(value = "/hotels")
+    public ResponseEntity<Hotel> updateHotel(@RequestBody Hotel hotel) {
+        addressService.save(hotel.getAddress());
+        Hotel savedHotel = hotelService.update(hotel);
+        return ResponseEntity.ok(savedHotel);
     }
+
 
     @DeleteMapping(value = "/hotels/{id}")
     public ResponseEntity<Hotel> deleteHotel(@PathVariable Long id) {

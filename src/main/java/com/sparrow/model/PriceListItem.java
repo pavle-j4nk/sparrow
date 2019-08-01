@@ -15,7 +15,7 @@ public class PriceListItem {
 
     private double price;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JsonIgnore
     private PriceList priceList;
 

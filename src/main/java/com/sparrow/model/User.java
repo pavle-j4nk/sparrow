@@ -137,6 +137,7 @@ public class User implements UserDetails {
     }
 
     @Override
+    @Transient
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(role == null)
             return null;
