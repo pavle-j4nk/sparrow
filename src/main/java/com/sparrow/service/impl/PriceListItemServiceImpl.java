@@ -1,10 +1,8 @@
 package com.sparrow.service.impl;
 
-import com.sparrow.dto.NewPriceListItemDto;
 import com.sparrow.model.Hotel;
 import com.sparrow.model.PriceList;
 import com.sparrow.model.PriceListItem;
-import com.sparrow.model.Room;
 import com.sparrow.repository.PriceListItemRepository;
 import com.sparrow.repository.RoomRepository;
 import com.sparrow.service.HotelService;
@@ -15,6 +13,7 @@ import com.sparrow.service.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -40,8 +39,7 @@ public class PriceListItemServiceImpl implements PriceListItemService {
         Optional<PriceListItem> priceListItemOptional = priceListItemRepository.findById(id);
         if (priceListItemOptional.isPresent()) {
             return priceListItemOptional.get();
-        }
-        else {
+        } else {
             throw new NotFoundException();
         }
     }
@@ -54,21 +52,28 @@ public class PriceListItemServiceImpl implements PriceListItemService {
     @Override
     public PriceListItem create(PriceListItem item, Long id) {
         Hotel hotel = hotelService.findById(id);
+        Set<PriceListItem> items;
         Set<PriceList> priceLists = hotel.getPriceLists();
-
-        Optional<PriceList> priceListOptional = priceLists.stream().findFirst(); //TODO: dont use only one pricelist
-        PriceList priceList = priceListOptional.get();
-
-        item.setPriceList(priceList);
         item.getRoom().setHotel(hotel);
         roomService.save(item.getRoom());
 
-        Set<PriceListItem> priceListItems = priceList.getItems();
-        priceListItems.add(item);
+        if (priceLists.isEmpty()) {
+            PriceList p = new PriceList();
+            p.setHotel(hotel);
+            p.setItems(new HashSet<>());
+            priceListService.save(p);
 
-        PriceListItem priceListItem = save(item);
+            priceLists.add(p);
+            hotel.setPriceLists(priceLists);
+        }
 
-        priceListService.save(priceList);
+        PriceList p = priceLists.stream().findFirst().get();
+        item.setPriceList(p);
+        items = p.getItems();
+        items.add(item);
+        PriceListItem priceListItem = priceListItemRepository.save(item);
+        priceListService.save(p);
+
         return priceListItem;
     }
 
@@ -82,9 +87,7 @@ public class PriceListItemServiceImpl implements PriceListItemService {
         PriceList priceList = priceListItem.getPriceList();
         Set<PriceListItem> priceListItems = priceList.getItems();
         priceListItems.removeIf(p -> p.getRoom().getName().equals(priceListItem.getRoom().getName()));
-        priceList.setItems(priceListItems);
+//        priceList.setItems(priceListItems);
         priceListService.save(priceList);
-
-        priceListItemRepository.delete(priceListItem);
     }
 }

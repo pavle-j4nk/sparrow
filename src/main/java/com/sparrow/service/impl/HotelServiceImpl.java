@@ -2,6 +2,7 @@ package com.sparrow.service.impl;
 
 import com.sparrow.dto.NewHotelDto;
 import com.sparrow.model.Hotel;
+import com.sparrow.model.Room;
 import com.sparrow.repository.HotelRepository;
 import com.sparrow.service.HotelService;
 import com.sparrow.service.UserService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class HotelServiceImpl implements HotelService {
@@ -55,8 +57,7 @@ public class HotelServiceImpl implements HotelService {
         Optional<Hotel> hotel = hotelRepository.findByAddress(address);
         if (hotel.isPresent()) {
             return hotel.get();
-        }
-        else {
+        } else {
             throw new HotelNotFoundException();
         }
     }
@@ -65,8 +66,7 @@ public class HotelServiceImpl implements HotelService {
         Optional<Hotel> hotel = hotelRepository.findById(id);
         if (hotel.isPresent()) {
             return hotel.get();
-        }
-        else {
+        } else {
             throw new HotelNotFoundException(id);
         }
     }
@@ -96,6 +96,22 @@ public class HotelServiceImpl implements HotelService {
         hotel.setDescription(newHotelDto.getDescription());
         hotel.setAdmin(userService.findByUsername(newHotelDto.getUserEmail()));
         return hotel;
+    }
+
+    @Override
+    public Hotel updateRoom(Long hotelId, Long roomId, Room room) {
+        Hotel hotel = findById(hotelId);
+        Set<Room> rooms = hotel.getRooms();
+        for (Room r : rooms) {
+            if (r.getId() == roomId) {
+                r.setName(room.getName());
+                r.setBalcony(room.isBalcony());
+                r.setBedsNo(room.getBedsNo());
+                r.setFloor(room.getFloor());
+                break;
+            }
+        }
+        return save(hotel);
     }
 
 }

@@ -1,9 +1,10 @@
 package com.sparrow.controller;
 
 import com.sparrow.dto.NewHotelDto;
-import com.sparrow.dto.NewPriceListItemDto;
 import com.sparrow.model.*;
-import com.sparrow.service.*;
+import com.sparrow.service.ExceptionHandlerService;
+import com.sparrow.service.HotelService;
+import com.sparrow.service.RoomService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -25,19 +24,10 @@ public class HotelController {
     private Logger logger = LoggerFactory.getLogger(HotelController.class);
 
     @Autowired
-    HotelService hotelService;
-
-    @Autowired
-    UserService userService;
+    private HotelService hotelService;
 
     @Autowired
     private RoomService roomService;
-
-    @Autowired
-    private PriceListService priceListService;
-
-    @Autowired
-    private PriceListItemService priceListItemService;
 
     @Autowired
     private ExceptionHandlerService exceptionHandlerService;
@@ -54,27 +44,17 @@ public class HotelController {
         return ResponseEntity.ok(hotelService.save(hotel));
     }
 
-    @PostMapping(value = "/{id}/pricelistitem")
-    public ResponseEntity<PriceListItem> postPriceListItem(@RequestBody PriceListItem priceListItem, @PathVariable Long id) {
-        PriceListItem pli = priceListItemService.create(priceListItem, id);
-        return ResponseEntity.ok(pli);
-    }
-
-    @DeleteMapping(value = "/pricelistitem/{id}")
-    public ResponseEntity<PriceListItem> deletePriceListItem(@PathVariable Long id) {
-        PriceListItem priceListItem = priceListItemService.findById(id);
-        if (priceListItem == null) {
-            return (ResponseEntity<PriceListItem>) ResponseEntity.notFound();
-        }
-        priceListItemService.delete(priceListItem);
-        return ResponseEntity.ok(priceListItem);
-    }
-
     @GetMapping(value = "/{id}")
     public ResponseEntity<Hotel> getHotelDetails(@PathVariable Long id) {
         Hotel hotel = hotelService.findById(id);
         logger.info("Getting hotel details...");
         return ResponseEntity.ok(hotel);
+    }
+
+    @GetMapping(value = "/room/{roomId}")
+    public ResponseEntity<Room> getRoomDetails(@PathVariable Long roomId) {
+        Room room = roomService.findById(roomId);
+        return ResponseEntity.ok(room);
     }
 
     @GetMapping(value = "/{id}/pricelist")
@@ -90,22 +70,10 @@ public class HotelController {
         return ResponseEntity.ok(hotel.getHotelServices());
     }
 
-    @GetMapping(value = "/edit/{id}")
-    public String getHotelEdit(@PathVariable Long id) {
-        logger.info("Passed id :" + id);
-        return null;
-    }
-
     @GetMapping(value = "/delete/{id}")
     public String getHotelDelete(@PathVariable Long id) {
         Hotel hotel = hotelService.findById(id);
         hotelService.delete(hotel);
-        return null;
-    }
-
-    @PostMapping(value = "/room")
-    public String postRoom() {
-
         return null;
     }
 

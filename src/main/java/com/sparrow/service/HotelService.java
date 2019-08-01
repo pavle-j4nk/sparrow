@@ -2,6 +2,7 @@ package com.sparrow.service;
 
 import com.sparrow.dto.NewHotelDto;
 import com.sparrow.model.Hotel;
+import com.sparrow.model.Room;
 
 import java.util.List;
 
@@ -26,5 +27,7 @@ public interface HotelService {
     void delete(Hotel hotel);
 
     Hotel create(NewHotelDto newHotelDto);
+
+    Hotel updateRoom(Long hotelId, Long roomId, Room room);
 
 }

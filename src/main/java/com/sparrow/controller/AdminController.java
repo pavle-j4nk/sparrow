@@ -3,6 +3,8 @@ package com.sparrow.controller;
 import com.sparrow.model.Hotel;
 import com.sparrow.service.AddressService;
 import com.sparrow.service.HotelService;
+import com.sparrow.service.PriceListItemService;
+import com.sparrow.service.RoomService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +26,16 @@ public class AdminController {
     @Autowired
     private AddressService addressService;
 
+    @Autowired
+    private RoomService roomService;
+
+    @Autowired
+    private PriceListItemService priceListItemService;
+
     //TODO: Add Rent-a-car and flight services
 
     @GetMapping(value = "/hotels")
-    public ResponseEntity<List<Hotel>> getHotels(){
+    public ResponseEntity<List<Hotel>> getHotels() {
         List<Hotel> hotels = hotelService.findAll();
         return ResponseEntity.ok(hotels);
     }
@@ -40,14 +48,6 @@ public class AdminController {
         Hotel savedHotel = hotelService.save(hotel);
         return ResponseEntity.ok(savedHotel);
     }
-
-    @PutMapping(value = "/hotels")
-    public ResponseEntity<Hotel> updateHotel(@RequestBody Hotel hotel) {
-        addressService.save(hotel.getAddress());
-        Hotel savedHotel = hotelService.update(hotel);
-        return ResponseEntity.ok(savedHotel);
-    }
-
 
     @DeleteMapping(value = "/hotels/{id}")
     public ResponseEntity<Hotel> deleteHotel(@PathVariable Long id) {
@@ -62,4 +62,5 @@ public class AdminController {
 
         return ResponseEntity.ok(hotel);
     }
+
 }
