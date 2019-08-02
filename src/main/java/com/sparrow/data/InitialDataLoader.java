@@ -102,7 +102,15 @@ public class InitialDataLoader implements
         e2.setName("Swimming pool");
         ExtraService e3 = new ExtraService();
         e3.setName("Spa");
-        extraServicesRepository.saveAll(Arrays.asList(e1, e2, e3));
+        ExtraService e4 = new ExtraService();
+        e4.setName("Breakfast");
+        ExtraService e5 = new ExtraService();
+        e5.setName("Transfer to airport");
+        ExtraService e6 = new ExtraService();
+        e6.setName("Transfer from airport");
+        ExtraService e7 = new ExtraService();
+        e7.setName("Gym");
+        extraServicesRepository.saveAll(Arrays.asList(e1, e2, e3, e4, e5, e6, e7));
 
         HotelServices hs1 = new HotelServices();
         hs1.setExtraService(e1);

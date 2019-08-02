@@ -70,13 +70,6 @@ public class HotelController {
         return ResponseEntity.ok(hotel.getHotelServices());
     }
 
-    @GetMapping(value = "/delete/{id}")
-    public String getHotelDelete(@PathVariable Long id) {
-        Hotel hotel = hotelService.findById(id);
-        hotelService.delete(hotel);
-        return null;
-    }
-
     @ExceptionHandler
     public void onException(Exception e, HttpServletResponse response) {
         exceptionHandlerService.handle(e, response);
