@@ -64,10 +64,12 @@ public class InitialDataLoader implements
         List<Privilege> adminPrivileges = Arrays.asList(
                 readPrivilege, writePrivilege);
         createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
+        createRoleIfNotFound("ROLE_HOTEL_ADMIN", adminPrivileges);
         createRoleIfNotFound("ROLE_USER", Arrays.asList(readPrivilege));
 
         Role roleUser = roleRepository.findByName("ROLE_USER");
         Role adminRole = roleRepository.findByName("ROLE_ADMIN");
+        Role hotelAdminRole = roleRepository.findByName("ROLE_HOTEL_ADMIN");
 
         User user = new User();
         user.setFirstName("Test");
@@ -83,6 +85,7 @@ public class InitialDataLoader implements
         User u1 = new User("pavle.jankovic", "pavle.gp@gmail.com", "Pavle", "Jankovic", "Babanovacka bb", passwordEncoder.encode("123"), true, roleUser);
         User u2 = new User("marko.ristic", "marko.ristic@gmail.com", "Marko", "Ristic", "Topolska 18", passwordEncoder.encode("123"), true, roleUser);
         User u3 = new User("aleksandar.vujasinovic", "aleksandar.vujasinov@gmail.com", "Aleksandar", "Vujasinovic", "Laze Stajica 16", passwordEncoder.encode("123"), true, roleUser);
+        User hotelAdmin = new User("hotel.admin", "hotel_admin@sparrow.com", "Hotel", "Admin", "Hotel Admin Address 0", passwordEncoder.encode("123"), true, hotelAdminRole);
         User admin = new User("sysadmin", "admin@admin.com", "Bog", "Boziji", "Nebeska 12", passwordEncoder.encode("123"), true, adminRole);
 
         Address a1 = new Address("Danila Kisa 44, 21000, Novi Sad", 45.24, 19.83);
@@ -91,9 +94,9 @@ public class InitialDataLoader implements
         Address a4 = new Address("Gavrila Principa 3, 11000, Beograd", 44.81, 20.45);
         addressRepository.saveAll(Arrays.asList(a1, a2, a3, a4));
 
-        Hotel h1 = new Hotel("Plaza", "The Plaza Hotel is a landmarked 20-story luxury hotel and condominium apartment building in the Midtown Manhattan neighborhood of Manhattan, New York City. It opened in 1907 and is now owned by Katara Hospitality.", u2, a1);
-        Hotel h2 = new Hotel("Holiday Inn", "Holiday Inn is a British-owned American brand of hotels, and a subsidiary of InterContinental Hotels Group. Founded as a U.S. motel chain, it has grown to be one of the world's largest hotel chains.", u3, a2);
-        Hotel h3 = new Hotel("Burj Al Arab", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", u1, a3);
+        Hotel h1 = new Hotel("Plaza", "The Plaza Hotel is a landmarked 20-story luxury hotel and condominium apartment building in the Midtown Manhattan neighborhood of Manhattan, New York City. It opened in 1907 and is now owned by Katara Hospitality.", hotelAdmin, a1);
+        Hotel h2 = new Hotel("Holiday Inn", "Holiday Inn is a British-owned American brand of hotels, and a subsidiary of InterContinental Hotels Group. Founded as a U.S. motel chain, it has grown to be one of the world's largest hotel chains.", hotelAdmin, a2);
+        Hotel h3 = new Hotel("Burj Al Arab", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", hotelAdmin, a3);
         hotelRepository.saveAll(Arrays.asList(h1, h2, h3));
 
         ExtraService e1 = new ExtraService();
@@ -156,7 +159,7 @@ public class InitialDataLoader implements
         h1.setPriceLists(new HashSet<>(Arrays.asList(pl1)));
         hotelRepository.save(h1);
 
-        userRepository.saveAll(Arrays.asList(u1, u2, u3, admin));
+        userRepository.saveAll(Arrays.asList(u1, u2, u3, admin, hotelAdmin));
 
         alreadySetup = true;
     }
