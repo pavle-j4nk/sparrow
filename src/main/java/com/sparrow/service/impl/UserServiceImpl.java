@@ -1,12 +1,16 @@
 package com.sparrow.service.impl;
 
+import com.sparrow.dto.ExtendedUser;
+import com.sparrow.model.FriendRequest;
 import com.sparrow.model.Role;
 import com.sparrow.model.User;
+import com.sparrow.repository.FriendRequestRepository;
 import com.sparrow.repository.RoleRepository;
 import com.sparrow.repository.UserRepository;
+import com.sparrow.service.UserService;
 import com.sparrow.service.exception.UserAlreadyExists;
 import com.sparrow.service.exception.UserDoesNotExist;
-import com.sparrow.service.UserService;
+import com.sparrow.service.impl.user.FriendshipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +32,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleRepository roleRepo;
 
+    @Autowired
+    private FriendshipService friendshipService;
+
     @Override
     public User findById(Long id) throws AccessDeniedException {
         return userRepository.findById(id).orElseGet(() -> {
@@ -40,6 +47,17 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username).orElseGet(() -> {
             throw new UserDoesNotExist(username);
         });
+    }
+
+    @Override
+    public ExtendedUser findExtendedByUsername(String username) {
+        User user = userRepository.findByUsername(username).orElseGet(() -> {
+            throw new UserDoesNotExist(username);
+        });
+
+        List<FriendRequest> friendshipRequests = friendshipService.getRequestFor(username);
+
+        return new ExtendedUser(user, friendshipRequests.size());
     }
 
     @Override

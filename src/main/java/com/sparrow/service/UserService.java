@@ -1,5 +1,6 @@
 package com.sparrow.service;
 
+import com.sparrow.dto.ExtendedUser;
 import com.sparrow.model.User;
 import org.springframework.data.domain.Page;
 
@@ -9,6 +10,8 @@ public interface UserService {
     User findById(Long id);
 
     User findByUsername(String username);
+
+    ExtendedUser findExtendedByUsername(String username);
 
     User findByEmail(String email);
 
