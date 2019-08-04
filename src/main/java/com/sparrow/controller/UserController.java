@@ -1,20 +1,17 @@
 package com.sparrow.controller;
 
+import com.sparrow.dto.ExtendedUser;
 import com.sparrow.model.User;
 import com.sparrow.response.UserProfileResponse;
 import com.sparrow.response.UserResponse;
 import com.sparrow.service.ExceptionHandlerService;
-import com.sparrow.service.impl.user.UserDoesNotExistException;
 import com.sparrow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.PermitAll;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.security.Principal;
@@ -32,19 +29,10 @@ public class UserController {
     private ExceptionHandlerService exceptionHandlerService;
 
     @GetMapping("/me")
-    @PreAuthorize("hasRole('USER')")
-
-    public ResponseEntity<UserProfileResponse> getUser(Principal principal) {
-        return ResponseEntity.ok(new UserProfileResponse(userService.findByUsername(principal.getName())));
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ExtendedUser> getUser(Principal principal) {
+        return ResponseEntity.ok(userService.findExtendedByUsername(principal.getName()));
     }
-
-/*
-    @PostMapping(path = "/me")
-    public ResponseEntity updateProfile(Principal principal, @RequestBody @Valid User info) {
-        userService.updateUserInfo(principal.getName(), info);
-        return ResponseEntity.ok().build();
-    }
-*/
 
     @GetMapping("/search/{name}")
     public ResponseEntity<List<UserResponse>> search(Principal principal
