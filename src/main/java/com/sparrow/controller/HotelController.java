@@ -88,9 +88,4 @@ public class HotelController {
         exceptionHandlerService.handle(e, response);
     }
 
-    @ExceptionHandler
-    public String onNullPointerException(NullPointerException e) {
-        return e.getMessage();
-    }
-
 }

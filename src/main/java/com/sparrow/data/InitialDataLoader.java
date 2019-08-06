@@ -88,10 +88,10 @@ public class InitialDataLoader implements
         User hotelAdmin = new User("hotel.admin", "hotel_admin@sparrow.com", "Hotel", "Admin", "Hotel Admin Address 0", passwordEncoder.encode("123"), true, hotelAdminRole);
         User admin = new User("sysadmin", "admin@admin.com", "Bog", "Boziji", "Nebeska 12", passwordEncoder.encode("123"), true, adminRole);
 
-        Address a1 = new Address("Danila Kisa 44, 21000, Novi Sad", 45.24, 19.83);
-        Address a2 = new Address("Brace Ribnikar 17, 21000, Novi Sad", 45.24, 19.83);
-        Address a3 = new Address("Topolska 18, 11000, Beograd", 44.79, 20.47);
-        Address a4 = new Address("Gavrila Principa 3, 11000, Beograd", 44.81, 20.45);
+        Address a1 = new Address("Danila Kisa 44, 21000, Novi Sad", 19.83, 45.24);
+        Address a2 = new Address("Brace Ribnikar 17, 21000, Novi Sad", 19.83, 45.24);
+        Address a3 = new Address("Topolska 18, 11000, Beograd", 20.47, 44.79);
+        Address a4 = new Address("Gavrila Principa 3, 11000, Beograd", 20.45, 44.81);
         addressRepository.saveAll(Arrays.asList(a1, a2, a3, a4));
 
         Hotel h1 = new Hotel("Plaza", "The Plaza Hotel is a landmarked 20-story luxury hotel and condominium apartment building in the Midtown Manhattan neighborhood of Manhattan, New York City. It opened in 1907 and is now owned by Katara Hospitality.", hotelAdmin, a1);
