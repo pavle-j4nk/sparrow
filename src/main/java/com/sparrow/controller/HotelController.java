@@ -1,5 +1,6 @@
 package com.sparrow.controller;
 
+import com.sparrow.dto.HotelSearchDto;
 import com.sparrow.dto.NewHotelDto;
 import com.sparrow.model.*;
 import com.sparrow.service.ExceptionHandlerService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -70,9 +72,25 @@ public class HotelController {
         return ResponseEntity.ok(hotel.getHotelServices());
     }
 
+    @GetMapping(value = "/search")
+    public ResponseEntity<List<Hotel>> getSearchHotels(@RequestParam String place,
+                                                       @RequestParam(required = false) Date start,
+                                                       @RequestParam(required = false) Date end,
+                                                       @RequestParam(required = false) Integer rooms,
+                                                       @RequestParam(required = false) Integer guests) {
+        HotelSearchDto hotelSearchDto = new HotelSearchDto(place, start, end, rooms, guests);
+
+        return ResponseEntity.ok(hotelService.search(hotelSearchDto));
+    }
+
     @ExceptionHandler
     public void onException(Exception e, HttpServletResponse response) {
         exceptionHandlerService.handle(e, response);
+    }
+
+    @ExceptionHandler
+    public String onNullPointerException(NullPointerException e) {
+        return e.getMessage();
     }
 
 }

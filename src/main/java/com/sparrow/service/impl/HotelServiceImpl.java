@@ -1,9 +1,12 @@
 package com.sparrow.service.impl;
 
+import com.sparrow.dto.HotelSearchDto;
 import com.sparrow.dto.NewHotelDto;
 import com.sparrow.model.Hotel;
+import com.sparrow.model.HotelReservation;
 import com.sparrow.model.Room;
 import com.sparrow.repository.HotelRepository;
+import com.sparrow.repository.HotelReservationRepository;
 import com.sparrow.service.HotelService;
 import com.sparrow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,9 @@ public class HotelServiceImpl implements HotelService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private HotelReservationRepository hotelReservationRepository;
 
     @Override
     public List<Hotel> findAll() {
@@ -114,4 +120,36 @@ public class HotelServiceImpl implements HotelService {
         return save(hotel);
     }
 
+    @Override
+    public List<Hotel> search(HotelSearchDto hotelSearchDto) {
+        List<Hotel> hotels = hotelRepository.findAllByName(hotelSearchDto.getPlace());
+
+        List<HotelReservation> reservations = hotelReservationRepository.findAll();
+
+        for (HotelReservation r : reservations) {
+            if ((hotelSearchDto.getStart().before(r.getStart()) || hotelSearchDto.getStart().equals(r.getStart())) &&
+                    (hotelSearchDto.getEnd().after(r.getEnd()) || hotelSearchDto.getEnd().equals(r.getEnd()))) {
+                hotels.remove(r.getRoom().getHotel());
+            }
+        }
+
+        hotels.removeIf(h -> hotelSearchDto.getRooms() > h.getRooms().size());
+
+        boolean hasCapacity = false;
+
+        for (Hotel h : hotels) {
+            Set<Room> rooms = h.getRooms();
+            for (Room r: rooms) {
+                if (hotelSearchDto.getGuests() < r.getBedsNo()) {
+                    hasCapacity = true;
+                    break;
+                }
+            }
+            if (!hasCapacity) {
+                hotels.remove(h);
+            }
+        }
+
+        return hotels;
+    }
 }

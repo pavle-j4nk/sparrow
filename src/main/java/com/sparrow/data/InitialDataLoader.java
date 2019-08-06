@@ -97,7 +97,12 @@ public class InitialDataLoader implements
         Hotel h1 = new Hotel("Plaza", "The Plaza Hotel is a landmarked 20-story luxury hotel and condominium apartment building in the Midtown Manhattan neighborhood of Manhattan, New York City. It opened in 1907 and is now owned by Katara Hospitality.", hotelAdmin, a1);
         Hotel h2 = new Hotel("Holiday Inn", "Holiday Inn is a British-owned American brand of hotels, and a subsidiary of InterContinental Hotels Group. Founded as a U.S. motel chain, it has grown to be one of the world's largest hotel chains.", hotelAdmin, a2);
         Hotel h3 = new Hotel("Burj Al Arab", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", hotelAdmin, a3);
-        hotelRepository.saveAll(Arrays.asList(h1, h2, h3));
+        Hotel h4 = new Hotel("Sheratton", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", hotelAdmin, a4);
+        Hotel h5 = new Hotel("City", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", hotelAdmin, a4);
+        Hotel h6 = new Hotel("Nacional", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", hotelAdmin, a4);
+        Hotel h7 = new Hotel("Mr.Jones", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", hotelAdmin, a4);
+        Hotel h8 = new Hotel("Hilton", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", hotelAdmin, a4);
+        hotelRepository.saveAll(Arrays.asList(h1, h2, h3, h4, h5, h6, h7, h8));
 
         ExtraService e1 = new ExtraService();
         e1.setName("Wellness");

@@ -1,5 +1,6 @@
 package com.sparrow.service;
 
+import com.sparrow.dto.HotelSearchDto;
 import com.sparrow.dto.NewHotelDto;
 import com.sparrow.model.Hotel;
 import com.sparrow.model.Room;
@@ -29,5 +30,7 @@ public interface HotelService {
     Hotel create(NewHotelDto newHotelDto);
 
     Hotel updateRoom(Long hotelId, Long roomId, Room room);
+
+    List<Hotel> search(HotelSearchDto hotelSearchDto);
 
 }
