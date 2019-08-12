@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Controller
@@ -41,12 +42,11 @@ public class AdminController {
     }
 
     @PostMapping(value = "/hotels")
-    public ResponseEntity<Hotel> createHotel(@RequestBody Hotel hotel) {
+    public ResponseEntity<Hotel> createHotel(@RequestBody Hotel hotel) throws UnsupportedEncodingException {
         logger.info("Creating new hotel with following attributes: ");
         logger.info(String.format("Name: %s, \n Description: %s, \n Address: %s, \n", hotel.getName(), hotel.getDescription(), hotel.getAddress()));
         addressService.save(hotel.getAddress());
-        Hotel savedHotel = hotelService.save(hotel);
-        return ResponseEntity.ok(savedHotel);
+        return ResponseEntity.ok(hotelService.save(hotel));
     }
 
     @DeleteMapping(value = "/hotels/{id}")

@@ -32,6 +32,10 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
     private Set<HotelServices> hotelServices;
 
+    @Lob
+    @Column(name = "HOTEL_IMAGE", nullable = true, columnDefinition = "BLOB")
+    private String image;
+
     public Hotel() {
     }
 
@@ -104,5 +108,13 @@ public class Hotel {
 
     public void setHotelServices(Set<HotelServices> hotelServices) {
         this.hotelServices = hotelServices;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

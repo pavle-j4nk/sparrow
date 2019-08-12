@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 @Component
@@ -17,6 +20,8 @@ public class InitialDataLoader implements
         ApplicationListener<ContextRefreshedEvent> {
 
     boolean alreadySetup = false;
+
+    private String BASE_64_IMAGE;
 
     @Autowired
     private UserRepository userRepository;
@@ -54,6 +59,12 @@ public class InitialDataLoader implements
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
     public void onApplicationEvent(ContextRefreshedEvent event) {
+        try {
+            BASE_64_IMAGE = new String(Files.readAllBytes(Paths.get("src/main/resources/base64_image.txt")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         if (alreadySetup)
             return;
         Privilege readPrivilege
@@ -95,14 +106,14 @@ public class InitialDataLoader implements
         addressRepository.saveAll(Arrays.asList(a1, a2, a3, a4));
 
         Hotel h1 = new Hotel("Plaza", "The Plaza Hotel is a landmarked 20-story luxury hotel and condominium apartment building in the Midtown Manhattan neighborhood of Manhattan, New York City. It opened in 1907 and is now owned by Katara Hospitality.", hotelAdmin, a1);
+        h1.setImage(BASE_64_IMAGE);
         Hotel h2 = new Hotel("Holiday Inn", "Holiday Inn is a British-owned American brand of hotels, and a subsidiary of InterContinental Hotels Group. Founded as a U.S. motel chain, it has grown to be one of the world's largest hotel chains.", hotelAdmin, a2);
+        h2.setImage(BASE_64_IMAGE);
         Hotel h3 = new Hotel("Burj Al Arab", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", hotelAdmin, a3);
+        h3.setImage(BASE_64_IMAGE);
         Hotel h4 = new Hotel("Sheratton", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", hotelAdmin, a4);
-        Hotel h5 = new Hotel("City", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", hotelAdmin, a4);
-        Hotel h6 = new Hotel("Nacional", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", hotelAdmin, a4);
-        Hotel h7 = new Hotel("Mr.Jones", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", hotelAdmin, a4);
-        Hotel h8 = new Hotel("Hilton", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", hotelAdmin, a4);
-        hotelRepository.saveAll(Arrays.asList(h1, h2, h3, h4, h5, h6, h7, h8));
+        h4.setImage(BASE_64_IMAGE);
+        hotelRepository.saveAll(Arrays.asList(h1, h2, h3, h4));
 
         ExtraService e1 = new ExtraService();
         e1.setName("Wellness");
