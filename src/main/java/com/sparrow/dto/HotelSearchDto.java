@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class HotelSearchDto {
     /**
-     *  Hotel or destination name
+     * Hotel or destination name
      */
     private String place;
 
@@ -12,16 +12,10 @@ public class HotelSearchDto {
 
     private Date end;
 
-    private int rooms;
-
-    private int guests;
-
-    public HotelSearchDto(String place, Date start, Date end, int rooms, int guests) {
+    public HotelSearchDto(String place, Date start, Date end) {
         this.place = place;
         this.start = start;
         this.end = end;
-        this.rooms = rooms;
-        this.guests = guests;
     }
 
     public String getPlace() {
@@ -48,19 +42,4 @@ public class HotelSearchDto {
         this.end = end;
     }
 
-    public int getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(int rooms) {
-        this.rooms = rooms;
-    }
-
-    public int getGuests() {
-        return guests;
-    }
-
-    public void setGuests(int guests) {
-        this.guests = guests;
-    }
 }

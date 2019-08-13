@@ -14,7 +14,7 @@ public interface HotelRepository extends JpaRepository<Hotel, Long> {
 
     Optional<Hotel> findByAddress(String address);
 
-    @Query("SELECT h FROM Hotel h WHERE h.name LIKE CONCAT('%', :name, '%')")
+    @Query("SELECT h FROM Hotel h WHERE UPPER(h.name) LIKE CONCAT('%', :name, '%')")
     List<Hotel> findAllByName(@Param("name") String name);
 
 }

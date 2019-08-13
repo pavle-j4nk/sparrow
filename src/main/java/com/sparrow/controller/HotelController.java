@@ -75,10 +75,8 @@ public class HotelController {
     @GetMapping(value = "/search")
     public ResponseEntity<List<Hotel>> getSearchHotels(@RequestParam String place,
                                                        @RequestParam(required = false) Date start,
-                                                       @RequestParam(required = false) Date end,
-                                                       @RequestParam(required = false) Integer rooms,
-                                                       @RequestParam(required = false) Integer guests) {
-        HotelSearchDto hotelSearchDto = new HotelSearchDto(place, start, end, rooms, guests);
+                                                       @RequestParam(required = false) Date end) {
+        HotelSearchDto hotelSearchDto = new HotelSearchDto(place, start, end);
 
         return ResponseEntity.ok(hotelService.search(hotelSearchDto));
     }

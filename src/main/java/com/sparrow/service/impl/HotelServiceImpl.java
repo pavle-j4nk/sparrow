@@ -122,7 +122,7 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public List<Hotel> search(HotelSearchDto hotelSearchDto) {
-        List<Hotel> hotels = hotelRepository.findAllByName(hotelSearchDto.getPlace());
+        List<Hotel> hotels = hotelRepository.findAllByName(hotelSearchDto.getPlace().toUpperCase());
 
         List<HotelReservation> reservations = hotelReservationRepository.findAll();
 
@@ -130,23 +130,6 @@ public class HotelServiceImpl implements HotelService {
             if ((hotelSearchDto.getStart().before(r.getStart()) || hotelSearchDto.getStart().equals(r.getStart())) &&
                     (hotelSearchDto.getEnd().after(r.getEnd()) || hotelSearchDto.getEnd().equals(r.getEnd()))) {
                 hotels.remove(r.getRoom().getHotel());
-            }
-        }
-
-        hotels.removeIf(h -> hotelSearchDto.getRooms() > h.getRooms().size());
-
-        boolean hasCapacity = false;
-
-        for (Hotel h : hotels) {
-            Set<Room> rooms = h.getRooms();
-            for (Room r: rooms) {
-                if (hotelSearchDto.getGuests() < r.getBedsNo()) {
-                    hasCapacity = true;
-                    break;
-                }
-            }
-            if (!hasCapacity) {
-                hotels.remove(h);
             }
         }
 
