@@ -1,5 +1,6 @@
 package com.sparrow.controller;
 
+import com.sparrow.dto.HotelDto;
 import com.sparrow.dto.HotelSearchDto;
 import com.sparrow.dto.NewHotelDto;
 import com.sparrow.model.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -35,8 +37,8 @@ public class HotelController {
     private ExceptionHandlerService exceptionHandlerService;
 
     @GetMapping
-    public ResponseEntity<List<Hotel>> getHotels() {
-        return ResponseEntity.ok(hotelService.findAll());
+    public ResponseEntity<List<HotelDto>> getHotels() {
+        return ResponseEntity.ok(hotelService.findAllExtended());
     }
 
     @PostMapping

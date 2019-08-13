@@ -1,5 +1,6 @@
 package com.sparrow.service;
 
+import com.sparrow.dto.HotelDto;
 import com.sparrow.dto.HotelSearchDto;
 import com.sparrow.dto.NewHotelDto;
 import com.sparrow.model.Hotel;
@@ -10,6 +11,11 @@ import java.util.List;
 public interface HotelService {
 
     List<Hotel> findAll();
+
+    /**
+     * returns HotelDto list that contains hotel attributes extended with all hotel pricelists, extra services etc.
+     */
+    List<HotelDto> findAllExtended();
 
     Hotel getOne(Long id);
 

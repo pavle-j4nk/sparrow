@@ -1,5 +1,6 @@
 package com.sparrow.service.impl;
 
+import com.sparrow.dto.HotelDto;
 import com.sparrow.dto.HotelSearchDto;
 import com.sparrow.dto.NewHotelDto;
 import com.sparrow.model.Hotel;
@@ -12,6 +13,7 @@ import com.sparrow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -31,6 +33,26 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public List<Hotel> findAll() {
         return hotelRepository.findAll();
+    }
+
+    @Override
+    public List<HotelDto> findAllExtended() {
+        List<Hotel> hotels = findAll();
+        List<HotelDto> hotelDtos = new ArrayList<>();
+        for (Hotel h : hotels) {
+            HotelDto dto = new HotelDto();
+            dto.setId(h.getId());
+            dto.setName(h.getName());
+            dto.setAddress(h.getAddress());
+            dto.setDescription(h.getDescription());
+            dto.setPriceLists(h.getPriceLists());
+            dto.setRooms(h.getRooms());
+            dto.setAdmin(h.getAdmin());
+            dto.setHotelServices(h.getHotelServices());
+            dto.setImage(h.getImage());
+            hotelDtos.add(dto);
+        }
+        return hotelDtos;
     }
 
     @Override

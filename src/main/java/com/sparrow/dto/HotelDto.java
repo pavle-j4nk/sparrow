@@ -3,6 +3,7 @@ package com.sparrow.dto;
 import com.sparrow.model.*;
 
 import java.util.List;
+import java.util.Set;
 
 public class HotelDto {
     private Long id;
@@ -13,20 +14,20 @@ public class HotelDto {
 
     private String description;
 
-    private List<PriceList> priceLists;
+    private Set<PriceList> priceLists;
 
-    private List<Room> rooms;
+    private Set<Room> rooms;
 
     private User admin;
 
-    private List<HotelServices> hotelServices;
+    private Set<HotelServices> hotelServices;
 
     private String image;
 
     public HotelDto() {
     }
 
-    public HotelDto(Long id, String name, Address address, String description, List<PriceList> priceLists, List<Room> rooms, User admin, List<HotelServices> hotelServices, String image) {
+    public HotelDto(Long id, String name, Address address, String description, Set<PriceList> priceLists, Set<Room> rooms, User admin, Set<HotelServices> hotelServices, String image) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -70,19 +71,19 @@ public class HotelDto {
         this.description = description;
     }
 
-    public List<PriceList> getPriceLists() {
+    public Set<PriceList> getPriceLists() {
         return priceLists;
     }
 
-    public void setPriceLists(List<PriceList> priceLists) {
+    public void setPriceLists(Set<PriceList> priceLists) {
         this.priceLists = priceLists;
     }
 
-    public List<Room> getRooms() {
+    public Set<Room> getRooms() {
         return rooms;
     }
 
-    public void setRooms(List<Room> rooms) {
+    public void setRooms(Set<Room> rooms) {
         this.rooms = rooms;
     }
 
@@ -94,11 +95,11 @@ public class HotelDto {
         this.admin = admin;
     }
 
-    public List<HotelServices> getHotelServices() {
+    public Set<HotelServices> getHotelServices() {
         return hotelServices;
     }
 
-    public void setHotelServices(List<HotelServices> hotelServices) {
+    public void setHotelServices(Set<HotelServices> hotelServices) {
         this.hotelServices = hotelServices;
     }
 
