@@ -3,10 +3,13 @@ package com.sparrow.service;
 import com.sparrow.dto.HotelDto;
 import com.sparrow.dto.HotelSearchDto;
 import com.sparrow.dto.NewHotelDto;
+import com.sparrow.dto.RoomSearchDto;
 import com.sparrow.model.Hotel;
+import com.sparrow.model.PriceListItem;
 import com.sparrow.model.Room;
 
 import java.util.List;
+import java.util.Set;
 
 public interface HotelService {
 
@@ -34,6 +37,8 @@ public interface HotelService {
     void delete(Hotel hotel);
 
     Hotel create(NewHotelDto newHotelDto);
+
+    Set<PriceListItem> searchRooms(RoomSearchDto roomSearchDto, Long hotelId);
 
     Hotel updateRoom(Long hotelId, Long roomId, Room room);
 

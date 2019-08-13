@@ -3,6 +3,7 @@ package com.sparrow.service.impl;
 import com.sparrow.model.Hotel;
 import com.sparrow.model.PriceList;
 import com.sparrow.model.PriceListItem;
+import com.sparrow.model.Room;
 import com.sparrow.repository.PriceListItemRepository;
 import com.sparrow.repository.RoomRepository;
 import com.sparrow.service.HotelService;
@@ -42,6 +43,16 @@ public class PriceListItemServiceImpl implements PriceListItemService {
         } else {
             throw new NotFoundException();
         }
+    }
+
+    @Override
+    public PriceListItem findByRoom(Room room) {
+        return priceListItemRepository.findByRoom(room);
+    }
+
+    @Override
+    public PriceListItem findByRoomName(String name) {
+        return priceListItemRepository.findByRoomName(name);
     }
 
     @Override

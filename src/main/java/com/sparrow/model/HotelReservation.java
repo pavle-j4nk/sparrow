@@ -2,6 +2,7 @@ package com.sparrow.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Set;
 
 @Entity
 public class HotelReservation {
@@ -12,12 +13,17 @@ public class HotelReservation {
     @ManyToOne
     private User user;
 
-    @ManyToOne
-    private Room room;
+    @ManyToMany
+    private Set<Room> rooms;
 
     private Date start;
 
     private Date end;
+
+    @ManyToMany
+    private Set<HotelServices> hotelServices;
+
+    private Double price;
 
     public HotelReservation() {
 
@@ -39,12 +45,12 @@ public class HotelReservation {
         this.user = user;
     }
 
-    public Room getRoom() {
-        return room;
+    public Set<Room> getRooms() {
+        return rooms;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setRooms(Set<Room> rooms) {
+        this.rooms = rooms;
     }
 
     public Date getStart() {
@@ -61,5 +67,21 @@ public class HotelReservation {
 
     public void setEnd(Date end) {
         this.end = end;
+    }
+
+    public Set<HotelServices> getHotelServices() {
+        return hotelServices;
+    }
+
+    public void setHotelServices(Set<HotelServices> hotelServices) {
+        this.hotelServices = hotelServices;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

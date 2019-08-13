@@ -3,10 +3,9 @@ package com.sparrow.controller;
 import com.sparrow.dto.HotelDto;
 import com.sparrow.dto.HotelSearchDto;
 import com.sparrow.dto.NewHotelDto;
+import com.sparrow.dto.RoomSearchDto;
 import com.sparrow.model.*;
-import com.sparrow.service.ExceptionHandlerService;
-import com.sparrow.service.HotelService;
-import com.sparrow.service.RoomService;
+import com.sparrow.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -25,6 +23,7 @@ import java.util.Set;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class HotelController {
 
+    public static final String ALEKSANDAR_VUJASINOVIC = "aleksandar.vujasinovic";
     private Logger logger = LoggerFactory.getLogger(HotelController.class);
 
     @Autowired
@@ -35,6 +34,12 @@ public class HotelController {
 
     @Autowired
     private ExceptionHandlerService exceptionHandlerService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private HotelReservationService hotelReservationService;
 
     @GetMapping
     public ResponseEntity<List<HotelDto>> getHotels() {
@@ -81,6 +86,23 @@ public class HotelController {
         HotelSearchDto hotelSearchDto = new HotelSearchDto(place, start, end);
 
         return ResponseEntity.ok(hotelService.search(hotelSearchDto));
+    }
+
+    @PostMapping(value = "/reservation")
+    public ResponseEntity postHotelReservation(@RequestBody HotelReservation hotelReservation) {
+        hotelReservation.setUser(userService.findByUsername(ALEKSANDAR_VUJASINOVIC));
+        return ResponseEntity.ok(hotelReservationService.save(hotelReservation));
+    }
+
+    @GetMapping(value = "/{id}/rooms/search")
+    public ResponseEntity<Set<PriceListItem>> getSearchHotelRoom(@RequestParam Date start,
+                                                                 @RequestParam Date end,
+                                                                 @RequestParam Integer guests,
+                                                                 @RequestParam Integer rooms,
+                                                                 @RequestParam Integer capacity,
+                                                                 @PathVariable Long id) {
+        RoomSearchDto roomSearchDto = new RoomSearchDto(start, end, guests, rooms, capacity);
+        return ResponseEntity.ok(hotelService.searchRooms(roomSearchDto, id));
     }
 
     @ExceptionHandler

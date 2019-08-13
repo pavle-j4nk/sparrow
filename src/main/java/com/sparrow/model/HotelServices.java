@@ -4,10 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
-//@Table(
-//        name = "HOTEL_SERVICES",
-//        uniqueConstraints = @UniqueConstraint(columnNames = {"extra_service_name","hotel_id"})
-//)
 @Entity
 public class HotelServices {
 

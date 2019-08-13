@@ -3,9 +3,8 @@ package com.sparrow.service.impl;
 import com.sparrow.dto.HotelDto;
 import com.sparrow.dto.HotelSearchDto;
 import com.sparrow.dto.NewHotelDto;
-import com.sparrow.model.Hotel;
-import com.sparrow.model.HotelReservation;
-import com.sparrow.model.Room;
+import com.sparrow.dto.RoomSearchDto;
+import com.sparrow.model.*;
 import com.sparrow.repository.HotelRepository;
 import com.sparrow.repository.HotelReservationRepository;
 import com.sparrow.service.HotelService;
@@ -13,10 +12,7 @@ import com.sparrow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class HotelServiceImpl implements HotelService {
@@ -151,10 +147,43 @@ public class HotelServiceImpl implements HotelService {
         for (HotelReservation r : reservations) {
             if ((hotelSearchDto.getStart().before(r.getStart()) || hotelSearchDto.getStart().equals(r.getStart())) &&
                     (hotelSearchDto.getEnd().after(r.getEnd()) || hotelSearchDto.getEnd().equals(r.getEnd()))) {
-                hotels.remove(r.getRoom().getHotel());
+                for (Room room : r.getRooms()) {
+                    hotels.remove(room.getHotel());
+                    break;
+                }
+            }
+        }
+        return hotels;
+    }
+
+    @Override
+    public Set<PriceListItem> searchRooms(RoomSearchDto roomSearchDto, Long hotelId) {
+        Hotel hotel = findById(hotelId);
+        PriceList priceList = hotel.getPriceLists().iterator().next();
+        Set<PriceListItem> priceListItems = priceList.getItems();
+
+        List<HotelReservation> reservations = hotelReservationRepository.findByDate(roomSearchDto.getStart(), roomSearchDto.getEnd());
+
+        for (HotelReservation reservation : reservations) {
+            for (Room room : reservation.getRooms()) {
+                priceListItems.removeIf(r -> r.getRoom().equals(room));
+            }
+        }
+        Set<PriceListItem> withExactCapacity = new HashSet<>();
+
+        priceListItems.removeIf(r -> r.getRoom().getBedsNo() < roomSearchDto.getCapacity());
+
+        for (PriceListItem item : priceListItems) {
+            if (item.getRoom().getBedsNo() == roomSearchDto.getCapacity()) {
+                withExactCapacity.add(item);
             }
         }
 
-        return hotels;
+        if (withExactCapacity.size() < roomSearchDto.getRooms()) {
+            priceListItems.removeIf(r -> r.getRoom().getBedsNo() < roomSearchDto.getGuests());
+            priceListItems.addAll(withExactCapacity);
+        }
+
+        return priceListItems;
     }
 }

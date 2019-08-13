@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Date;
 import java.util.*;
 
 @Component
@@ -52,6 +53,9 @@ public class InitialDataLoader implements
 
     @Autowired
     private HotelServicesRepository hotelServicesRepository;
+
+    @Autowired
+    private HotelReservationRepository hotelReservationRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -173,9 +177,27 @@ public class InitialDataLoader implements
         priceListRepository.save(pl1);
 
         h1.setPriceLists(new HashSet<>(Arrays.asList(pl1)));
-        hotelRepository.save(h1);
 
         userRepository.saveAll(Arrays.asList(u1, u2, u3, admin, hotelAdmin));
+        hotelRepository.save(h1);
+
+        HotelReservation hr = new HotelReservation();
+        hr.setStart(new Date(1565388000000L));
+        hr.setEnd(new Date(1565820000000L));
+
+        Set<Room> reservationRooms = new HashSet<>();
+        reservationRooms.add(r1);
+        reservationRooms.add(r2);
+        reservationRooms.add(r3);
+
+        Set<HotelServices> hotelServices = new HashSet<>();
+        hotelServices.add(hs1);
+        hr.setRooms(reservationRooms);
+        hr.setHotelServices(hotelServices);
+        hr.setUser(u3);
+        hr.setPrice(102.0);
+        hotelReservationRepository.save(hr);
+
 
         alreadySetup = true;
     }
