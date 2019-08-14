@@ -1,6 +1,7 @@
 package com.sparrow.service.exception;
 
 import com.sparrow.service.ExceptionHandlerService;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,9 @@ public class ExceptionHandlerServiceImpl implements ExceptionHandlerService {
         } else if (e instanceof BadCredentialsException) {
             sc = HttpServletResponse.SC_BAD_REQUEST;
         } else if (e instanceof NotFoundException) {
-            sc = HttpServletResponse.SC_BAD_REQUEST;
+            sc = HttpServletResponse.SC_NOT_FOUND;
+        } else if (e instanceof AccessDeniedException) {
+            sc = HttpServletResponse.SC_FORBIDDEN;
         }
 
         try {
