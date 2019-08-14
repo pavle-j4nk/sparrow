@@ -1,6 +1,7 @@
 package com.sparrow.repository;
 
 import com.sparrow.model.HotelReservation;
+import com.sparrow.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,4 +13,9 @@ public interface HotelReservationRepository extends JpaRepository<HotelReservati
 
     @Query("SELECT h FROM HotelReservation h WHERE (h.start >= :start AND h.start <= :end) OR (h.end >=:start AND h.end <= :end)")
     List<HotelReservation> findByDate(@Param("start") Date start, @Param("end") Date end);
+
+    @Query("SELECT h FROM HotelReservation h WHERE :currentDate BETWEEN h.start AND h.end")
+    List<HotelReservation> findByCurrentDate(@Param("currentDate") Date currentDate);
+
+    List<HotelReservation> findByUser(User user);
 }

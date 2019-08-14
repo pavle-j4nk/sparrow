@@ -187,8 +187,6 @@ public class InitialDataLoader implements
 
         Set<Room> reservationRooms = new HashSet<>();
         reservationRooms.add(r1);
-        reservationRooms.add(r2);
-        reservationRooms.add(r3);
 
         Set<HotelServices> hotelServices = new HashSet<>();
         hotelServices.add(hs1);

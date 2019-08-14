@@ -12,6 +12,7 @@ import com.sparrow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.*;
 
 @Service
@@ -182,6 +183,26 @@ public class HotelServiceImpl implements HotelService {
         if (withExactCapacity.size() < roomSearchDto.getRooms()) {
             priceListItems.removeIf(r -> r.getRoom().getBedsNo() < roomSearchDto.getGuests());
             priceListItems.addAll(withExactCapacity);
+        }
+
+        return priceListItems;
+    }
+
+
+    @Override
+    public Set<PriceListItem> searchRoomsByCurrentDate(Long hotelId) {
+        Hotel hotel = findById(hotelId);
+        PriceList priceList = hotel.getPriceLists().iterator().next();
+        Set<PriceListItem> priceListItems = priceList.getItems();
+
+        Date currentDate = new Date(Calendar.getInstance().getTime().getTime());
+
+        List<HotelReservation> hotelReservations = hotelReservationRepository.findByCurrentDate(currentDate);
+
+        for (HotelReservation reservation : hotelReservations) {
+            for (Room room : reservation.getRooms()) {
+                priceListItems.removeIf(r -> r.getRoom().equals(room));
+            }
         }
 
         return priceListItems;

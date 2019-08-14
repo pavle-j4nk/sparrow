@@ -1,9 +1,6 @@
 package com.sparrow.controller;
 
-import com.sparrow.dto.HotelDto;
-import com.sparrow.dto.HotelSearchDto;
-import com.sparrow.dto.NewHotelDto;
-import com.sparrow.dto.RoomSearchDto;
+import com.sparrow.dto.*;
 import com.sparrow.model.*;
 import com.sparrow.service.*;
 import org.slf4j.Logger;
@@ -68,15 +65,12 @@ public class HotelController {
 
     @GetMapping(value = "/{id}/pricelist")
     public ResponseEntity<Set<PriceListItem>> getHotelPriceList(@PathVariable Long id) {
-        Hotel hotel = hotelService.findById(id);
-        Set<PriceList> priceLists = hotel.getPriceLists();
-        return ResponseEntity.ok(priceLists.stream().findFirst().get().getItems());
+        return ResponseEntity.ok(hotelService.searchRoomsByCurrentDate(id));
     }
 
     @GetMapping(value = "/{id}/services")
     public ResponseEntity<Set<HotelServices>> getHotelServices(@PathVariable Long id) {
-        Hotel hotel = hotelService.findById(id);
-        return ResponseEntity.ok(hotel.getHotelServices());
+        return ResponseEntity.ok(hotelService.findById(id).getHotelServices());
     }
 
     @GetMapping(value = "/search")
@@ -90,8 +84,22 @@ public class HotelController {
 
     @PostMapping(value = "/reservation")
     public ResponseEntity postHotelReservation(@RequestBody HotelReservation hotelReservation) {
-        hotelReservation.setUser(userService.findByUsername(ALEKSANDAR_VUJASINOVIC));
+//        hotelReservation.setUser(userService.findByUsername(ALEKSANDAR_VUJASINOVIC));
         return ResponseEntity.ok(hotelReservationService.save(hotelReservation));
+    }
+
+    @GetMapping(value = "/reservations-active/{id}")
+    public ResponseEntity<List<HotelReservationDto>> getHotelReservationsActive(@PathVariable Long id) {
+        User user = userService.findById(id);
+        List<HotelReservation> hotelReservations = hotelReservationService.findActiveByUser(user);
+        return ResponseEntity.ok(hotelReservationService.createReservationsDto(hotelReservations));
+    }
+
+    @GetMapping(value = "/reservations-finished/{id}")
+    public ResponseEntity<List<HotelReservationDto>> getHotelReservationsFinished(@PathVariable Long id) {
+        User user = userService.findById(id);
+        List<HotelReservation> hotelReservations = hotelReservationService.findFinishedByUser(user);
+        return ResponseEntity.ok(hotelReservationService.createReservationsDto(hotelReservations));
     }
 
     @GetMapping(value = "/{id}/rooms/search")
