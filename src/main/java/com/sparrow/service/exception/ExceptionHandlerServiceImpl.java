@@ -24,6 +24,8 @@ public class ExceptionHandlerServiceImpl implements ExceptionHandlerService {
             sc = HttpServletResponse.SC_NOT_FOUND;
         } else if (e instanceof AccessDeniedException) {
             sc = HttpServletResponse.SC_FORBIDDEN;
+        } else {
+            e.printStackTrace();
         }
 
         try {

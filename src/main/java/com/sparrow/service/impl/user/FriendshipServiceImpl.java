@@ -8,6 +8,7 @@ import com.sparrow.repository.FriendRequestRepository;
 import com.sparrow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,8 +26,8 @@ public class FriendshipServiceImpl implements FriendshipService {
     FriendRequestRepository friendRequestRepository;
 
     @Override
-    public List<User> getFriendsOf(String email) {
-        User user = userService.findByUsername(email);
+    public List<User> getFriendsOf(String username) {
+        User user = userService.findByUsername(username);
 
         List<Friendship> friendships = friendshipRepository.findAllByFriendsContaining(user);
 
@@ -41,9 +42,9 @@ public class FriendshipServiceImpl implements FriendshipService {
     }
 
     @Override
-    public void createFriendship(String email1, String email2) {
-        User user1 = userService.findByUsername(email1);
-        User user2 = userService.findByUsername(email2);
+    public void createFriendship(String username1, String username2) {
+        User user1 = userService.findByUsername(username1);
+        User user2 = userService.findByUsername(username2);
 
         Friendship friendship = new Friendship();
         friendship.setFriends(Arrays.asList(user1, user2));
@@ -52,23 +53,23 @@ public class FriendshipServiceImpl implements FriendshipService {
     }
 
     @Override
-    public void breakFriendship(String email1, String email2) {
-        User user1 = userService.findByUsername(email1);
-        User user2 = userService.findByUsername(email2);
+    public void breakFriendship(String username1, String username2) {
+        User user1 = userService.findByUsername(username1);
+        User user2 = userService.findByUsername(username2);
 
         List<Friendship> friendships = friendshipRepository
                 .findAllByFriendsContainingAndFriendsContaining(user1, user2);
         if (friendships.isEmpty()) {
-            throw new FriendshipDoesNotExistException(String.format("Between %s and %s", email1, email2));
+            throw new FriendshipDoesNotExistException(String.format("Between %s and %s", username1, username2));
         }
 
         friendshipRepository.delete(friendships.get(0));
     }
 
     @Override
-    public FriendRequest findRequest(String senderEmail, String receiverEmail) {
-        User sender = userService.findByUsername(senderEmail);
-        User receiver = userService.findByUsername(receiverEmail);
+    public FriendRequest findRequest(String senderUsername, String receiverUsername) {
+        User sender = userService.findByUsername(senderUsername);
+        User receiver = userService.findByUsername(receiverUsername);
 
         return findRequest(sender, receiver);
     }
@@ -87,18 +88,18 @@ public class FriendshipServiceImpl implements FriendshipService {
     }
 
     @Override
-    public void sendRequest(String emailFrom, String emailTo) {
-        User sender = userService.findByUsername(emailFrom);
-        User receiver = userService.findByUsername(emailTo);
+    public void sendRequest(String usernameFrom, String usernameTo) {
+        User sender = userService.findByUsername(usernameFrom);
+        User receiver = userService.findByUsername(usernameTo);
 
         if (!friendRequestRepository.findBySenderAndReceiverAndStatus(sender, receiver, FriendRequest.Status.PENDING)
                 .isEmpty()) {
-            throw new FriendRequestAlreadyExistsException(String.format("From %s to %s", emailFrom, emailTo));
+            throw new FriendRequestAlreadyExistsException(String.format("From %s to %s", usernameFrom, usernameTo));
         }
 
         if (!friendRequestRepository.findBySenderAndReceiverAndStatus(receiver, sender, FriendRequest.Status.PENDING)
                 .isEmpty()) {
-            throw new FriendRequestAlreadyExistsException(String.format("From %s to %s", emailTo, emailFrom));
+            throw new FriendRequestAlreadyExistsException(String.format("From %s to %s", usernameTo, usernameFrom));
         }
 
 
@@ -108,17 +109,17 @@ public class FriendshipServiceImpl implements FriendshipService {
     }
 
     @Override
-    public void acceptRequest(String emailFrom, String emailTo) {
-        FriendRequest request = findRequest(emailFrom, emailTo);
+    public void acceptRequest(String usernameFrom, String usernameTo) {
+        FriendRequest request = findRequest(usernameFrom, usernameTo);
         request.setStatus(FriendRequest.Status.ACCEPTED);
         friendRequestRepository.save(request);
 
-        createFriendship(emailTo, emailFrom);
+        createFriendship(usernameTo, usernameFrom);
     }
 
     @Override
-    public void declineRequest(String emailFrom, String emailTo) {
-        FriendRequest request = findRequest(emailFrom, emailTo);
+    public void declineRequest(String usernameFrom, String usernameTo) {
+        FriendRequest request = findRequest(usernameFrom, usernameTo);
         request.setStatus(FriendRequest.Status.DECLINED);
         friendRequestRepository.save(request);
     }

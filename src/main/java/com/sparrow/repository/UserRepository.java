@@ -1,5 +1,6 @@
 package com.sparrow.repository;
 
+import com.sparrow.model.Role;
 import com.sparrow.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,7 +19,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param name
      * @return
      */
-    @Query("SELECT u from User u WHERE u.enabled = true AND (lower(u.firstName) LIKE %?1% OR lower(u.lastName) LIKE %?1%)")
-    List<User> findAllWhereAnyNameContains(String name);
+    @Query("SELECT u from User u WHERE u.enabled = true AND (lower(u.firstName) LIKE %?1% OR lower(u.lastName) LIKE %?1%)" +
+            " AND u.role = ?2")
+    List<User> findAllWhereAnyNameContains(String name, Role role);
 
 }

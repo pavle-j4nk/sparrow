@@ -7,21 +7,21 @@ import java.util.List;
 
 public interface FriendshipService {
 
-    List<User> getFriendsOf(String email);
+    List<User> getFriendsOf(String username);
 
-    void createFriendship(String email1, String email2);
+    void createFriendship(String username1, String username2);
 
-    void breakFriendship(String email1, String email2);
+    void breakFriendship(String username1, String username2);
 
-    FriendRequest findRequest(String senderEmail, String receiverEmail);
+    FriendRequest findRequest(String senderUsername, String receiverUsername);
 
     FriendRequest findRequest(User sender, User receiver);
 
-    void sendRequest(String emailFrom, String emailTo);
+    void sendRequest(String usernameFrom, String usernameTo);
 
-    void acceptRequest(String emailFrom, String emailTo);
+    void acceptRequest(String usernameFrom, String usernameTo);
 
-    void declineRequest(String emailFrom, String emailTo);
+    void declineRequest(String usernameFrom, String usernameTo);
 
     List<FriendRequest> getRequestFor(String receiver);
 

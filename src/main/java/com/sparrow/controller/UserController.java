@@ -35,9 +35,10 @@ public class UserController {
     }
 
     @GetMapping("/search/{name}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<UserResponse>> search(Principal principal
             , @PathVariable("name") String name
-            , @RequestParam(name = "friend", required = false) Boolean isFriend
+            , @RequestParam(name = "isFriend", required = false) Boolean isFriend
             , @RequestParam(name = "canAddFriend", required = false) Boolean canAddFriend) {
 
         return ResponseEntity

@@ -4,7 +4,6 @@ import com.sparrow.dto.ExtendedUser;
 import com.sparrow.model.FriendRequest;
 import com.sparrow.model.Role;
 import com.sparrow.model.User;
-import com.sparrow.repository.FriendRequestRepository;
 import com.sparrow.repository.RoleRepository;
 import com.sparrow.repository.UserRepository;
 import com.sparrow.service.UserService;
@@ -19,7 +18,9 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -83,8 +84,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> searchByAnyName(String name, String name1, Boolean isFriend, Boolean canAddFriend) {
-        return userRepository.findAllWhereAnyNameContains(name);
+    public List<User> searchByAnyName(String query, String loggedUsername, Boolean isFriend, Boolean canAddFriend) {
+        List<User> friendsOf = friendshipService.getFriendsOf(loggedUsername);
+        List<User> results = userRepository.findAllWhereAnyNameContains(query, roleRepo.findByName(Role.USER));
+
+        results.remove(findByUsername(loggedUsername));
+
+        if (isFriend) {
+            results.removeIf(user -> !friendsOf.contains(user));
+        } else {
+            results.removeIf(friendsOf::contains);
+        }
+
+        List<FriendRequest> requests = friendshipService.getRequestFor(loggedUsername);
+        requests.addAll(friendshipService.getRequestOf(loggedUsername));
+
+        Set<User> requestUsers = new HashSet<>();
+        for (FriendRequest request : requests) {
+            requestUsers.add(request.getSender());
+            requestUsers.add(request.getReceiver());
+        }
+
+        if (canAddFriend) {
+            results.removeIf(requestUsers::contains);
+        }
+
+        return results;
     }
 
     @Override

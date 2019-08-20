@@ -12,23 +12,25 @@ public class UserResponse {
     private String email;
     private String firstName;
     private String lastName;
+    private String username;
     private Boolean enabled;
     private String role;
 
     public UserResponse() {
     }
 
-    public UserResponse(Long id, String email, String firstName, String lastName, Boolean enabled, String role) {
+    public UserResponse(Long id, String email, String firstName, String lastName, String username, Boolean enabled, String role) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = username;
         this.enabled = enabled;
         this.role = role;
     }
 
     public UserResponse(User user) {
-        this(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName()
+        this(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getUsername()
                 , user.getEnabled(), user.getRole().getName());
     }
 
@@ -97,4 +99,11 @@ public class UserResponse {
         this.role = role;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
