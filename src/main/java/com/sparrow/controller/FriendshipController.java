@@ -27,9 +27,9 @@ public class FriendshipController {
         return ResponseEntity.ok(UserResponse.of(friendshipService.getFriendsOf(principal.getName())));
     }
 
-    @DeleteMapping("/{email}")
+    @DeleteMapping("/{username}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity removeFriend(Principal principal, @PathVariable("email") String email) {
+    public ResponseEntity removeFriend(Principal principal, @PathVariable("username") String email) {
         friendshipService.breakFriendship(principal.getName(), email);
         return ResponseEntity.ok().build();
     }
@@ -48,9 +48,9 @@ public class FriendshipController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/request/{email}/decline")
+    @PostMapping("/request/{username}/decline")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity declineRequest(Principal principal, @PathVariable("email") String email) {
+    public ResponseEntity declineRequest(Principal principal, @PathVariable("username") String email) {
         friendshipService.declineRequest(email, principal.getName());
         return ResponseEntity.ok().build();
     }
