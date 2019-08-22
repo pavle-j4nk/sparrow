@@ -128,4 +128,18 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    @Override
+    public User update(User user) {
+        User old = findByUsername(user.getUsername());
+        old.setFirstName(user.getFirstName());
+        old.setLastName(user.getLastName());
+        old.setAddress(user.getAddress());
+
+        if (user.getPassword() != null) {
+            old.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+        return userRepository.save(old);
+    }
+
 }

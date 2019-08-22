@@ -24,4 +24,6 @@ public interface UserService {
     List<User> searchByAnyName(String name, String name1, Boolean isFriend, Boolean canAddFriend);
 
     User create(User user);
+
+    User update(User user);
 }
