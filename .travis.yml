@@ -4,4 +4,5 @@ before_install:
 deploy:
   provider: heroku
   api_key:
-    secure: "1539ff7e-7eb0-478b-babb-0d8ac6343d22"
+    secure: 1539ff7e-7eb0-478b-babb-0d8ac6343d22
+  app: isa-sparrow-backend
