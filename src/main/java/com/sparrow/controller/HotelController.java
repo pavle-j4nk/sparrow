@@ -84,8 +84,12 @@ public class HotelController {
 
     @PostMapping(value = "/reservation")
     public ResponseEntity postHotelReservation(@RequestBody HotelReservation hotelReservation) {
-//        hotelReservation.setUser(userService.findByUsername(ALEKSANDAR_VUJASINOVIC));
         return ResponseEntity.ok(hotelReservationService.save(hotelReservation));
+    }
+
+    @GetMapping(value = "/reservations/{id}")
+    public ResponseEntity<List<HotelReservation>> getHotelReservations(@PathVariable Long id) {
+        return ResponseEntity.ok(hotelReservationService.findAll());
     }
 
     @GetMapping(value = "/reservations-active/{id}")

@@ -20,6 +20,11 @@ public class HotelReservationServiceImpl implements HotelReservationService {
     private HotelReservationRepository hotelReservationRepository;
 
     @Override
+    public List<HotelReservation> findAll() {
+        return hotelReservationRepository.findAll();
+    }
+
+    @Override
     @Transactional
     public HotelReservation save(HotelReservation hotelReservation) {
         return hotelReservationRepository.save(hotelReservation);

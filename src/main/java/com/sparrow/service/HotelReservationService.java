@@ -7,6 +7,8 @@ import com.sparrow.model.User;
 import java.util.List;
 
 public interface HotelReservationService {
+    List<HotelReservation> findAll();
+
     HotelReservation save(HotelReservation hotelReservation);
 
     List<HotelReservation> findByUser(User user);
