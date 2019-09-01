@@ -70,6 +70,12 @@ public class UserController {
         return ResponseEntity.ok(userService.create(user));
     }
 
+    @PutMapping
+    public ResponseEntity<User> update(@RequestBody @Valid User user, Principal principal) {
+        user.setUsername(principal.getName());
+        return ResponseEntity.ok(userService.update(user));
+    }
+
     @ExceptionHandler(Exception.class)
     public void onException(Exception e, HttpServletResponse response) {
         this.exceptionHandlerService.handle(e, response);
