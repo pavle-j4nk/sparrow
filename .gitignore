@@ -37,4 +37,4 @@ nbdist/
 .nb-gradle/
 
 ### To prevent password leaks
-application.properties
+#application.properties
