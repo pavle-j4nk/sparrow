@@ -9,6 +9,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class HotelRepositoryIntegrationTest {
@@ -26,6 +28,6 @@ public class HotelRepositoryIntegrationTest {
 
         Hotel foundHotel = hotelRepository.findByName(hotel.getName()).get();
 
-        MatcherAssert.assertThat("Not equal", foundHotel.getName().equals(hotel.getName()));
+        assertThat(foundHotel.getName()).isEqualTo(hotel.getName());
     }
 }

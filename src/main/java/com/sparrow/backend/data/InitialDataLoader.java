@@ -63,11 +63,6 @@ public class InitialDataLoader implements
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        try {
-            BASE_64_IMAGE = new String(Files.readAllBytes(Paths.get("src/main/resources/base64_image.txt")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         if (alreadySetup)
             return;
