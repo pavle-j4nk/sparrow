@@ -6,6 +6,8 @@ import java.sql.Date;
 import java.util.Set;
 
 public class HotelReservationDto {
+    private Long id;
+
     private String hotelName;
 
     private Set<Room> rooms;
@@ -19,12 +21,21 @@ public class HotelReservationDto {
     public HotelReservationDto() {
     }
 
-    public HotelReservationDto(String hotelName, Set<Room> rooms, Date start, Date end, Double price) {
+    public HotelReservationDto(Long id, String hotelName, Set<Room> rooms, Date start, Date end, Double price) {
+        this.id = id;
         this.hotelName = hotelName;
         this.rooms = rooms;
         this.start = start;
         this.end = end;
         this.price = price;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getHotelName() {
