@@ -31,8 +31,19 @@ public class HotelReservationServiceImpl implements HotelReservationService {
     }
 
     @Override
+    public HotelReservation getOne(Long id) {
+        return hotelReservationRepository.getOne(id);
+    }
+
+    @Override
     public List<HotelReservation> findByUser(User user) {
         return hotelReservationRepository.findByUser(user);
+    }
+
+    @Override
+    public void delete(Long id) {
+        HotelReservation hotelReservation = hotelReservationRepository.getOne(id);
+        hotelReservationRepository.delete(hotelReservation);
     }
 
     @Override
@@ -58,6 +69,7 @@ public class HotelReservationServiceImpl implements HotelReservationService {
         List<HotelReservationDto> hotelReservationDtos = new ArrayList<>();
         for (HotelReservation hr: reservations) {
             HotelReservationDto dto = new HotelReservationDto();
+            dto.setId(hr.getId());
             dto.setHotelName(hr.getRooms().iterator().next().getHotel().getName());
             dto.setStart(hr.getStart());
             dto.setEnd(hr.getEnd());

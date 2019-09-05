@@ -11,7 +11,11 @@ public interface HotelReservationService {
 
     HotelReservation save(HotelReservation hotelReservation);
 
+    HotelReservation getOne(Long id);
+
     List<HotelReservation> findByUser(User user);
+
+    void delete(Long id);
 
     List<HotelReservationDto> createReservationsDto(List<HotelReservation> reservations);
 
