@@ -64,6 +64,14 @@ public class HotelAdminController {
     @DeleteMapping(value = "hotels/pricelistitem/{id}")
     public ResponseEntity<PriceListItem> deletePriceListItem(@PathVariable Long id) {
         PriceListItem priceListItem = priceListItemService.findById(id);
+
+        List<HotelReservation> hotelReservations = hotelReservationService.findActive();
+        for (HotelReservation hr : hotelReservations) {
+            for (Room r : hr.getRooms())
+                if (r.getId() == priceListItem.getRoom().getId()) {
+                    return new ResponseEntity<>(priceListItem, HttpStatus.FORBIDDEN);
+                }
+        }
         if (priceListItem == null) {
             return (ResponseEntity<PriceListItem>) ResponseEntity.notFound();
         }
