@@ -65,6 +65,15 @@ public class HotelReservationServiceImpl implements HotelReservationService {
     }
 
     @Override
+    public List<HotelReservation> findActive() {
+        List<HotelReservation> reservations = hotelReservationRepository.findAll();
+        Date currentDate = new Date(Calendar.getInstance().getTime().getTime());
+
+        reservations.removeIf(hotelReservation -> currentDate.after(hotelReservation.getEnd()));
+        return reservations;
+    }
+
+    @Override
     public List<HotelReservationDto> createReservationsDto(List<HotelReservation> reservations) {
         List<HotelReservationDto> hotelReservationDtos = new ArrayList<>();
         for (HotelReservation hr: reservations) {

@@ -21,5 +21,7 @@ public interface HotelReservationService {
 
     List<HotelReservation> findFinishedByUser(User user);
 
+    List<HotelReservation> findActive();
+
     List<HotelReservation> findActiveByUser(User user);
 }
