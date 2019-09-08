@@ -38,6 +38,9 @@ public class HotelController {
     @Autowired
     private HotelReservationService hotelReservationService;
 
+    @Autowired
+    private HotelRoomDiscountService hotelRoomDiscountService;
+
     @GetMapping
     public ResponseEntity<List<HotelDto>> getHotels() {
         return ResponseEntity.ok(hotelService.findAllExtended());
@@ -66,6 +69,11 @@ public class HotelController {
     @GetMapping(value = "/{id}/pricelist")
     public ResponseEntity<Set<PriceListItem>> getHotelPriceList(@PathVariable Long id) {
         return ResponseEntity.ok(hotelService.searchRoomsByCurrentDate(id));
+    }
+
+    @GetMapping(value = "/{id}/pricelist/dates")
+    public ResponseEntity<Set<PriceListItem>> getHotelPriceListItemsByDate(@RequestParam Date tripStart, @RequestParam Date tripEnd, @PathVariable Long id) {
+        return ResponseEntity.ok(hotelService.findPriceListItemsByDates(id, tripStart, tripEnd));
     }
 
     @GetMapping(value = "/{id}/services")

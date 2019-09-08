@@ -8,6 +8,7 @@ import com.sparrow.backend.model.Hotel;
 import com.sparrow.backend.model.PriceListItem;
 import com.sparrow.backend.model.Room;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -41,6 +42,8 @@ public interface HotelService {
     Set<PriceListItem> searchRooms(RoomSearchDto roomSearchDto, Long hotelId);
 
     Set<PriceListItem> searchRoomsByCurrentDate(Long hotelId);
+
+    Set<PriceListItem> findPriceListItemsByDates(Long hotelId, Date tripStart, Date tripEnd);
 
     Hotel updateRoom(Long hotelId, Long roomId, Room room);
 

@@ -7,6 +7,7 @@ import com.sparrow.backend.dto.RoomSearchDto;
 import com.sparrow.backend.model.*;
 import com.sparrow.backend.repository.HotelRepository;
 import com.sparrow.backend.repository.HotelReservationRepository;
+import com.sparrow.backend.repository.HotelRoomDiscountRepository;
 import com.sparrow.backend.service.HotelService;
 import com.sparrow.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class HotelServiceImpl implements HotelService {
 
     @Autowired
     private HotelReservationRepository hotelReservationRepository;
+
+    @Autowired
+    private HotelRoomDiscountRepository hotelRoomDiscountRepository;
 
     @Override
     public List<Hotel> findAll() {
@@ -205,6 +209,25 @@ public class HotelServiceImpl implements HotelService {
             }
         }
 
+        return priceListItems;
+    }
+
+    @Override
+    public Set<PriceListItem> findPriceListItemsByDates(Long hotelId, Date tripStart, Date tripEnd) {
+        Hotel hotel = findById(hotelId);
+        PriceList priceList = hotel.getPriceLists().iterator().next();
+        Set<PriceListItem> priceListItems = priceList.getItems();
+
+        List<HotelRoomDiscount> hotelRoomDiscounts = hotelRoomDiscountRepository.findAll();
+        for (HotelRoomDiscount hrd : hotelRoomDiscounts) {
+            if (tripStart.before(hrd.getValidFrom()) && tripEnd.before(hrd.getValidFrom())) {
+                continue;
+            } else if (hrd.getValidTo().before(tripStart)) {
+                continue;
+            } else {
+                priceListItems.removeIf(p -> p.getRoom() == hrd.getPriceListItem().getRoom());
+            }
+        }
         return priceListItems;
     }
 }

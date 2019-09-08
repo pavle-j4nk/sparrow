@@ -1,13 +1,7 @@
 package com.sparrow.backend.controller;
 
-import com.sparrow.backend.model.Hotel;
-import com.sparrow.backend.model.HotelReservation;
-import com.sparrow.backend.model.PriceListItem;
-import com.sparrow.backend.model.Room;
-import com.sparrow.backend.service.AddressService;
-import com.sparrow.backend.service.HotelReservationService;
-import com.sparrow.backend.service.HotelService;
-import com.sparrow.backend.service.PriceListItemService;
+import com.sparrow.backend.model.*;
+import com.sparrow.backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +26,9 @@ public class HotelAdminController {
 
     @Autowired
     private HotelReservationService hotelReservationService;
+
+    @Autowired
+    private HotelRoomDiscountService hotelRoomDiscountService;
 
 
     @PutMapping(value = "/hotels")
@@ -77,5 +74,18 @@ public class HotelAdminController {
         }
         priceListItemService.delete(priceListItem);
         return ResponseEntity.ok(priceListItem);
+    }
+
+    @GetMapping(value = "hotels/{id}/discount")
+    public ResponseEntity<List<HotelRoomDiscount>> getHotelRoomDiscounts(@PathVariable Long id) {
+        List<HotelRoomDiscount> hotelRoomDiscounts = hotelRoomDiscountService.findAll();
+        hotelRoomDiscounts.removeIf(h -> h.getPriceListItem().getRoom().getHotel().getId() != id);
+        return ResponseEntity.ok(hotelRoomDiscounts);
+    }
+
+
+    @PostMapping(value = "hotels/discount")
+    public ResponseEntity<HotelRoomDiscount> postHotelRoomDiscount(@RequestBody HotelRoomDiscount hotelRoomDiscount) {
+        return ResponseEntity.ok(hotelRoomDiscountService.save(hotelRoomDiscount));
     }
 }
