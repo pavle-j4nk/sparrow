@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,8 +78,8 @@ public class HotelAdminController {
     }
 
     @GetMapping(value = "hotels/{id}/discount")
-    public ResponseEntity<List<HotelRoomDiscount>> getHotelRoomDiscounts(@PathVariable Long id) {
-        List<HotelRoomDiscount> hotelRoomDiscounts = hotelRoomDiscountService.findAll();
+    public ResponseEntity<List<HotelRoomDiscount>> getHotelRoomDiscounts(@PathVariable Long id, @RequestParam Date tripStart, @RequestParam Date tripEnd) {
+        List<HotelRoomDiscount> hotelRoomDiscounts = hotelRoomDiscountService.findAllActive(tripStart, tripEnd);
         hotelRoomDiscounts.removeIf(h -> h.getPriceListItem().getRoom().getHotel().getId() != id);
         return ResponseEntity.ok(hotelRoomDiscounts);
     }

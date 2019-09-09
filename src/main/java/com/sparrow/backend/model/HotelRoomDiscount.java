@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.sql.Date;
+import java.util.Set;
 
 @Entity
 public class HotelRoomDiscount {
@@ -15,6 +16,9 @@ public class HotelRoomDiscount {
     private Date validFrom;
 
     private Date validTo;
+
+    @ManyToMany
+    private Set<HotelServices> hotelServices;
 
     @ManyToOne
     private PriceListItem priceListItem;
@@ -64,5 +68,13 @@ public class HotelRoomDiscount {
 
     public void setDiscount(Double discount) {
         this.discount = discount;
+    }
+
+    public Set<HotelServices> getHotelServices() {
+        return hotelServices;
+    }
+
+    public void setHotelServices(Set<HotelServices> hotelServices) {
+        this.hotelServices = hotelServices;
     }
 }
