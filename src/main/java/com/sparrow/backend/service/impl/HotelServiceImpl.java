@@ -62,16 +62,6 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public Hotel findOne(Long id) {
-        Optional<Hotel> hotel = hotelRepository.findById(id);
-        if (hotel.isPresent()) {
-            return hotel.get();
-        } else {
-            throw new HotelNotFoundException();
-        }
-    }
-
-    @Override
     public Hotel findByName(String name) {
         Optional<Hotel> hotel = hotelRepository.findByName(name);
         if (hotel.isPresent()) {

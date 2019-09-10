@@ -19,7 +19,7 @@ public class HotelNotFoundException extends RuntimeException {
     }
 
     public HotelNotFoundException(Long id) {
-        super(String.format("Hotel with id: %f not found", id));
+        super(String.format("Hotel with id: %d not found", id));
         this.id = id;
     }
 }
