@@ -1,29 +1,28 @@
-package com.sparrow.backend.model;
+package com.sparrow.backend.dto;
 
-import javax.persistence.*;
+import com.sparrow.backend.model.Address;
+import com.sparrow.backend.model.Airline;
+import com.sparrow.backend.model.Destination;
+import com.sparrow.backend.model.User;
+
 import java.util.List;
 
-@Entity
-public class Airline {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AirlineDto {
     private Long id;
-
-    @ManyToOne(fetch = FetchType.EAGER)
     private User admin;
-
     private String name;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Address address;
-
     private String description;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "airline")
-    private List<Flight> flights;
-
-    @ManyToMany
     private List<Destination> destinations;
+
+    public AirlineDto(Airline airline) {
+        this.id = airline.getId();
+        this.admin = airline.getAdmin();
+        this.name = airline.getName();
+        this.address = airline.getAddress();
+        this.description = airline.getDescription();
+        this.destinations = airline.getDestinations();
+    }
 
     public List<Destination> getDestinations() {
         return destinations;
@@ -33,12 +32,23 @@ public class Airline {
         this.destinations = destinations;
     }
 
+    public AirlineDto() {
+    }
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(User admin) {
+        this.admin = admin;
     }
 
     public String getName() {
@@ -63,21 +73,5 @@ public class Airline {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public User getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(User admin) {
-        this.admin = admin;
-    }
-
-    public List<Flight> getFlights() {
-        return flights;
-    }
-
-    public void setFlights(List<Flight> flights) {
-        this.flights = flights;
     }
 }

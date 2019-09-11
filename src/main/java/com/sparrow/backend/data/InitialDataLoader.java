@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -60,6 +61,12 @@ public class InitialDataLoader implements
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private DestinationRepository destinationRepository;
+
+    @Autowired
+    private AirlineRepository airlineRepository;
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -99,7 +106,7 @@ public class InitialDataLoader implements
         User u3 = new User("aleksandar.vujasinovic", "aleksandar.vujasinov@gmail.com", "Aleksandar", "Vujasinovic", "Laze Stajica 16", passwordEncoder.encode("123"), true, roleUser);
         User hotelAdmin = new User("hotel.admin", "hotel_admin@sparrow.com", "Hotel", "Admin", "Hotel Admin Address 0", passwordEncoder.encode("123"), true, hotelAdminRole);
         User admin = new User("sysadmin", "admin@admin.com", "Bog", "Boziji", "Nebeska 12", passwordEncoder.encode("123"), true, adminRole);
-        User airlineAdmin = new User("aa", "ad11min@admin.com", "Bog", "Boziji", "Nebeska 12", passwordEncoder.encode("123"), true, airlineAdminRole);
+        User airlineAdmin = new User("aa", "ad11min@admin.com", "Letac", "Presratac", "Nebeska 12", passwordEncoder.encode("123"), true, airlineAdminRole);
 
         Address a1 = new Address("Danila Kisa 44, 21000, Novi Sad", 19.83, 45.24);
         Address a2 = new Address("Brace Ribnikar 17, 21000, Novi Sad", 19.83, 45.24);
@@ -194,6 +201,34 @@ public class InitialDataLoader implements
         hr.setPrice(102.0);
         hotelReservationRepository.save(hr);
 
+        Airline airline = new Airline();
+        Address airlineAdd = new Address();
+        airlineAdd.setLatitude(10);
+        airlineAdd.setLongitude(10);
+        airline.setAddress(airlineAdd);
+        airline.setDescription("Airline bla bla bla");
+        airline.setName("Airline1");
+        airline.setAdmin(airlineAdmin);
+        airlineRepository.save(airline);
+
+
+        Destination d1 = new Destination();
+        d1.setName("Belgrade");
+        d1.setCode("BEG");
+        Destination d2 = new Destination();
+        d2.setName("Paris");
+        d2.setCode("CDG");
+        Destination d3 = new Destination();
+        d3.setName("Moscov");
+        d3.setCode("VKO");
+        Destination d4 = new Destination();
+        d4.setCode("ATH");
+        d4.setName("Athens");
+        Destination d5 = new Destination();
+        d5.setName("Amsterdam");
+        d5.setCode("AMS");
+
+        destinationRepository.saveAll(Arrays.asList(d1, d2, d3, d4, d5));
 
         alreadySetup = true;
     }
