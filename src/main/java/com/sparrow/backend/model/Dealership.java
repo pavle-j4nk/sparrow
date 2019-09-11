@@ -1,5 +1,7 @@
 package com.sparrow.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,10 +15,17 @@ public class Dealership {
     private String name;
 
     @ManyToOne
+    @JsonIgnore
     private RentACar rentACar;
 
     @OneToOne
     private Address address;
+
+    public Dealership(String name, RentACar rentACar, Address address) {
+        this.name = name;
+        this.rentACar = rentACar;
+        this.address = address;
+    }
 
     public Dealership(){
 

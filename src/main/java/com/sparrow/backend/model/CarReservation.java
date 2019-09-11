@@ -15,6 +15,7 @@ public class CarReservation {
     @ManyToMany
     private Set<Car> cars;
 
+
     @ManyToOne
     private User user;
 
@@ -24,9 +25,39 @@ public class CarReservation {
 
     private Double price;
 
+   /* @ManyToOne
+    private Dealership dealershipPickUp;
+
+    @ManyToOne
+    private Dealership dealershipDropOff;
+*/
     public CarReservation(){
 
     }
+
+    public CarReservation(User user, Date start, Date end) {
+        this.user = user;
+        this.start = start;
+        this.end = end;
+    }
+    /*
+    public Dealership getDealershipPickUp() {
+        return dealershipPickUp;
+    }
+
+    public void setDealershipPickUp(Dealership dealershipPickUp) {
+        this.dealershipPickUp = dealershipPickUp;
+    }
+
+    public Dealership getDealershipDropOff() {
+        return dealershipDropOff;
+    }
+
+    public void setDealershipDropOff(Dealership dealershipDropOff) {
+        this.dealershipDropOff = dealershipDropOff;
+    }
+*/
+
 
     public Long getId() {
         return id;

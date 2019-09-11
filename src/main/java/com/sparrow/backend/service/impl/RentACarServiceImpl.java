@@ -1,20 +1,32 @@
 package com.sparrow.backend.service.impl;
 
+import com.sparrow.backend.dto.CarSearchDto;
 import com.sparrow.backend.dto.RentACarDto;
+import com.sparrow.backend.dto.RentACarSearchDto;
+import com.sparrow.backend.model.Car;
+import com.sparrow.backend.model.CarReservation;
 import com.sparrow.backend.model.Dealership;
 import com.sparrow.backend.model.RentACar;
+import com.sparrow.backend.repository.CarRepository;
+import com.sparrow.backend.repository.CarReservationRepository;
 import com.sparrow.backend.repository.RentACarRepository;
 import com.sparrow.backend.service.RentACarService;
+import com.sparrow.backend.service.exception.RentacarNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class RentACarServiceImpl implements RentACarService {
     @Autowired
     RentACarRepository rentACarRepository;
+
+    @Autowired
+    CarReservationRepository carReservationRepository;
 
     @Override
     public List<RentACar> findAll() {
@@ -23,7 +35,22 @@ public class RentACarServiceImpl implements RentACarService {
 
     @Override
     public List<RentACarDto> findAllExtended() {
-        return null; /*TODO : implemen find all extended*/
+        List<RentACar> rentACars = findAll();
+        List<RentACarDto> rentACarDtos = new ArrayList<>();
+        for(RentACar r : rentACars){
+            RentACarDto dto = new RentACarDto();
+
+            dto.setId(r.getId());
+            dto.setName(r.getName());
+            dto.setAddress(r.getAddress());
+            dto.setDescription(r.getDescription());
+            dto.setAdmin(r.getAdmin());
+            dto.setDealerships(r.getDealerships());
+            dto.setCars(r.getCars());
+            dto.setCity(r.getCity());
+            rentACarDtos.add(dto);
+        }
+        return rentACarDtos;
     }
 
     @Override
@@ -47,7 +74,7 @@ public class RentACarServiceImpl implements RentACarService {
         if(rentACar.isPresent()) {
             return rentACar.get();
         }else{
-            return null; /* TODO: IMPLEMENTIRATI RENTACAR NOT FOUND*/
+            throw new RentacarNotFoundException(name);
         }
     }
 
@@ -57,7 +84,7 @@ public class RentACarServiceImpl implements RentACarService {
         if(rentACar.isPresent()) {
             return rentACar.get();
         }else{
-            return null; /* TODO: IMPLEMENTIRATI RENTACAR NOT FOUND*/
+            throw new RentacarNotFoundException(address);
         }
     }
 
@@ -67,7 +94,7 @@ public class RentACarServiceImpl implements RentACarService {
         if(rentACar.isPresent()) {
             return rentACar.get();
         }else{
-            return null; /* TODO: IMPLEMENTIRATI RENTACAR NOT FOUND*/
+            throw new RentacarNotFoundException(id);
         }
     }
 
@@ -77,8 +104,16 @@ public class RentACarServiceImpl implements RentACarService {
 }
 
     @Override
-    public RentACar update(RentACar rentACar) {
-        return null; /*TODO : IMPLEMENTIRATI UPDATE*/
+    public RentACar update(RentACar rentACar , Long rentacarId) {
+        Optional<RentACar> hotelOptional = rentACarRepository.findById(rentACar.getId());
+        RentACar carForReturn = hotelOptional.get();
+
+        carForReturn.setDescription(rentACar.getDescription());
+        carForReturn.setAddress(rentACar.getAddress());
+        carForReturn.setName(rentACar.getName());
+
+
+        return  rentACarRepository.save(carForReturn);
     }
 
     @Override
@@ -87,7 +122,7 @@ public class RentACarServiceImpl implements RentACarService {
     }
 
     @Override
-    public RentACar create(RentACar newHotelDto) {
+    public RentACar create(RentACar newRentacarDto) {
         /*TODO : IMPLEMENT CREATE UPDATE DEALERSHIP AND SEARCH*/
         return null;
     }
@@ -98,7 +133,30 @@ public class RentACarServiceImpl implements RentACarService {
     }
 
     @Override
-    public List<RentACar> search(RentACarDto hotelSearchDto) {
-        return null;
+    public List<RentACar> search(RentACarSearchDto rentACarSearchDto) {
+       List<RentACar> rentACars = rentACarRepository.findAllByCity(rentACarSearchDto.getCity());
+
+       return rentACars;
+    }
+
+    @Override
+    public Set<Car> searchRooms(CarSearchDto carSearchDto, Long rentacarId) {
+
+
+        RentACar rentACar = findById(rentacarId);
+        Set<Car> carsAll  = rentACar.getCars();
+
+        List<CarReservation> reservations = carReservationRepository.findByDate(carSearchDto.getStart(), carSearchDto.getEnd());
+
+        for(CarReservation reservation : reservations){
+            for(Car cars : reservation.getCars()){
+                carsAll.removeIf(c -> c.getId().equals(cars.getId()));
+           }
+        }
+
+        carsAll.removeIf(c -> (c.getSeats() < carSearchDto.getSeats()));
+
+
+        return carsAll;
     }
 }

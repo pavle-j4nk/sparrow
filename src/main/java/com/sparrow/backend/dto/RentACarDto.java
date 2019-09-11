@@ -21,7 +21,9 @@ public class RentACarDto {
 
     private User admin;
 
-    public RentACarDto(long id, String name, Address address, String description, Set<Car> cars, Set<Dealership> dealerships, User admin) {
+    private String city;
+
+    public RentACarDto(long id, String name, Address address, String description, Set<Car> cars, Set<Dealership> dealerships, User admin , String city) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -29,6 +31,7 @@ public class RentACarDto {
         this.cars = cars;
         this.dealerships = dealerships;
         this.admin = admin;
+        this.city = city;
     }
 
     public RentACarDto(){
@@ -41,6 +44,14 @@ public class RentACarDto {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getName() {

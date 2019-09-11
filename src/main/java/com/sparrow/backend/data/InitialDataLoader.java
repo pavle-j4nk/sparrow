@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -57,6 +58,18 @@ public class InitialDataLoader implements
 
     @Autowired
     private HotelReservationRepository hotelReservationRepository;
+
+    @Autowired
+    private RentACarRepository rentACarRepository;
+
+    @Autowired
+    private DealershipRepository dealershipRepository;
+
+    @Autowired
+    private CarRepository carRepository;
+
+    @Autowired
+    private CarReservationRepository carReservationRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -108,10 +121,10 @@ public class InitialDataLoader implements
         User admin = new User("sysadmin", "admin@admin.com", "Bog", "Boziji", "Nebeska 12", passwordEncoder.encode("123"), true, adminRole);
         User airlineAdmin = new User("aa", "ad11min@admin.com", "Letac", "Presratac", "Nebeska 12", passwordEncoder.encode("123"), true, airlineAdminRole);
 
-        Address a1 = new Address("Danila Kisa 44, 21000, Novi Sad", 19.83, 45.24);
-        Address a2 = new Address("Brace Ribnikar 17, 21000, Novi Sad", 19.83, 45.24);
+        Address a1 = new Address("Danila Kisa 44, 21000, Novi Sad", 19.8313, 45.2413);
+        Address a2 = new Address("Brace Ribnikar 17, 21000, Novi Sad", 19.8356, 45.24532);
         Address a3 = new Address("Topolska 18, 11000, Beograd", 20.47, 44.79);
-        Address a4 = new Address("Gavrila Principa 3, 11000, Beograd", 20.45, 44.81);
+        Address a4 = new Address("Gavrila Principa 3, 11000, Beograd", 20.432525, 44.83251);
         addressRepository.saveAll(Arrays.asList(a1, a2, a3, a4));
 
         Hotel h1 = new Hotel("Plaza", "The Plaza Hotel is a landmarked 20-story luxury hotel and condominium apartment building in the Midtown Manhattan neighborhood of Manhattan, New York City. It opened in 1907 and is now owned by Katara Hospitality.", hotelAdmin, a1);
@@ -229,6 +242,34 @@ public class InitialDataLoader implements
         d5.setCode("AMS");
 
         destinationRepository.saveAll(Arrays.asList(d1, d2, d3, d4, d5));
+
+        RentACar rentACar1 = new RentACar("Rent-A-Car Marko", "Najbolji Rent-A-Car servis.", admin, a2,"Novi Sad");
+        RentACar rentACar2 = new RentACar("Rent-A-Car Aca i Paja", "Nista posebno", admin, a1 , "Novi Sad");
+        RentACar rentACar3 = new RentACar("Rent-A-Car Ugljo" , "Mozda su auta losa ali su skupa ", admin , a3 , "Beograd");
+
+        rentACarRepository.saveAll(Arrays.asList(rentACar1, rentACar2,rentACar3));
+
+
+        Dealership ds1 = new Dealership("Filijala1", rentACar1, a1);
+        Dealership ds2 = new Dealership("filijala2", rentACar2, a1);
+        Dealership ds3 = new Dealership("filijala3", rentACar3, a2);
+        Dealership ds4 = new Dealership("filijala4", rentACar1, a3);
+        Dealership ds5 = new Dealership("filijala5", rentACar2, a2);
+
+        dealershipRepository.saveAll(Arrays.asList(ds1, ds2,ds3, ds4,ds5));
+
+        Car car1 = new Car("Diesel", "Peugeot", "3008", 2017, 49, rentACar1 , 5);
+        Car car2 = new Car("Electric", "Tesla", "Roadster", 2019, 35, rentACar1, 2);
+        Car car3 = new Car("Petrol", "BMW", "305", 2013, 60, rentACar1, 5);
+        Car car4 = new Car("Petrol", "Mercedes-Benz", "A180", 2013, 60, rentACar2, 5);
+        Car car5 = new Car("Petrol", "Lexus", "315", 2016, 55, rentACar2, 5);
+        Car car6 = new Car("Diesel", "Opel", "Kadet", 1998, 80, rentACar3, 5);
+        Car car7 = new Car("Petrol", "VW", "Golf 4", 2000, 85, rentACar3, 5);
+
+
+        carRepository.saveAll(Arrays.asList(car1, car2, car3, car4 , car5,car6,car7));
+
+
 
         alreadySetup = true;
     }
