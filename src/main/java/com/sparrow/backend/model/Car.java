@@ -1,19 +1,19 @@
 package com.sparrow.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
-enum CarType{
-    Diesel , Petrol , Electric
-}
 
 @Entity
+@Table(name = "car")
 public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private CarType carType;
+    private String carType;
 
     private String carManufacturer;
 
@@ -21,12 +21,23 @@ public class Car {
 
     private Integer YearOfManufacturing;
 
-    private Boolean available;
-
     private double price;
 
     @ManyToOne
+    @JsonIgnore
     private RentACar rentACar;
+
+    private Integer seats;
+
+    public Car(String carType, String carManufacturer, String carModel, Integer yearOfManufacturing, double price, RentACar rentACar, Integer seats) {
+        this.carType = carType;
+        this.carManufacturer = carManufacturer;
+        this.carModel = carModel;
+        YearOfManufacturing = yearOfManufacturing;
+        this.price = price;
+        this.rentACar = rentACar;
+        this.seats = seats;
+    }
 
     public Car(){
 
@@ -41,11 +52,19 @@ public class Car {
         this.id = id;
     }
 
-    public CarType getCarType() {
+    public Integer getSeats() {
+        return seats;
+    }
+
+    public void setSeats(Integer seats) {
+        this.seats = seats;
+    }
+
+    public String getCarType() {
         return carType;
     }
 
-    public void setCarType(CarType carType) {
+    public void setCarType(String carType) {
         this.carType = carType;
     }
 
@@ -89,12 +108,5 @@ public class Car {
         this.rentACar = rentACar;
     }
 
-    public Boolean getAvailable() {
-        return available;
-    }
-
-    public void setAvailable(Boolean available) {
-        this.available = available;
-    }
 }
 

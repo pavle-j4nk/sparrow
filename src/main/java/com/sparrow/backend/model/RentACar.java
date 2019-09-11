@@ -1,10 +1,13 @@
 package com.sparrow.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
 @Entity
+@Table(name = "rentacar")
 public class RentACar {
 
     @Id
@@ -19,27 +22,43 @@ public class RentACar {
     @Column
     private String description;
 
-   // private Set<PriceList> priceLists;
-
-    @OneToMany
+    @OneToMany(mappedBy = "rentACar", fetch = FetchType.EAGER)
     private Set<Car> cars;
 
-    @OneToMany
+    @OneToMany(mappedBy = "rentACar" , fetch = FetchType.EAGER)
     private Set<Dealership> dealerships;
 
     @ManyToOne
     private User admin;
 
+    private  String city;
+
     public RentACar(){
 
     }
 
-    public long getId() {
+    public RentACar(String name, String description, User admin , Address address , String city) {
+        this.name = name;
+        this.description = description;
+        this.admin = admin;
+        this.address = address;
+        this.city = city;
+    }
+
+    public Long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getName() {

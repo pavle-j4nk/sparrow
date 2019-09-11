@@ -1,6 +1,7 @@
 package com.sparrow.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,11 +15,13 @@ public class Flight {
     private Long id;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnoreProperties({"flights"})
     private Airline airline;
 
     @ManyToOne()
     private Destination from;
+
+    private Long price;
 
     @ManyToOne
     private Destination to;
@@ -157,6 +160,14 @@ public class Flight {
 
     public void setArrivalTime(LocalTime arrivalTime) {
         this.arrivalTime = arrivalTime;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
     }
 }
 

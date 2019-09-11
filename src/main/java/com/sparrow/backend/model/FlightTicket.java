@@ -16,6 +16,10 @@ public class FlightTicket {
 
     private Long price;
 
+    private String firstName;
+
+    private String lastName;
+
     public Long getId() {
         return id;
     }
@@ -46,5 +50,21 @@ public class FlightTicket {
 
     public void setPrice(Long price) {
         this.price = price;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

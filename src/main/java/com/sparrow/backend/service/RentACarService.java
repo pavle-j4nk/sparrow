@@ -1,12 +1,18 @@
 package com.sparrow.backend.service;
 
+import com.sparrow.backend.dto.CarSearchDto;
 import com.sparrow.backend.dto.RentACarDto;
+import com.sparrow.backend.dto.RentACarSearchDto;
+import com.sparrow.backend.model.Car;
 import com.sparrow.backend.model.Dealership;
 import com.sparrow.backend.model.RentACar;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 public interface RentACarService {
+
     List<RentACar> findAll();
 
     /**
@@ -27,13 +33,15 @@ public interface RentACarService {
 
     RentACar save(RentACar rentACar);
 
-    RentACar update(RentACar rentACar);
+    RentACar update(RentACar rentACar , Long rentacarId);
 
     void delete(RentACar rentACar);
 
-    RentACar create(RentACar newHotelDto);
+    RentACar create(RentACar newRentacarDto);
 
     RentACar updateDealership(Long rentACarId, Long dealershipId, Dealership dealership);
 
-    List<RentACar> search(RentACarDto hotelSearchDto);
+    List<RentACar> search(RentACarSearchDto rentACarSearchDto);
+
+    Set<Car> searchRooms(CarSearchDto carSearchDto, Long hotelId);
 }
