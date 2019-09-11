@@ -81,7 +81,7 @@ public class InitialDataLoader implements
     private AirlineRepository airlineRepository;
 
     @Override
-    // @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
     public void onApplicationEvent(ContextRefreshedEvent event) {
         try {
             if (alreadySetup)
@@ -266,7 +266,8 @@ public class InitialDataLoader implements
 
             alreadySetup = true;
 
-        } catch(Throwable ignored) {
+        } catch (Throwable ignored) {
+            ignored.printStackTrace();
         }
     }
 

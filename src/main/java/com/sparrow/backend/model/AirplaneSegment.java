@@ -11,16 +11,20 @@ public class AirplaneSegment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "segment_name")
     private String name;
 
     @ManyToOne
     @JsonIgnore
     private Flight flight;
 
+    @Column(name = "sLayout")
     private String seatLayout;
 
+    @Column(name = "segmentRows")
     private Integer rows;
 
+    @Column(name = "columns")
     private Integer cols;
 
     @OneToMany(cascade = CascadeType.ALL)
