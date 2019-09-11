@@ -1,6 +1,7 @@
 package com.sparrow.backend.repository;
 
 import com.sparrow.backend.model.FlightTicket;
+import com.sparrow.backend.model.Seat;
 import com.sparrow.backend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
@@ -15,5 +16,7 @@ public interface TicketRepository extends JpaRepository<FlightTicket, Long> {
     <S extends FlightTicket> S save(S s);
 
     List<FlightTicket> getAllByUser(User user);
+
+    FlightTicket findFirstBySeat(Seat seat);
 
 }

@@ -128,10 +128,13 @@ public class AirlineServiceImpl implements AirlineService {
 
     @Override
     public FlightTicket createTicket(FlightTicket ticket, String username) {
+        Seat seat = seatRepository.getOne(ticket.getSeat().getId());
+        if(ticketRepository.findFirstBySeat(seat) != null)
+            throw new IllegalArgumentException();
+
         ticket.setUser(userRepository.findByUsername(username).get());
         ticket.getSeat().setAvailable(false);
 
-        Seat seat = seatRepository.getOne(ticket.getSeat().getId());
         seat.setAvailable(false);
         seatRepository.save(seat);
 
