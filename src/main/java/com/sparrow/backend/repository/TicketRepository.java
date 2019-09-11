@@ -11,6 +11,9 @@ import java.util.List;
 public interface TicketRepository extends JpaRepository<FlightTicket, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_READ)
+    @Override
+    <S extends FlightTicket> S save(S s);
+
     List<FlightTicket> getAllByUser(User user);
 
 }
