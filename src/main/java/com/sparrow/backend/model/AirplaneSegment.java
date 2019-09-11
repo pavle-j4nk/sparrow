@@ -11,11 +11,17 @@ public class AirplaneSegment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
     @ManyToOne
     @JsonIgnore
     private Flight flight;
 
     private String seatLayout;
+
+    private Integer rows;
+
+    private Integer cols;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Seat> seats;
@@ -50,5 +56,29 @@ public class AirplaneSegment {
 
     public void setSeats(List<Seat> seats) {
         this.seats = seats;
+    }
+
+    public Integer getRows() {
+        return rows;
+    }
+
+    public void setRows(Integer rows) {
+        this.rows = rows;
+    }
+
+    public Integer getCols() {
+        return cols;
+    }
+
+    public void setCols(Integer cols) {
+        this.cols = cols;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

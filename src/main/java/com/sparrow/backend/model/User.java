@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class User implements UserDetails {
@@ -42,11 +43,21 @@ public class User implements UserDetails {
     private String address;
 
     @Column(nullable = false)
-    @JsonIgnore
     private String password;
 
     @Column(nullable = false)
     private Boolean enabled;
+
+    public List<FlightTicket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<FlightTicket> tickets) {
+        this.tickets = tickets;
+    }
+
+    @ManyToMany
+    private List<FlightTicket> tickets;
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Collection<Friendship> friendships;
@@ -147,6 +158,7 @@ public class User implements UserDetails {
             return AuthorityUtils.createAuthorityList(role.getName());
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }

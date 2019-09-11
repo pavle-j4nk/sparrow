@@ -3,7 +3,8 @@ package com.sparrow.backend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -16,23 +17,35 @@ public class Flight {
     @JsonIgnore
     private Airline airline;
 
-    @ManyToOne
+    @ManyToOne()
     private Destination from;
 
     @ManyToOne
     private Destination to;
 
-    private LocalDateTime departure;
+    private LocalDate departureDate;
 
-    private LocalDateTime arrival;
+    private LocalDate arrivalDate;
+
+    private LocalTime departureTime;
+
+    private LocalTime arrivalTime;
+
+    private Boolean luggage;
+
+    private Long discount;
 
     @OneToMany
     private List<Destination> changeovers;
 
     private Integer duration;
 
+    @OneToMany
+    @JsonIgnore
+    private List<FlightTicket> tickets;
+
     @OneToMany(cascade = CascadeType.ALL)
-    private List<AirplaneSegment> airplaneSegments;
+    private List<AirplaneSegment> segments;
 
     public Long getId() {
         return id;
@@ -66,28 +79,28 @@ public class Flight {
         this.to = to;
     }
 
-    public LocalDateTime getDeparture() {
-        return departure;
+    public LocalDate getDepartureDate() {
+        return departureDate;
     }
 
-    public void setDeparture(LocalDateTime departure) {
-        this.departure = departure;
+    public void setDepartureDate(LocalDate departureDate) {
+        this.departureDate = departureDate;
     }
 
-    public LocalDateTime getArrival() {
-        return arrival;
+    public LocalDate getArrivalDate() {
+        return arrivalDate;
     }
 
-    public void setArrival(LocalDateTime arrival) {
-        this.arrival = arrival;
+    public void setArrivalDate(LocalDate arrivalDate) {
+        this.arrivalDate = arrivalDate;
     }
 
-    public List<AirplaneSegment> getAirplaneSegments() {
-        return airplaneSegments;
+    public List<AirplaneSegment> getSegments() {
+        return segments;
     }
 
-    public void setAirplaneSegments(List<AirplaneSegment> airplaneSegments) {
-        this.airplaneSegments = airplaneSegments;
+    public void setSegments(List<AirplaneSegment> segments) {
+        this.segments = segments;
     }
 
     public List<Destination> getChangeovers() {
@@ -105,4 +118,45 @@ public class Flight {
     public void setDuration(Integer duration) {
         this.duration = duration;
     }
+
+    public Boolean getLuggage() {
+        return luggage;
+    }
+
+    public void setLuggage(Boolean luggage) {
+        this.luggage = luggage;
+    }
+
+    public Long getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Long discount) {
+        this.discount = discount;
+    }
+
+    public List<FlightTicket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<FlightTicket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public LocalTime getDepartureTime() {
+        return departureTime;
+    }
+
+    public void setDepartureTime(LocalTime departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public LocalTime getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(LocalTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
 }
+
