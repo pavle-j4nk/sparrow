@@ -6,14 +6,14 @@ import com.sparrow.backend.repository.*;
 import com.sparrow.backend.service.AirlineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.Segment;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class AirlineServiceImpl implements AirlineService {
     @Autowired
     private AirlineRepository airlineRepository;
