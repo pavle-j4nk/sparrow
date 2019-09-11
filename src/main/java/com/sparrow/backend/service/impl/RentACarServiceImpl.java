@@ -14,6 +14,7 @@ import com.sparrow.backend.service.RentACarService;
 import com.sparrow.backend.service.exception.RentacarNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@Transactional
 public class RentACarServiceImpl implements RentACarService {
     @Autowired
     RentACarRepository rentACarRepository;
@@ -64,7 +66,7 @@ public class RentACarServiceImpl implements RentACarService {
         if(rentACar.isPresent()) {
             return rentACar.get();
         }else{
-            return null; /* TODO: IMPLEMENTIRATI RENTACAR NOT FOUND*/
+            throw new RentacarNotFoundException(id);
         }
     }
 

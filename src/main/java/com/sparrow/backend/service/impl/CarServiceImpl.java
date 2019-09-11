@@ -10,11 +10,13 @@ import com.sparrow.backend.service.RentACarService;
 import com.sparrow.backend.service.exception.RentacarNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.Set;
 
 @Service
+@Transactional
 public class CarServiceImpl implements CarService {
     @Autowired
     RentACarRepository rentACarRepository;

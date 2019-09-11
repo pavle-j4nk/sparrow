@@ -5,11 +5,13 @@ import com.sparrow.backend.repository.CarReservationRepository;
 import com.sparrow.backend.service.CarReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class CarReservationServiceImpl implements CarReservationService
 {
     @Autowired
@@ -18,7 +20,7 @@ public class CarReservationServiceImpl implements CarReservationService
     /*TODO : IMPLEMENT CAR RESERVATION METHODS*/
     @Override
     public CarReservation findById(Long id) {
-        return null;
+        return carReservationRepository.getOne(id);
     }
 
     @Override
@@ -43,6 +45,6 @@ public class CarReservationServiceImpl implements CarReservationService
 
     @Override
     public List<CarReservation> findAll() {
-        return null;
+        return carReservationRepository.findAll();
     }
 }
