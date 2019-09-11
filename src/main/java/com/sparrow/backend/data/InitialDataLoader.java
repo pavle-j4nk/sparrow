@@ -116,13 +116,7 @@ public class InitialDataLoader implements
 
         Hotel h1 = new Hotel("Plaza", "The Plaza Hotel is a landmarked 20-story luxury hotel and condominium apartment building in the Midtown Manhattan neighborhood of Manhattan, New York City. It opened in 1907 and is now owned by Katara Hospitality.", hotelAdmin, a1);
         h1.setImage(BASE_64_IMAGE);
-        Hotel h2 = new Hotel("Holiday Inn", "Holiday Inn is a British-owned American brand of hotels, and a subsidiary of InterContinental Hotels Group. Founded as a U.S. motel chain, it has grown to be one of the world's largest hotel chains.", hotelAdmin, a2);
-        h2.setImage(BASE_64_IMAGE);
-        Hotel h3 = new Hotel("Burj Al Arab", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", null, a3);
-        h3.setImage(BASE_64_IMAGE);
-        Hotel h4 = new Hotel("Sheratton", "An architectural wonder and one of the most famous hotels in the world, the Burj Al Arab is a Dubai icon.", hotelAdmin, a4);
-        h4.setImage(BASE_64_IMAGE);
-        hotelRepository.saveAll(Arrays.asList(h1, h2, h3, h4));
+        hotelRepository.saveAll(Arrays.asList(h1));
 
         ExtraService e1 = new ExtraService();
         e1.setName("Wellness");

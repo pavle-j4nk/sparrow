@@ -15,7 +15,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
-@Controller
+@RestController
 @RequestMapping(value = "api/hotels")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class HotelController {

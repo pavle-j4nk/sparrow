@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @Service
+@Transactional
 public class HotelReservationServiceImpl implements HotelReservationService {
     @Autowired
     private HotelReservationRepository hotelReservationRepository;

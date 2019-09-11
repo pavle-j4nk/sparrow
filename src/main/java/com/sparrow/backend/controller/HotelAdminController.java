@@ -84,6 +84,13 @@ public class HotelAdminController {
         return ResponseEntity.ok(hotelRoomDiscounts);
     }
 
+    @GetMapping(value = "hotels/{id}/allDiscounts")
+    public ResponseEntity<List<HotelRoomDiscount>> getHotelRoomDiscounts(@PathVariable Long id) {
+        List<HotelRoomDiscount> hotelRoomDiscounts = hotelRoomDiscountService.findAll();
+        hotelRoomDiscounts.removeIf(h -> h.getPriceListItem().getRoom().getHotel().getId() != id);
+        return ResponseEntity.ok(hotelRoomDiscounts);
+    }
+
 
     @PostMapping(value = "hotels/discount")
     public ResponseEntity<HotelRoomDiscount> postHotelRoomDiscount(@RequestBody HotelRoomDiscount hotelRoomDiscount) {

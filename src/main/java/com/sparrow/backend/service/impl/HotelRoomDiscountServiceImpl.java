@@ -7,11 +7,13 @@ import com.sparrow.backend.service.HotelReservationService;
 import com.sparrow.backend.service.HotelRoomDiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class HotelRoomDiscountServiceImpl implements HotelRoomDiscountService {
     @Autowired
     private HotelRoomDiscountRepository hotelRoomDiscountRepository;

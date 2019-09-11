@@ -12,11 +12,13 @@ import com.sparrow.backend.service.HotelService;
 import com.sparrow.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.*;
 
 @Service
+@Transactional
 public class HotelServiceImpl implements HotelService {
 
     @Autowired
