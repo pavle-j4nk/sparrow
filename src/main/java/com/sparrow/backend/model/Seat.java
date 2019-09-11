@@ -12,7 +12,7 @@ public class Seat {
 
     private Boolean available;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private AirplaneSegment segment;
 
     public Boolean getQuickReservation() {

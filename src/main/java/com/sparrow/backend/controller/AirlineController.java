@@ -1,15 +1,19 @@
 package com.sparrow.backend.controller;
 
 import com.sparrow.backend.dto.AirlineDto;
+import com.sparrow.backend.dto.TicketDto;
 import com.sparrow.backend.model.Airline;
 import com.sparrow.backend.model.Flight;
+import com.sparrow.backend.model.FlightTicket;
 import com.sparrow.backend.service.AirlineService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -45,7 +49,6 @@ public class AirlineController {
     }
 
     @GetMapping("/flight/{id}")
-    @PreAuthorize("hasAuthority('ROLE_AIRLINE_ADMIN')")
     public Flight getFlight(@PathVariable Long id) {
         return airlineService.getFlight(id);
     }
@@ -76,4 +79,38 @@ public class AirlineController {
     public ResponseEntity<AirlineDto> getOne(@PathVariable("id") Long id) {
         return ResponseEntity.ok(new AirlineDto(airlineService.getOne(id)));
     }
+
+    @GetMapping("search")
+    public ResponseEntity<List<Flight>> search(@RequestParam Date departure, @RequestParam String from, @RequestParam String to) {
+        return ResponseEntity.ok(airlineService.search(departure, from, to));
+    }
+
+    @PostMapping("ticket/invite/accept/{id}")
+    public ResponseEntity<?> acceptInvite(@PathVariable Long id) {
+        airlineService.acceptInvite(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("ticket/invite/decline/{id}")
+    public ResponseEntity<?> declineInvite(@PathVariable Long id) {
+        airlineService.declineInvite(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/ticket")
+    public ResponseEntity<FlightTicket> createTicket(@RequestBody FlightTicket ticket, Principal principal) {
+        return ResponseEntity.ok(airlineService.createTicket(ticket, principal.getName()));
+    }
+
+    @PostMapping("ticket/invite/{tid}/{username}")
+    public ResponseEntity<?> createInvite(@PathVariable Long tid, @PathVariable String username) {
+        airlineService.createInvite(tid, username);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/ticket")
+    public ResponseEntity<List<TicketDto>> getTickets(Principal principal) {
+        return ResponseEntity.ok(airlineService.getTickets(principal.getName()));
+    }
+
 }
