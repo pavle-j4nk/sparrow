@@ -1,7 +1,6 @@
 package com.sparrow.backend.service;
 
 import com.sparrow.backend.dto.HotelDto;
-import com.sparrow.backend.dto.NewHotelDto;
 import com.sparrow.backend.model.Address;
 import com.sparrow.backend.model.Hotel;
 import com.sparrow.backend.model.Role;
@@ -37,14 +36,12 @@ public class HotelServiceTest {
     public static final String FIRSTNAME = "firstname";
     public static final String LASTNAME = "lastname";
     public static final String PASSWORD = "pw";
+
     @Mock
     private HotelRepository hotelRepositoryMock;
 
     @Mock
     private Hotel hotelMock;
-
-    @Mock
-    private NewHotelDto newHotelDtoMock;
 
     @InjectMocks
     private HotelServiceImpl hotelService;
@@ -175,24 +172,4 @@ public class HotelServiceTest {
         });
     }
 
-
-    @Test
-    public void testCreate_NullPointer() {
-        assertThrows(NullPointerException.class, () -> {
-            hotelService.create(newHotelDtoMock);
-        });
-    }
-
-    @Test
-    public void testCreate() {
-        NewHotelDto dto = new NewHotelDto();
-
-        dto.setName(HOTEL);
-        dto.setDescription(DESCRIPTION);
-        dto.setUserEmail(EMAIL);
-
-        Hotel hotel = hotelService.save(hotelMock);
-
-        assertNull(hotel);
-    }
 }
