@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class CarSaleServiceImpl implements CarSaleService {
@@ -16,8 +18,13 @@ public class CarSaleServiceImpl implements CarSaleService {
     CarSaleRepository carSaleRepository;
 
     @Override
+    public List<CarSale> findAll() {
+        return this.carSaleRepository.findAll();
+    }
+
+    @Override
     @Transactional
-    public CarSale createCarSale(CarSale carSale , Car car) {
+    public CarSale createCarSale(CarSale carSale, Car car) {
 
         CarSale carSaleInput = new CarSale();
         carSaleInput.setCar(car);

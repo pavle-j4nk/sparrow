@@ -4,10 +4,7 @@ import com.sparrow.backend.dto.CarReservationDto;
 import com.sparrow.backend.dto.CarSearchDto;
 import com.sparrow.backend.dto.RentACarDto;
 import com.sparrow.backend.dto.RentACarSearchDto;
-import com.sparrow.backend.model.Car;
-import com.sparrow.backend.model.CarReservation;
-import com.sparrow.backend.model.RentACar;
-import com.sparrow.backend.model.User;
+import com.sparrow.backend.model.*;
 import com.sparrow.backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +42,9 @@ public class RentACarController {
 
     @Autowired
     private CarReservationService carReservationService;
+
+    @Autowired
+    private CarSaleService carSaleService;
 
     @GetMapping
     public ResponseEntity<List<RentACarDto>> getRentACar() {
@@ -104,6 +104,11 @@ public class RentACarController {
     public ResponseEntity<CarReservation> deleteCarReservation(@PathVariable Long id) {
         carReservationService.delete(id);
         return ResponseEntity.ok(new CarReservation());
+    }
+
+    @GetMapping(value = "/car-sales")
+    public ResponseEntity<List<CarSale>> getCarSales() {
+        return ResponseEntity.ok(carSaleService.findAll());
     }
 
 }
