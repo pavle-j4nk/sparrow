@@ -3,12 +3,10 @@ package com.sparrow.backend.service.impl;
 import com.sparrow.backend.dto.CarSearchDto;
 import com.sparrow.backend.dto.RentACarDto;
 import com.sparrow.backend.dto.RentACarSearchDto;
-import com.sparrow.backend.model.Car;
-import com.sparrow.backend.model.CarReservation;
-import com.sparrow.backend.model.Dealership;
-import com.sparrow.backend.model.RentACar;
+import com.sparrow.backend.model.*;
 import com.sparrow.backend.repository.CarRepository;
 import com.sparrow.backend.repository.CarReservationRepository;
+import com.sparrow.backend.repository.CarSaleRepository;
 import com.sparrow.backend.repository.RentACarRepository;
 import com.sparrow.backend.service.RentACarService;
 import com.sparrow.backend.service.exception.RentacarNotFoundException;
@@ -29,6 +27,9 @@ public class RentACarServiceImpl implements RentACarService {
 
     @Autowired
     CarReservationRepository carReservationRepository;
+
+    @Autowired
+    CarSaleRepository carSaleRepository;
 
     @Override
     public List<RentACar> findAll() {
@@ -148,13 +149,21 @@ public class RentACarServiceImpl implements RentACarService {
         RentACar rentACar = findById(rentacarId);
         Set<Car> carsAll  = rentACar.getCars();
 
+        List<CarSale> carSaleList = carSaleRepository.findByDate(carSearchDto.getStart(), carSearchDto.getEnd());
+
+
         List<CarReservation> reservations = carReservationRepository.findByDate(carSearchDto.getStart(), carSearchDto.getEnd());
 
-        for(CarReservation reservation : reservations){
-            for(Car cars : reservation.getCars()){
-                carsAll.removeIf(c -> c.getId().equals(cars.getId()));
-           }
+        for(CarSale carSale : carSaleList){
+            carsAll.removeIf(c-> c.getId().equals(carSale.getCar().getId()));
         }
+
+        for(CarReservation reservation : reservations) {
+            for (Car cars : reservation.getCars()) {
+                carsAll.removeIf(c -> c.getId().equals(cars.getId()));
+            }
+        }
+
 
         carsAll.removeIf(c -> (c.getSeats() < carSearchDto.getSeats()));
         carsAll.removeIf(c-> (c.getPrice() > carSearchDto.getPriceLow()));

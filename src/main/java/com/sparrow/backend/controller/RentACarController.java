@@ -87,14 +87,14 @@ public class RentACarController {
     }
 
     @GetMapping(value = "/reservations-active/{id}")
-    public ResponseEntity<List<CarReservationDto>> getHotelReservationsActive(@PathVariable Long id) {
+    public ResponseEntity<List<CarReservationDto>> getCarReservationsActive(@PathVariable Long id) {
         User user = userService.findById(id);
         List<CarReservation> carReservations = carReservationService.findActiveByUser(user);
         return ResponseEntity.ok(carReservationService.createReservationsDto(carReservations));
     }
 
     @GetMapping(value = "/reservations-finished/{id}")
-    public ResponseEntity<List<CarReservationDto>> getHotelReservationsFinished(@PathVariable Long id) {
+    public ResponseEntity<List<CarReservationDto>> getCarReservationsFinished(@PathVariable Long id) {
         User user = userService.findById(id);
         List<CarReservation> hotelReservations = carReservationService.findFinishedByUser(user);
         return ResponseEntity.ok(carReservationService.createReservationsDto(hotelReservations));
