@@ -127,6 +127,8 @@ public class InitialDataLoader implements
             Address a4 = new Address("Gavrila Principa 3, 11000, Beograd", 20.432525, 44.83251);
             addressRepository.saveAll(Arrays.asList(a1, a2, a3, a4));
 
+            userRepository.save(hotelAdmin);
+
             Hotel h1 = new Hotel("Plaza", "The Plaza Hotel is a landmarked 20-story luxury hotel and condominium apartment building in the Midtown Manhattan neighborhood of Manhattan, New York City. It opened in 1907 and is now owned by Katara Hospitality.", hotelAdmin, a1);
             h1.setImage(BASE_64_IMAGE);
             hotelRepository.saveAll(Arrays.asList(h1));
@@ -237,9 +239,9 @@ public class InitialDataLoader implements
 
             destinationRepository.saveAll(Arrays.asList(d1, d2, d3, d4, d5));
 
-            RentACar rentACar1 = new RentACar("Rent-A-Car Marko", "Najbolji Rent-A-Car servis.", admin, a2, "Novi Sad");
-            RentACar rentACar2 = new RentACar("Rent-A-Car Aca i Paja", "Nista posebno", admin, a1, "Novi Sad");
-            RentACar rentACar3 = new RentACar("Rent-A-Car Ugljo", "Mozda su auta losa ali su skupa ", admin, a3, "Beograd");
+            RentACar rentACar1 = new RentACar("Marko", "Najbolji Rent-A-Car servis.", admin, a2, "Novi Sad");
+            RentACar rentACar2 = new RentACar("Djuro", "Nista posebno", admin, a1, "Novi Sad");
+            RentACar rentACar3 = new RentACar("Pero", "Mozda su auta losa ali su skupa ", admin, a3, "Beograd");
 
             rentACarRepository.saveAll(Arrays.asList(rentACar1, rentACar2, rentACar3));
 

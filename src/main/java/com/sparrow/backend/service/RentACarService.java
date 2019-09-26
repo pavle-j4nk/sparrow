@@ -43,5 +43,5 @@ public interface RentACarService {
 
     List<RentACar> search(RentACarSearchDto rentACarSearchDto);
 
-    Set<Car> searchRooms(CarSearchDto carSearchDto, Long hotelId);
+    Set<Car> searchCars(CarSearchDto carSearchDto, Long hotelId);
 }

@@ -9,11 +9,21 @@ public class CarSearchDto {
     private Date start;
     private Date end;
     private Integer seats;
+    private Long priceLow;
 
-    public CarSearchDto(Date start , Date end , Integer seats) {
+    public CarSearchDto(Date start , Date end , Integer seats , Long priceLow) {
         this.start = start;
         this.end = end;
         this.seats = seats;
+        this.priceLow = priceLow;
+    }
+
+    public Long getPriceLow() {
+        return priceLow;
+    }
+
+    public void setPriceLow(Long priceLow) {
+        this.priceLow = priceLow;
     }
 
     public Date getStart() {

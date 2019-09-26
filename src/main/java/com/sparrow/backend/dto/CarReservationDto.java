@@ -7,8 +7,11 @@ import java.util.Set;
 
 public class CarReservationDto {
 
+    private Long id;
 
     private Set<Car> cars;
+
+    private String rentacarName;
 
     private User user;
 
@@ -26,7 +29,23 @@ public class CarReservationDto {
         this.price = price;
     }
 
+    public String getRentacarName() {
+        return rentacarName;
+    }
+
+    public void setRentacarName(String rentacarName) {
+        this.rentacarName = rentacarName;
+    }
+
     public CarReservationDto() {
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Set<Car> getCars() {

@@ -142,7 +142,7 @@ public class RentACarServiceImpl implements RentACarService {
     }
 
     @Override
-    public Set<Car> searchRooms(CarSearchDto carSearchDto, Long rentacarId) {
+    public Set<Car> searchCars(CarSearchDto carSearchDto, Long rentacarId) {
 
 
         RentACar rentACar = findById(rentacarId);
@@ -157,7 +157,7 @@ public class RentACarServiceImpl implements RentACarService {
         }
 
         carsAll.removeIf(c -> (c.getSeats() < carSearchDto.getSeats()));
-
+        carsAll.removeIf(c-> (c.getPrice() > carSearchDto.getPriceLow()));
 
         return carsAll;
     }

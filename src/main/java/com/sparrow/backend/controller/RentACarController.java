@@ -1,11 +1,13 @@
 package com.sparrow.backend.controller;
 
+import com.sparrow.backend.dto.CarReservationDto;
 import com.sparrow.backend.dto.CarSearchDto;
 import com.sparrow.backend.dto.RentACarDto;
 import com.sparrow.backend.dto.RentACarSearchDto;
 import com.sparrow.backend.model.Car;
 import com.sparrow.backend.model.CarReservation;
 import com.sparrow.backend.model.RentACar;
+import com.sparrow.backend.model.User;
 import com.sparrow.backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -67,13 +69,14 @@ public class RentACarController {
     public ResponseEntity<Set<Car>> getSearchHotelRoom(@RequestParam Date start,
                                                        @RequestParam Date end,
                                                        @RequestParam Integer seats,
+                                                       @RequestParam Long priceLow,
                                                        @PathVariable Long id) {
-        CarSearchDto carSearchDto = new CarSearchDto(start, end,seats);
-        return ResponseEntity.ok(rentACarService.searchRooms(carSearchDto, id));
+        CarSearchDto carSearchDto = new CarSearchDto(start, end,seats , priceLow);
+        return ResponseEntity.ok(rentACarService.searchCars(carSearchDto, id));
     }
 
     @PostMapping(value = "/reservation")
-    public ResponseEntity postHotelReservation(@RequestBody CarReservation carReservation) {
+    public ResponseEntity postCarReservation(@RequestBody CarReservation carReservation) {
         return ResponseEntity.ok(carReservationService.save(carReservation));
     }
 
@@ -81,6 +84,26 @@ public class RentACarController {
     public ResponseEntity<Car> getCar(@PathVariable Long id){
         Car car = carService.findById(id);
         return ResponseEntity.ok(car);
+    }
+
+    @GetMapping(value = "/reservations-active/{id}")
+    public ResponseEntity<List<CarReservationDto>> getHotelReservationsActive(@PathVariable Long id) {
+        User user = userService.findById(id);
+        List<CarReservation> carReservations = carReservationService.findActiveByUser(user);
+        return ResponseEntity.ok(carReservationService.createReservationsDto(carReservations));
+    }
+
+    @GetMapping(value = "/reservations-finished/{id}")
+    public ResponseEntity<List<CarReservationDto>> getHotelReservationsFinished(@PathVariable Long id) {
+        User user = userService.findById(id);
+        List<CarReservation> hotelReservations = carReservationService.findFinishedByUser(user);
+        return ResponseEntity.ok(carReservationService.createReservationsDto(hotelReservations));
+    }
+
+    @DeleteMapping(value = "/reservation/{id}")
+    public ResponseEntity<CarReservation> deleteCarReservation(@PathVariable Long id) {
+        carReservationService.delete(id);
+        return ResponseEntity.ok(new CarReservation());
     }
 
 }

@@ -15,6 +15,7 @@ public class CarReservation {
     @ManyToMany
     private Set<Car> cars;
 
+    private Long rentacarId;
 
     @ManyToOne
     private User user;

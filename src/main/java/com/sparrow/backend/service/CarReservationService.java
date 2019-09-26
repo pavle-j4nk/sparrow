@@ -1,7 +1,9 @@
 package com.sparrow.backend.service;
 
+import com.sparrow.backend.dto.CarReservationDto;
 import com.sparrow.backend.model.Car;
 import com.sparrow.backend.model.CarReservation;
+import com.sparrow.backend.model.User;
 
 import java.util.Date;
 import java.util.List;
@@ -17,7 +19,13 @@ public interface CarReservationService {
 
     CarReservation update(CarReservation carReservation);
 
-    CarReservation delete(CarReservation carReservation);
+    void delete(Long id);
+
+    List<CarReservation> findActiveByUser(User user);
+
+    List<CarReservation> findFinishedByUser(User user);
+
+    List<CarReservationDto> createReservationsDto(List<CarReservation> reservations);
 
     List<CarReservation> findAll();
 }
