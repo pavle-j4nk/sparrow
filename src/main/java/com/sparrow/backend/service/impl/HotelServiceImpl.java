@@ -44,6 +44,8 @@ public class HotelServiceImpl implements HotelService {
         List<HotelDto> hotelDtos = new ArrayList<>();
         for (Hotel h : hotels) {
             HotelDto dto = new HotelDto();
+            dto.setAvgScore(h.getAvgScore());
+            dto.setNoOfScores(h.getNoOfScores());
             dto.setId(h.getId());
             dto.setName(h.getName());
             dto.setAddress(h.getAddress());
@@ -102,6 +104,11 @@ public class HotelServiceImpl implements HotelService {
         hotel.setName(h.getName());
         hotel.setDescription(h.getDescription());
         hotel.setAddress(h.getAddress());
+
+        hotel.setAvgScore(h.getAvgScore());
+
+        hotel.setNoOfScores(h.getNoOfScores());
+
         return hotelRepository.save(hotel);
     }
 

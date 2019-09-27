@@ -108,7 +108,14 @@ public class RentACarController {
 
     @GetMapping(value = "/car-sales")
     public ResponseEntity<List<CarSale>> getCarSales() {
+
         return ResponseEntity.ok(carSaleService.findAll());
+    }
+
+    @GetMapping(value = "/car-sales-date")
+    public ResponseEntity<List<CarSale>> getCarSalesByDate(@RequestParam Date start,
+                                                            @RequestParam Date end){
+        return ResponseEntity.ok(carSaleService.findByDate(start , end));
     }
 
 }

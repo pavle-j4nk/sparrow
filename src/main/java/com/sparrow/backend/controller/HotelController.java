@@ -66,6 +66,13 @@ public class HotelController {
         return ResponseEntity.ok(room);
     }
 
+    @GetMapping(value = "/{name}")
+    public ResponseEntity<Hotel> getHotelByName(@PathVariable String name){
+        Hotel hotel = hotelService.findByName(name);
+        return ResponseEntity.ok(hotel);
+
+    }
+
     @GetMapping(value = "/{id}/pricelist")
     public ResponseEntity<Set<PriceListItem>> getHotelPriceList(@PathVariable Long id) {
         return ResponseEntity.ok(hotelService.searchRoomsByCurrentDate(id));

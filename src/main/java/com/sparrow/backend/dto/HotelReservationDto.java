@@ -10,6 +10,8 @@ public class HotelReservationDto {
 
     private String hotelName;
 
+    private Long hotelId;
+
     private Set<Room> rooms;
 
     private Date start;
@@ -28,6 +30,14 @@ public class HotelReservationDto {
         this.start = start;
         this.end = end;
         this.price = price;
+    }
+
+    public Long getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(Long hotelId) {
+        this.hotelId = hotelId;
     }
 
     public Long getId() {

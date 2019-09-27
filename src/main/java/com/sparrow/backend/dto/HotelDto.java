@@ -23,6 +23,10 @@ public class HotelDto {
 
     private String image;
 
+    private double avgScore;
+
+    private double noOfScores;
+
     public HotelDto() {
     }
 
@@ -36,6 +40,22 @@ public class HotelDto {
         this.admin = admin;
         this.hotelServices = hotelServices;
         this.image = image;
+    }
+
+    public double getAvgScore() {
+        return avgScore;
+    }
+
+    public void setAvgScore(double avgScore) {
+        this.avgScore = avgScore;
+    }
+
+    public double getNoOfScores() {
+        return noOfScores;
+    }
+
+    public void setNoOfScores(double noOfScores) {
+        this.noOfScores = noOfScores;
     }
 
     public Long getId() {

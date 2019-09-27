@@ -81,6 +81,7 @@ public class HotelReservationServiceImpl implements HotelReservationService {
             HotelReservationDto dto = new HotelReservationDto();
             dto.setId(hr.getId());
             dto.setHotelName(hr.getRooms().iterator().next().getHotel().getName());
+            dto.setHotelId(hr.getRooms().iterator().next().getHotel().getId());
             dto.setStart(hr.getStart());
             dto.setEnd(hr.getEnd());
             dto.setRooms(hr.getRooms());

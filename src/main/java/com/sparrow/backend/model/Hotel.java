@@ -36,6 +36,10 @@ public class Hotel {
     @Column(name = "HOTEL_IMAGE", nullable = true, columnDefinition = "BLOB")
     private String image;
 
+    private double avgScore;
+
+    private double noOfScores;
+
     public Hotel() {
     }
 
@@ -44,6 +48,24 @@ public class Hotel {
         this.description = description;
         this.admin = admin;
         this.address = address;
+        this.avgScore = 0.0;
+        this.noOfScores = 0.0;
+    }
+
+    public double getAvgScore() {
+        return avgScore;
+    }
+
+    public void setAvgScore(double avgScore) {
+        this.avgScore = avgScore;
+    }
+
+    public double getNoOfScores() {
+        return noOfScores;
+    }
+
+    public void setNoOfScores(double noOfScores) {
+        this.noOfScores = noOfScores;
     }
 
     public Long getId() {

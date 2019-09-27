@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface CarSaleRepository extends JpaRepository<CarSale, Long> {
 
-    @Query("SELECT c from CarSale c where(c.start >= :start AND c.start <= :end) OR (c.end >=:start AND c.end <= :end)")
+    @Query("SELECT c from CarSale c where(c.start <= :start AND c.end >= :end)")
     List<CarSale> findByDate(@Param("start") Date start , @Param("end") Date end) ;
 
     @Lock(LockModeType.PESSIMISTIC_READ)
