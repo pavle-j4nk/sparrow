@@ -4,7 +4,10 @@ import com.sparrow.backend.dto.CarReservationDto;
 import com.sparrow.backend.model.Car;
 import com.sparrow.backend.model.CarReservation;
 import com.sparrow.backend.model.User;
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.LockModeType;
 import java.util.Date;
 import java.util.List;
 

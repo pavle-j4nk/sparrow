@@ -131,6 +131,7 @@ public class InitialDataLoader implements
 
             Hotel h1 = new Hotel("Plaza", "The Plaza Hotel is a landmarked 20-story luxury hotel and condominium apartment building in the Midtown Manhattan neighborhood of Manhattan, New York City. It opened in 1907 and is now owned by Katara Hospitality.", hotelAdmin, a1);
             h1.setImage(BASE_64_IMAGE);
+            h1.setAdmin(hotelAdmin);
             hotelRepository.saveAll(Arrays.asList(h1));
 
             ExtraService e1 = new ExtraService();
@@ -196,6 +197,11 @@ public class InitialDataLoader implements
             hotelRepository.save(h1);
 
             HotelReservation hr = new HotelReservation();
+            HotelReservation hr1 = new HotelReservation();
+
+            hr1.setStart(new Date(1569948590000L));
+            hr1.setEnd(new Date(1570726190000L));
+
             hr.setStart(new Date(1565388000000L));
             hr.setEnd(new Date(1565820000000L));
 
@@ -208,7 +214,12 @@ public class InitialDataLoader implements
             hr.setHotelServices(hotelServices);
             hr.setUser(u3);
             hr.setPrice(102.0);
+            hr1.setRooms(reservationRooms);
+            hr1.setHotelServices(hotelServices);
+            hr1.setUser(u3);
+            hr1.setPrice(102.0);
             hotelReservationRepository.save(hr);
+            hotelReservationRepository.save(hr1);
 
             Airline airline = new Airline();
             Address airlineAdd = new Address();

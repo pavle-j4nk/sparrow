@@ -11,8 +11,6 @@ public class CarReservationDto {
 
     private Set<Car> cars;
 
-    private String rentacarName;
-
     private User user;
 
     private Date start;
@@ -20,6 +18,8 @@ public class CarReservationDto {
     private Date end;
 
     private Double price;
+
+    private Long rentacarId;
 
     public CarReservationDto(Set<Car> cars, User user, Date start, Date end, Double price) {
         this.cars = cars;
@@ -29,15 +29,15 @@ public class CarReservationDto {
         this.price = price;
     }
 
-    public String getRentacarName() {
-        return rentacarName;
-    }
-
-    public void setRentacarName(String rentacarName) {
-        this.rentacarName = rentacarName;
-    }
-
     public CarReservationDto() {
+    }
+
+    public Long getRentacarId() {
+        return rentacarId;
+    }
+
+    public void setRentacarId(Long rentacarId) {
+        this.rentacarId = rentacarId;
     }
 
     public void setId(Long id) {

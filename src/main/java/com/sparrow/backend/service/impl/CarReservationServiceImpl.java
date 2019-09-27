@@ -73,13 +73,14 @@ public class CarReservationServiceImpl implements CarReservationService
         for (CarReservation hr: reservations) {
             CarReservationDto dto = new CarReservationDto();
             dto.setId(hr.getId());
-            dto.setRentacarName(hr.getCars().iterator().next().getRentACar().getName());
+            dto.setRentacarId(hr.getRentaCarId());
             dto.setStart(hr.getStart());
             dto.setEnd(hr.getEnd());
             dto.setCars(hr.getCars());
             dto.setPrice(hr.getPrice());
             carReservationDtos.add(dto);
         }
+
         return carReservationDtos;
     }
 

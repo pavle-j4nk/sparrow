@@ -15,7 +15,6 @@ public class CarReservation {
     @ManyToMany
     private Set<Car> cars;
 
-    private Long rentacarId;
 
     @ManyToOne
     private User user;
@@ -25,6 +24,9 @@ public class CarReservation {
     private Date end;
 
     private Double price;
+
+    private Long rentaCarId;
+
 
    /* @ManyToOne
     private Dealership dealershipPickUp;
@@ -59,6 +61,14 @@ public class CarReservation {
     }
 */
 
+
+    public Long getRentaCarId() {
+        return rentaCarId;
+    }
+
+    public void setRentaCarId(Long rentaCarId) {
+        this.rentaCarId = rentaCarId;
+    }
 
     public Long getId() {
         return id;
